@@ -48,6 +48,12 @@ public class Teenager {
         }
     }
 
+    /**
+     * Adding a requirement to the teenager
+     * @param criterionName (CriterionName) - The name of the criterion
+     * @param value (String) - The value of the criterion
+     * @return (boolean) - True if the requirement is valid, false otherwise
+     */
     public boolean addRequirement(CriterionName criterionName, String value) {
         Criterion criterion = new Criterion(value, criterionName);
         if (criterion.isValid()) {
@@ -57,6 +63,11 @@ public class Teenager {
         return false;
     }
 
+    /**
+     * Adding a requirement to the teenager
+     * @param criterion (Criterion) - The criterion
+     * @return (boolean) - True if the requirement is valid, false otherwise
+     */
     public boolean addRequirement(Criterion criterion) {
         if (criterion.isValid()) {
             this.requirements.replace(criterion.getLabel(), criterion);
@@ -66,7 +77,7 @@ public class Teenager {
     }
 
     /**
-     * Check if the teenager is compatible with an another teenager
+     * Check if the teenager is compatible with a teenager
      * @param guest (Teenager) - The other teenager
      * @return (boolean) - True if the teenager is compatible with the other teenager, false otherwise
      */
@@ -91,7 +102,7 @@ public class Teenager {
     }
 
     /**
-     * Check if the teenager's food is compatible with an another teenager's food
+     * Check if the teenager's food is compatible with a teenager's food
      * @param guest (Teenager) - The other teenager
      * @return (boolean) - True if the teenager'food is compatible with the other teenager's food, false otherwise
      */
@@ -114,11 +125,14 @@ public class Teenager {
     }
 
     /**
-     * Check if the teenager can be with the same teenager than the last year
+     * Check if the teenager can be with the same teenager as the last year
      * @param guest (Teenager) - The other teenager
-     * @return (boolean) - False if the teenager doesn't want to be with the same teenager than the last year, true otherwise
+     * @return (boolean) - False if the teenager doesn't want to be with the same teenager as the last year, true otherwise
      */
     private boolean compatibleHistory(Teenager guest){
+        if(this.history == null){
+            return true;
+        }
         if(!this.history.equals(guest)){
             return true;
         }
@@ -215,43 +229,14 @@ public class Teenager {
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if(this == obj) { return true; }
+        if(obj == null) { return false; }
+        if(getClass() != obj.getClass()) { return false; }
         Teenager other = (Teenager) obj;
-        if (NAME == null) {
-            if (other.NAME != null)
-                return false;
-        } else if (!NAME.equals(other.NAME))
-            return false;
-        if (FORENAME == null) {
-            if (other.FORENAME != null)
-                return false;
-        } else if (!FORENAME.equals(other.FORENAME))
-            return false;
-        if (COUNTRY == null) {
-            if (other.COUNTRY != null)
-                return false;
-        } else if (!COUNTRY.equals(other.COUNTRY))
-            return false;
-        if (DATENAISS == null) {
-            if (other.DATENAISS != null)
-                return false;
-        } else if (!DATENAISS.equals(other.DATENAISS))
-            return false;
-        if (requirements == null) {
-            if (other.requirements != null)
-                return false;
-        } else if (!requirements.equals(other.requirements))
-            return false;
-        return true;
+        return this.NAME.equals(other.NAME) &&
+                this.FORENAME.equals(other.FORENAME) &&
+                this.COUNTRY.equals(other.COUNTRY) &&
+                this.DATENAISS.equals(other.DATENAISS) &&
+                this.requirements.equals(other.requirements);
     }
-
-    
-
-    
-
 }
