@@ -4,15 +4,15 @@ import java.util.HashSet;
 
 /**
  * Criterion class
- * @author Valentin Thuillier
+ * @author Valentin Thuillier, Romain Degez
  */
 public class Criterion {
 
     private CriterionName label;
     private String value;
 
-    private final static String YES = "yes";
-    private final static String NO = "no";
+    public final static String YES = "yes";
+    public final static String NO = "no";
     private final static HashSet<String> GENDERS = new HashSet<>(){{
        add("male");
        add("female");
@@ -63,5 +63,53 @@ public class Criterion {
     public CriterionName getLabel() {
         return this.label;
     }
+
+    /**
+     * Get the value of the value
+     * @return (String) - The value of the value
+     */
+    public String getValue() {
+        return value;
+    }
+
+    /**
+     * Hashcode method
+     * @return (int) - Hashcode
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((label == null) ? 0 : label.hashCode());
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        return result;
+    }
+
+    /**
+     * Equals method
+     * @return (boolean) - True if equals, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Criterion other = (Criterion) obj;
+        if (label != other.label)
+            return false;
+        if (value == null) {
+            if (other.value != null)
+                return false;
+        } else if (!value.equals(other.value))
+            return false;
+        return true;
+    }
+
+    
+
+    
 
 }
