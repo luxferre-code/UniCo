@@ -148,4 +148,9 @@ public class TeenagerTest {
         assertTrue(t4.compatibleWithGuest(t3));
     }
 
+    @Test
+    public void testHavingIncoherent() {
+        //TODO
+    }
+
 }

@@ -86,8 +86,7 @@ public class Teenager {
             return false;
         }
         if(!this.compatibleFood(guest)){ return false; }
-        if(!this.compatibleHistory(guest)) return false;
-        return true;
+        return this.compatibleHistory(guest);
     }
 
     /**
@@ -115,6 +114,7 @@ public class Teenager {
             for(String hfood : hostFoods){
                 if(gfood.equals(hfood)){
                     temp = true;
+                    break;
                 }
             }
             if(!temp){
@@ -136,10 +136,7 @@ public class Teenager {
         if(!this.history.equals(guest)){
             return true;
         }
-        if(booleanConverter(this, CriterionName.HISTORY, "other") || booleanConverter(guest, CriterionName.HISTORY, "other")){
-            return false;
-        }
-        return true;
+        return !booleanConverter(this, CriterionName.HISTORY, "other") && !booleanConverter(guest, CriterionName.HISTORY, "other");
     }
 
     /**
@@ -238,5 +235,21 @@ public class Teenager {
                 this.COUNTRY.equals(other.COUNTRY) &&
                 this.DATENAISS.equals(other.DATENAISS) &&
                 this.requirements.equals(other.requirements);
+    }
+
+    /**
+     * Having incoherent requirement
+     * @return (boolean) - True if the teenager has incoherent requirement, false otherwise
+     */
+    public boolean havingIncoherent() {
+        if(this.getCriterionValue(CriterionName.HOST_HAS_ANIMAL).equals(Criterion.YES) && this.getCriterionValue(CriterionName.GUEST_ANIMAL_ALLERGY).equals(Criterion.YES)){
+            return true;
+        }
+        for(Criterion c : this.requirements.values()){
+            if(!c.isValid()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
