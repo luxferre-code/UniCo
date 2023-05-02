@@ -42,8 +42,39 @@ public class Platform {
         }
     }
 
+    /**
+     * Purge all the teenagers having incoherent criterion
+     * @param minOnTheSet (int) - The minimum number of teenager on the set
+     * @return (boolean) - True if the process is successful, false otherwise
+     */
+    public boolean purgeIncoherentTeenager(int minOnTheSet) {
+        if(this.teenagers.size() < minOnTheSet) return false;
+        HashSet<Teenager> toRemove = new HashSet<>();
+        for(Teenager t : this.teenagers) {
+            if(this.teenagers.size() - toRemove.size() < minOnTheSet) break;
+            if(t.havingIncoherent()) {
+                toRemove.add(t);
+            }
+        }
+        this.teenagers.removeAll(toRemove);
+        return true;
+    }
 
+    /**
+     * Purge all the teenagers having incoherent criterion
+     * @return (boolean) - True if the process is successful, false otherwise
+     */
+    public boolean purgeIncoherentTeenager() {
+        return this.purgeIncoherentTeenager(0); // 0 = no minimum
+    }
 
-
+    /**
+     * Purge all the teenagers having incoherent criterion
+     * @param numberToDelete (int) - The number of teenager to delete
+     * @return (boolean) - True if the process is successful, false otherwise
+     */
+    public boolean purgeIncoherentTeenagerByNumber(int numberToDelete) {
+        return this.purgeIncoherentTeenager(this.teenagers.size() - numberToDelete);
+    }
 
 }

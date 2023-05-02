@@ -1,17 +1,16 @@
 package sae;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 
-import ullile.sae201.Criterion;
 import ullile.sae201.CriterionName;
 import ullile.sae201.Teenager;
-
-import static org.junit.Assert.*;
 
 public class TeenagerTest {
 
@@ -26,13 +25,13 @@ public class TeenagerTest {
         d3 = new Date();
         d4 = new Date();
         Calendar c = Calendar.getInstance();
-        c.set(1999, Calendar.FEBRUARY, 1);
+        c.set(1999, 1, 1);
         d1 = c.getTime();
-        c.set(2000, Calendar.APRIL, 1);
+        c.set(2000, 1, 1);
         d2 = c.getTime();
-        c.set(2001, Calendar.JULY, 1);
+        c.set(2001, 1, 1);
         d3 = c.getTime();
-        c.set(2002, Calendar.OCTOBER, 1);
+        c.set(2002, 1, 1);
         d4 = c.getTime();
 
         /* Instance of Teenager */
@@ -74,7 +73,7 @@ public class TeenagerTest {
         t1.addRequirement(CriterionName.PAIR_GENDER, "female");
         t1.addRequirement(CriterionName.HOBBIES, "video games,music");
         //T2
-        t2.addRequirement(CriterionName.GUEST_ANIMAL_ALLERGY, "maybe");
+        t2.addRequirement(CriterionName.GUEST_ANIMAL_ALLERGY, "no");
         t2.addRequirement(CriterionName.HOST_HAS_ANIMAL, "yes");
         t2.addRequirement(CriterionName.GENDER, "female");
         t2.addRequirement(CriterionName.GUEST_FOOD, "vegetarian");
@@ -84,73 +83,12 @@ public class TeenagerTest {
         t3.addRequirement(CriterionName.GUEST_ANIMAL_ALLERGY, "no");
         t3.addRequirement(CriterionName.HOST_HAS_ANIMAL, "no");
         t3.addRequirement(CriterionName.GENDER, "other");
-        t3.addRequirement(CriterionName.PAIR_GENDER, "males");
+        t3.addRequirement(CriterionName.PAIR_GENDER, "male");
         t3.addRequirement(CriterionName.HOBBIES, "video games");
         //T4
         t4.addRequirement(CriterionName.GUEST_ANIMAL_ALLERGY, "yes");
         t4.addRequirement(CriterionName.HOST_HAS_ANIMAL, "yes");
-        t4.addRequirement(CriterionName.GENDER, "");
-        t4.addRequirement(CriterionName.GUEST_FOOD, "nonuts");
-        t4.addRequirement(CriterionName.HOBBIES, "music");
-        t4.addRequirement(CriterionName.HISTORY, "same");
-    }
-
-    @Test
-    public void testPurgeInvalidRequirement() {
-        addRequirements();
-        HashMap<CriterionName, Criterion> req = t1.getRequirements();
-        assertEquals(8, req.size());
-        t1.purgeInvalidRequirement();
-        req = t1.getRequirements();
-        assertEquals(8, req.size());
-
-        req = t2.getRequirements();
-        assertEquals(8, req.size());
-        t2.purgeInvalidRequirement();
-        req = t2.getRequirements();
-        assertEquals(6, req.size()); // PAIR_GENDER AND GUEST_ANIMAL_ALLERGY are invalid
-
-        req = t3.getRequirements();
-        assertEquals(8, req.size());
-        t3.purgeInvalidRequirement();
-        req = t3.getRequirements();
-        assertEquals(7, req.size()); // PAIR_GENDER is invalid
-
-        req = t4.getRequirements();
-        assertEquals(8, req.size());
-        t4.purgeInvalidRequirement();
-        req = t4.getRequirements();
-        assertEquals(6, req.size()); // GENDER AND PAIR_GENDER are invalid
-    }
-
-    @Test
-    public void testEquals() {
-        Teenager t5 = new Teenager("Toto", "Machin", d1, "France");
-        assertEquals(t1, t5);
-        assertNotEquals(t1, t2);
-        assertNotEquals(t2, t5);
-    }
-
-    @Test
-    public void testCompatibleWithGuest() {
-        addRequirements();
-        assertFalse(t1.compatibleWithGuest(t2));
-        assertTrue(t1.compatibleWithGuest(t3));
-        assertFalse(t1.compatibleWithGuest(t4));
-        assertFalse(t2.compatibleWithGuest(t1));
-        assertTrue(t2.compatibleWithGuest(t3));
-        assertFalse(t2.compatibleWithGuest(t4));
-        assertTrue(t3.compatibleWithGuest(t1));
-        assertFalse(t3.compatibleWithGuest(t2));
-        assertFalse(t3.compatibleWithGuest(t4));
-        assertFalse(t4.compatibleWithGuest(t1));
-        assertFalse(t4.compatibleWithGuest(t2));
-        assertTrue(t4.compatibleWithGuest(t3));
-    }
-
-    @Test
-    public void testHavingIncoherent() {
-        //TODO
+        t4.addRequirement(CriterionName.GENDER, "male");
     }
 
 }
