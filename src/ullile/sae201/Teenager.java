@@ -11,7 +11,8 @@ import java.util.List;
  */
 public class Teenager {
 
-    private final String NAME, FORENAME, COUNTRY;
+    private final String NAME, FORENAME;
+    private final Country COUNTRY;
     private final Date DATENAISS;
     private Teenager history = null;
 
@@ -24,13 +25,24 @@ public class Teenager {
      * @param name (String) - The name of the teenager
      * @param forename (String) - The forename of the teenager
      * @param dateNaiss (Date) - The date of birth of the teenager
-     * @param country (String) - The country of the teenager
+     * @param country (Country) - The country of the teenager
      */
-    public Teenager(String name, String forename, Date dateNaiss, String country) {
+    public Teenager(String name, String forename, Date dateNaiss, Country country) {
         this.NAME = name;
         this.FORENAME = forename;
         this.DATENAISS = dateNaiss;
         this.COUNTRY = country;
+    }
+
+       /**
+     * Teenager overcharged constructor
+     * @param name (String) - The name of the teenager
+     * @param forename (String) - The forename of the teenager
+     * @param dateNaiss (Date) - The date of birth of the teenager
+     * @param country (String) - The country of the teenager
+     */
+    public Teenager(String name, String forename, Date dateNaiss, String country) {
+        this(name,forename,dateNaiss,Country.valueOf(country));
     }
 
     /**
@@ -159,7 +171,7 @@ public class Teenager {
      * Get the country of the teenager
      * @return (String) - The country of the teenager
      */
-    public String getCountry() {
+    public Country getCountry() {
         return COUNTRY;
     }
 
@@ -252,4 +264,6 @@ public class Teenager {
         }
         return false;
     }
+
+
 }
