@@ -18,10 +18,6 @@ public class Criterion {
        add("female");
        add("other");
     }};
-    private final static HashSet<String> ENUM_USING_GENDER = new HashSet<>() {{
-       add("GENDER");
-       add("PAIR_GENDER");
-    }};
 
     private final static HashSet<String> POSSIBILITY_HISTORY = new HashSet<>() {{
         add("same");
@@ -48,7 +44,8 @@ public class Criterion {
             case 'B':
                 return this.value.equals(Criterion.YES) || this.value.equals(Criterion.NO);
             case 'T':
-                if (Criterion.ENUM_USING_GENDER.contains(this.label.name())) { return Criterion.GENDERS.contains(this.value); }
+                if (this.label.name().contains("GENDER")) { return Criterion.GENDERS.contains(this.value); }
+                else if(this.label.name().equals("PAIR_GENDER")) { return this.value.isEmpty(); }
                 else if(this.label.name().equals("HISTORY")) { return Criterion.POSSIBILITY_HISTORY.contains(this.value); }
                 return true;
             default:

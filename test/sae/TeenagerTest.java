@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
+import ullile.sae201.Country;
 import ullile.sae201.CriterionName;
 import ullile.sae201.Teenager;
 
@@ -36,9 +37,9 @@ public class TeenagerTest {
 
         /* Instance of Teenager */
         t1 = new Teenager("Toto", "Machin", d1, "France");
-        t2 = new Teenager("Tata", "Truc",  d2, "Australia");
-        t3 = new Teenager("Titi", "Bidule",  d3, "USA");
-        t4 = new Teenager("Tati", "Chouette",  d4, "France");
+        t2 = new Teenager("Tata", "Truc",  d2, "Spain");
+        t3 = new Teenager("Titi", "Bidule",  d3, "Italy");
+        t4 = new Teenager("Tati", "Chouette",  d4, "germain");
     }
 
     @Test
@@ -59,10 +60,10 @@ public class TeenagerTest {
         assertEquals(d3, t3.getDateNaiss());
         assertEquals(d4, t4.getDateNaiss());
         //Country
-        assertEquals("France", t1.getCountry());
-        assertEquals("Australia", t2.getCountry());
-        assertEquals("USA", t3.getCountry());
-        assertEquals("France", t4.getCountry());
+        assertEquals(Country.FRANCE, t1.getCountry());
+        assertEquals(Country.SPAIN, t2.getCountry());
+        assertEquals(Country.ITALY, t3.getCountry());
+        assertEquals(Country.GERMAIN, t4.getCountry());
     }
 
     public void addRequirements() {

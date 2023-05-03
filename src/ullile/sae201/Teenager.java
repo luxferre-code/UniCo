@@ -16,9 +16,7 @@ public class Teenager {
     private final Date DATENAISS;
     private Teenager history = null;
 
-    private HashMap<CriterionName, Criterion> requirements = new HashMap<>(){{
-        for (CriterionName criterionName : CriterionName.values()) put(criterionName, new Criterion("", criterionName));
-    }};
+    private HashMap<CriterionName, Criterion> requirements = new HashMap<>();
 
     /**
      * Teenager constructor
@@ -42,7 +40,7 @@ public class Teenager {
      * @param country (String) - The country of the teenager
      */
     public Teenager(String name, String forename, Date dateNaiss, String country) {
-        this(name,forename,dateNaiss,Country.valueOf(country));
+        this(name,forename,dateNaiss,Country.valueOf(country.toUpperCase()));
     }
 
     /**
@@ -82,7 +80,21 @@ public class Teenager {
      */
     public boolean addRequirement(Criterion criterion) {
         if (criterion.isValid()) {
-            this.requirements.replace(criterion.getLabel(), criterion);
+            this.requirements.put(criterion.getLabel(), criterion);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Replacing a requirement to the teenager
+     * @param criterionName (CriterionName) - The name of the criterion
+     * @return (boolean) - True if the requirement is valid, false otherwise
+     */
+    public boolean replaceRequirement(CriterionName criterionName, String value) {
+        Criterion criterion = new Criterion(value, criterionName);
+        if (criterion.isValid()) {
+            this.requirements.replace(criterionName, criterion);
             return true;
         }
         return false;
@@ -119,6 +131,11 @@ public class Teenager {
      */
     private boolean compatibleFood(Teenager guest){
         boolean temp;
+
+        if(!this.requirements.containsKey(CriterionName.HOST_FOOD) && !guest.requirements.containsKey(CriterionName.GUEST_FOOD)){
+            return false;
+        }
+
         String[] hostFoods = this.getCriterionValue(CriterionName.HOST_FOOD).split(",");
         String[] guestFoods = guest.getCriterionValue(CriterionName.GUEST_FOOD).split(",");
         for(String gfood : guestFoods){
@@ -213,6 +230,7 @@ public class Teenager {
      * @return (Criterion) - The value from the hashmap
      */
     private String getCriterionValue(CriterionName criterionName){
+        if(!this.requirements.containsKey(criterionName)) return "";
         return this.getRequirements().get(criterionName).getValue();
     }
 
