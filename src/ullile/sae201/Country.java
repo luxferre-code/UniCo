@@ -22,7 +22,7 @@ public enum Country {
      * Get the character state
      * @return (boolean) - Character state
      */
-    public boolean isISGROUCH() { return ISGROUCH; }
+    public boolean isGrouch() { return ISGROUCH; }
 
     
 
