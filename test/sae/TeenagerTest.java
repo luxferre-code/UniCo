@@ -63,7 +63,7 @@ public class TeenagerTest {
         assertEquals(Country.FRANCE, t1.getCountry());
         assertEquals(Country.SPAIN, t2.getCountry());
         assertEquals(Country.ITALY, t3.getCountry());
-        assertEquals(Country.GERMAIN, t4.getCountry());
+        assertEquals(Country.GERMANY, t4.getCountry());
     }
 
     public void addRequirements() {
