@@ -7,7 +7,7 @@ package ullile.sae201;
 public enum Country {
     FRANCE(true),
     SPAIN(false),
-    GERMAIN(false),
+    GERMANY(false),
     ITALY(false);
 
     private final boolean ISGROUCH;
