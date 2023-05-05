@@ -260,11 +260,7 @@ public class Teenager {
         if(obj == null) { return false; }
         if(getClass() != obj.getClass()) { return false; }
         Teenager other = (Teenager) obj;
-        return this.NAME.equals(other.NAME) &&
-                this.FORENAME.equals(other.FORENAME) &&
-                this.COUNTRY.equals(other.COUNTRY) &&
-                this.DATENAISS.equals(other.DATENAISS) &&
-                this.requirements.equals(other.requirements);
+        return this.NAME.equals(other.NAME) && this.FORENAME.equals(other.FORENAME) && this.COUNTRY.equals(other.COUNTRY) && this.DATENAISS.equals(other.DATENAISS) && this.requirements.equals(other.requirements);
     }
 
     /**
@@ -272,7 +268,7 @@ public class Teenager {
      * @return (boolean) - True if the teenager has incoherent requirement, false otherwise
      */
     public boolean havingIncoherent() {
-        if(this.getCriterionValue(CriterionName.HOST_HAS_ANIMAL).equals(Criterion.YES) && this.getCriterionValue(CriterionName.GUEST_ANIMAL_ALLERGY).equals(Criterion.YES)){
+        if (booleanConverter(this, CriterionName.HOST_HAS_ANIMAL, Criterion.YES) && booleanConverter(this, CriterionName.GUEST_ANIMAL_ALLERGY, Criterion.YES)) {
             return true;
         }
         for(Criterion c : this.requirements.values()){

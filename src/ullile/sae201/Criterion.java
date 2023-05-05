@@ -44,8 +44,8 @@ public class Criterion {
             case 'B':
                 return this.value.equals(Criterion.YES) || this.value.equals(Criterion.NO);
             case 'T':
-                if (this.label.name().contains("GENDER")) { return Criterion.GENDERS.contains(this.value); }
-                else if(this.label.name().equals("PAIR_GENDER")) { return this.value.isEmpty(); }
+                if (this.label.name().equals("GENDER")) { return Criterion.GENDERS.contains(this.value); }
+                else if(this.label.name().equals("PAIR_GENDER")) { return Criterion.GENDERS.contains(this.value) || this.value.isEmpty(); }
                 else if(this.label.name().equals("HISTORY")) { return Criterion.POSSIBILITY_HISTORY.contains(this.value); }
                 return true;
             default:
