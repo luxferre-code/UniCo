@@ -1,17 +1,17 @@
 package sae;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
+import ullile.sae201.Country;
+import ullile.sae201.CriterionName;
+import ullile.sae201.Teenager;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
-
-import ullile.sae201.Country;
-import ullile.sae201.CriterionName;
-import ullile.sae201.Teenager;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TeenagerTest {
 
@@ -26,20 +26,20 @@ public class TeenagerTest {
         d3 = new Date();
         d4 = new Date();
         Calendar c = Calendar.getInstance();
-        c.set(1999, 1, 1);
+        c.set(1999, Calendar.JANUARY, 1);
         d1 = c.getTime();
-        c.set(2000, 1, 1);
+        c.set(2000, Calendar.JANUARY, 1);
         d2 = c.getTime();
-        c.set(2001, 1, 1);
+        c.set(2001, Calendar.JANUARY, 1);
         d3 = c.getTime();
-        c.set(2002, 1, 1);
+        c.set(2002, Calendar.JANUARY, 1);
         d4 = c.getTime();
 
         /* Instance of Teenager */
         t1 = new Teenager("Toto", "Machin", d1, "France");
         t2 = new Teenager("Tata", "Truc",  d2, "Spain");
-        t3 = new Teenager("Titi", "Bidule",  d3, "Italy");
-        t4 = new Teenager("Tati", "Chouette",  d4, "germain");
+        t3 = new Teenager("Titi", "Bidule", d3, "Italy");
+        t4 = new Teenager("Tati", "Chouette", d4, "germany");
     }
 
     @Test
@@ -90,6 +90,25 @@ public class TeenagerTest {
         t4.addRequirement(CriterionName.GUEST_ANIMAL_ALLERGY, "yes");
         t4.addRequirement(CriterionName.HOST_HAS_ANIMAL, "yes");
         t4.addRequirement(CriterionName.GENDER, "male");
+
+    }
+
+    @Test
+    public void testAddRequirement() {
+        addRequirements();
+        assertEquals(5, t1.getRequirements().size());
+        assertEquals(6, t2.getRequirements().size());
+        assertEquals(5, t3.getRequirements().size());
+        assertEquals(3, t4.getRequirements().size());
+    }
+
+    @Test
+    public void testHavingIncoherent() {
+        addRequirements();
+        assertFalse(t1.havingIncoherent());
+        assertFalse(t2.havingIncoherent());
+        assertFalse(t3.havingIncoherent());
+        assertTrue(t4.havingIncoherent());
     }
 
 }

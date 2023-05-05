@@ -1,6 +1,7 @@
 package ullile.sae201;
 
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Platform class
@@ -8,7 +9,7 @@ import java.util.HashSet;
  */
 public class Platform {
 
-    private HashSet<Teenager> teenagers = new HashSet<>();
+    private final HashSet<Teenager> teenagers = new HashSet<>();
 
     /**
      * Platform constructor
@@ -70,6 +71,7 @@ public class Platform {
 
     /**
      * Purge all the teenagers having incoherent criterion
+     *
      * @param numberToDelete (int) - The number of teenager to delete
      * @return (boolean) - True if the process is successful, false otherwise
      */
@@ -77,4 +79,12 @@ public class Platform {
         return this.purgeIncoherentTeenager(this.teenagers.size() - numberToDelete);
     }
 
+    /**
+     * Getter of the Set
+     *
+     * @return (Set)
+     */
+    public Set<Teenager> getTeenagers() {
+        return teenagers;
+    }
 }

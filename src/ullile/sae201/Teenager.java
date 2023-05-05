@@ -1,9 +1,6 @@
 package ullile.sae201;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Teenager class
@@ -16,14 +13,20 @@ public class Teenager {
     private final Date DATENAISS;
     private Teenager history = null;
 
-    private HashMap<CriterionName, Criterion> requirements = new HashMap<>();
+    private static final HashSet<CriterionName> REQUIDED = new HashSet<>() {{
+        add(CriterionName.GENDER);
+        add(CriterionName.GUEST_ANIMAL_ALLERGY);
+        add(CriterionName.HOST_HAS_ANIMAL);
+    }};
+    private final HashMap<CriterionName, Criterion> requirements = new HashMap<>();
 
     /**
      * Teenager constructor
-     * @param name (String) - The name of the teenager
-     * @param forename (String) - The forename of the teenager
+     *
+     * @param name      (String) - The name of the teenager
+     * @param forename  (String) - The forename of the teenager
      * @param dateNaiss (Date) - The date of birth of the teenager
-     * @param country (Country) - The country of the teenager
+     * @param country   (Country) - The country of the teenager
      */
     public Teenager(String name, String forename, Date dateNaiss, Country country) {
         this.NAME = name;
@@ -60,30 +63,22 @@ public class Teenager {
 
     /**
      * Adding a requirement to the teenager
+     *
      * @param criterionName (CriterionName) - The name of the criterion
-     * @param value (String) - The value of the criterion
-     * @return (boolean) - True if the requirement is valid, false otherwise
+     * @param value         (String) - The value of the criterion
      */
-    public boolean addRequirement(CriterionName criterionName, String value) {
+    public void addRequirement(CriterionName criterionName, String value) {
         Criterion criterion = new Criterion(value, criterionName);
-        if (criterion.isValid()) {
-            this.requirements.replace(criterionName, criterion);
-            return true;
-        }
-        return false;
+        this.requirements.put(criterionName, criterion);
     }
 
     /**
      * Adding a requirement to the teenager
+     *
      * @param criterion (Criterion) - The criterion
-     * @return (boolean) - True if the requirement is valid, false otherwise
      */
-    public boolean addRequirement(Criterion criterion) {
-        if (criterion.isValid()) {
-            this.requirements.put(criterion.getLabel(), criterion);
-            return true;
-        }
-        return false;
+    public void addRequirement(Criterion criterion) {
+        this.requirements.put(criterion.getLabel(), criterion);
     }
 
     /**
@@ -256,28 +251,51 @@ public class Teenager {
      */
     @Override
     public boolean equals(Object obj) {
-        if(this == obj) { return true; }
-        if(obj == null) { return false; }
-        if(getClass() != obj.getClass()) { return false; }
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
         Teenager other = (Teenager) obj;
         return this.NAME.equals(other.NAME) && this.FORENAME.equals(other.FORENAME) && this.COUNTRY.equals(other.COUNTRY) && this.DATENAISS.equals(other.DATENAISS) && this.requirements.equals(other.requirements);
     }
 
     /**
-     * Having incoherent requirement
-     * @return (boolean) - True if the teenager has incoherent requirement, false otherwise
+     * Check if a requirements is missed
+     *
+     * @return (boolean) - True if a requirements is missed, false otherwise
      */
-    public boolean havingIncoherent() {
-        if (booleanConverter(this, CriterionName.HOST_HAS_ANIMAL, Criterion.YES) && booleanConverter(this, CriterionName.GUEST_ANIMAL_ALLERGY, Criterion.YES)) {
-            return true;
-        }
-        for(Criterion c : this.requirements.values()){
-            if(!c.isValid()) {
+    public boolean missedRequirement() {
+        for (CriterionName cn : Teenager.REQUIDED) {
+            if (!this.requirements.containsKey(cn)) {
                 return true;
             }
         }
         return false;
     }
 
+    /**
+     * Having incoherent requirement
+     *
+     * @return (boolean) - True if the teenager has incoherent requirement, false otherwise
+     */
+    public boolean havingIncoherent() {
+        if (this.missedRequirement()) {
+            return true;
+        }
+        if (booleanConverter(this, CriterionName.HOST_HAS_ANIMAL, Criterion.YES) && booleanConverter(this, CriterionName.GUEST_ANIMAL_ALLERGY, Criterion.YES)) {
+            return true;
+        }
+        for (Criterion c : this.requirements.values()) {
+            if (!c.isValid()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

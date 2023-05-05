@@ -5,8 +5,8 @@ import org.junit.Test;
 import ullile.sae201.Criterion;
 import ullile.sae201.CriterionName;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * CriterionTest class - Test the Criterion class
@@ -22,8 +22,8 @@ public class CriterionTest {
     @Before
     public void setUp() {
         c1 = new Criterion("male", CriterionName.GENDER);
-        c2 = new Criterion("test", CriterionName.PAIR_GENDER);
-        c3 = new Criterion("same", CriterionName.HISTORY);
+        c2 = new Criterion("test", CriterionName.HOST_HAS_ANIMAL);
+        c3 = new Criterion("yes", CriterionName.GUEST_ANIMAL_ALLERGY);
         c4 = new Criterion("other", CriterionName.HISTORY);
     }
 

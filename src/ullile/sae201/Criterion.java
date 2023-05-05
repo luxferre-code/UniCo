@@ -4,20 +4,26 @@ import java.util.HashSet;
 
 /**
  * Criterion class
+ *
  * @author Valentin Thuillier, Romain Degez
  */
 public class Criterion {
 
-    private CriterionName label;
-    private String value;
+    private final static HashSet<String> GENDERS = new HashSet<>() {{
+        add("male");
+        add("female");
+        add("other");
+    }};
+    private final static HashSet<String> FOOD = new HashSet<>() {{
+        add("nonuts");
+        add("vegetarian");
+        add("");
+    }};
 
     public final static String YES = "yes";
     public final static String NO = "no";
-    private final static HashSet<String> GENDERS = new HashSet<>(){{
-       add("male");
-       add("female");
-       add("other");
-    }};
+    private final CriterionName label;
+    private final String value;
 
     private final static HashSet<String> POSSIBILITY_HISTORY = new HashSet<>() {{
         add("same");
@@ -41,15 +47,33 @@ public class Criterion {
      */
     public boolean isValid() {
         switch (this.label.getType()) {
-            case 'B':
+            case 'B' -> {
                 return this.value.equals(Criterion.YES) || this.value.equals(Criterion.NO);
-            case 'T':
-                if (this.label.name().equals("GENDER")) { return Criterion.GENDERS.contains(this.value); }
-                else if(this.label.name().equals("PAIR_GENDER")) { return Criterion.GENDERS.contains(this.value) || this.value.isEmpty(); }
-                else if(this.label.name().equals("HISTORY")) { return Criterion.POSSIBILITY_HISTORY.contains(this.value); }
+            }
+            case 'T' -> {
+                switch (this.label.name()) {
+                    case "GENDER" -> {
+                        return Criterion.GENDERS.contains(this.value);
+                    }
+                    case "PAIR_GENDER" -> {
+                        return Criterion.GENDERS.contains(this.value) || this.value.isEmpty();
+                    }
+                    case "HISTORY" -> {
+                        return Criterion.POSSIBILITY_HISTORY.contains(this.value);
+                    }
+                    default -> {
+                        if (this.label.name().equals("HOST_FOOD") || this.label.name().equals("GUEST_FOOD")) {
+                            for (String s : this.value.split(",")) {
+                                if (!Criterion.FOOD.contains(s)) return false;
+                            }
+                        }
+                    }
+                }
                 return true;
-            default:
+            }
+            default -> {
                 return false;
+            }
         }
     }
 
@@ -88,25 +112,13 @@ public class Criterion {
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         Criterion other = (Criterion) obj;
-        if (label != other.label)
-            return false;
-        if (value == null) {
-            if (other.value != null)
-                return false;
-        } else if (!value.equals(other.value))
-            return false;
-        return true;
+        if (label != other.label) return false;
+        if (value == null) return other.value == null;
+        else return value.equals(other.value);
     }
-
-    
-
-    
 
 }
