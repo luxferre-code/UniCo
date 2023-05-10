@@ -11,6 +11,8 @@ public class Platform {
 
     private final HashSet<Teenager> teenagers = new HashSet<>();
 
+    private final static int NOMINONTHESET  = 0;
+
     /**
      * Platform constructor
      */
@@ -66,7 +68,7 @@ public class Platform {
      * @return (boolean) - True if the process is successful, false otherwise
      */
     public boolean purgeIncoherentTeenager() {
-        return this.purgeIncoherentTeenager(0); // 0 = no minimum
+        return this.purgeIncoherentTeenager(NOMINONTHESET); // 0 = no minimum
     }
 
     /**
