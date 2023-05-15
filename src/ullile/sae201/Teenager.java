@@ -1,5 +1,7 @@
 package ullile.sae201;
 
+import ullile.sae201.exception.RequirementNotFound;
+
 import java.util.*;
 
 /**
@@ -15,8 +17,6 @@ public class Teenager {
 
     private static final HashSet<CriterionName> REQUIDED = new HashSet<>() {{
         add(CriterionName.GENDER);
-        add(CriterionName.GUEST_ANIMAL_ALLERGY);
-        add(CriterionName.HOST_HAS_ANIMAL);
     }};
     private final HashMap<CriterionName, Criterion> requirements = new HashMap<>();
 
@@ -137,6 +137,7 @@ public class Teenager {
     private boolean compatibleFood(Teenager guest){
         boolean temp;
 
+
         if(!this.requirements.containsKey(CriterionName.HOST_FOOD) && !guest.requirements.containsKey(CriterionName.GUEST_FOOD)){
             return false;
         }
@@ -251,7 +252,7 @@ public class Teenager {
         result = prime * result + ((FORENAME == null) ? 0 : FORENAME.hashCode());
         result = prime * result + ((COUNTRY == null) ? 0 : COUNTRY.hashCode());
         result = prime * result + ((DATENAISS == null) ? 0 : DATENAISS.hashCode());
-        result = prime * result + ((requirements == null) ? 0 : requirements.hashCode());
+        result = prime * result + requirements.hashCode();
         return result;
     }
 
@@ -308,4 +309,10 @@ public class Teenager {
         return false;
     }
 
+    public Set<String> getHobbies() throws RequirementNotFound {
+        if(!this.requirements.containsKey(CriterionName.HOBBIES)){
+            throw new RequirementNotFound("Hobbies not found");
+        }
+        return new HashSet<>(Arrays.asList(this.requirements.get(CriterionName.HOBBIES).getValue().split(",")));
+    }
 }

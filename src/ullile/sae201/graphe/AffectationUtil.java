@@ -1,12 +1,15 @@
 package ullile.sae201.graphe;
 
 import ullile.sae201.Teenager;
+import ullile.sae201.exception.RequirementNotFound;
 
 /**
  * AffectationUtil class
- * @author Romain Degez
+ * @author Romain Degez, Valentin Thuillier
  */
 public class AffectationUtil {
+
+    private static final int MAXHOBBIESCOUNT = 3;
 
     /** Calcule le poids de l’arête entre host et visitor dans le graphe modèle.
      * Doit faire appel à la méthode compatibleWithGuest(Teenager) de Teenager.
@@ -15,14 +18,18 @@ public class AffectationUtil {
      * @param visitor (Teenager) - The other teenager
      * @return (double) - The edge weight
      */
-    public static double weight (Teenager host, Teenager visitor /**, ... */) {
+    public static double weight(Teenager host, Teenager visitor) {
         double weigh = 100;
         if(!host.compatibleWithGuestGraphe(visitor)) weigh += 100;
 
+        try {
+            weigh += hobbies_weight(host, visitor);
+        } catch(RequirementNotFound e) {
+            System.out.println("Une des deux personnes n'a pas de hobbies définis !");
+        }
+
         return weigh;
     }
-
-    // ... ajouter toutes autres méthodes jugées nécessaires
 
     /**
      * Calculate the weight value withe the hobbies to remove from the total weight
@@ -30,9 +37,14 @@ public class AffectationUtil {
      * @param visitor (Teenager) - The other teenager
      * @return (double) - The edge weight got from the hobbies
      */
-    public static double hobbies_weight(Teenager host, Teenager visitor){
+    public static double hobbies_weight(Teenager host, Teenager visitor) throws RequirementNotFound {
         double hobbies_weight = 0;
-        // boucle ajutant 2 chaque fois que le hobbie de host est contenue dans hobbies de visitor 
+        int hobbies_count = 0;
+        for(String hobby : host.getHobbies()){
+            if(visitor.getHobbies().contains(hobby) && hobbies_count < MAXHOBBIESCOUNT) {
+                hobbies_count++;
+            }
+        }
         return hobbies_weight;
     }
 }
