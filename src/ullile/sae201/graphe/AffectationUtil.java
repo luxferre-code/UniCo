@@ -20,7 +20,12 @@ public class AffectationUtil {
      */
     public static double weight(Teenager host, Teenager visitor) {
         double weigh = 100;
-        if(!host.compatibleWithGuestGraphe(visitor)) weigh += 100;
+        try {
+            if(!host.compatibleWithGuestGraphe(visitor)) weigh += 100;
+        } catch(RequirementNotFound e) {
+            weigh += 100;
+        }
+
 
         try {
             weigh += hobbies_weight(host, visitor);
@@ -32,7 +37,7 @@ public class AffectationUtil {
     }
 
     /**
-     * Calculate the weight value withe the hobbies to remove from the total weight
+     * Calculate the weight value with the hobbies to remove from the total weight
      * @param host (Teenager) - The teenager
      * @param visitor (Teenager) - The other teenager
      * @return (double) - The edge weight got from the hobbies
