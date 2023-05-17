@@ -1,5 +1,6 @@
 package ullile.sae201.graphe;
 
+import ullile.sae201.Platform;
 import ullile.sae201.Teenager;
 import ullile.sae201.exception.RequirementNotFound;
 
@@ -20,24 +21,30 @@ public class AffectationUtil {
      */
     public static double weight(Teenager host, Teenager visitor) {
         double weigh = 100;
-        if(!host.compatibleWithGuestGraphe(visitor)) weigh += 100;
+        try {
+            if(!host.compatibleWithGuestGraphe(visitor)) weigh += 100;
+        } catch (RequirementNotFound e) {
+            System.out.println("Une des deux personnes n'a pas de critères définis !");
+        }
 
         try {
-            weigh += hobbies_weight(host, visitor);
+            weigh += hobbiesWeight(host, visitor);
         } catch(RequirementNotFound e) {
             System.out.println("Une des deux personnes n'a pas de hobbies définis !");
         }
+
+        if(Platform.grouching(host, visitor)) { weigh += 50; }
 
         return weigh;
     }
 
     /**
-     * Calculate the weight value withe the hobbies to remove from the total weight
+     * Calculate the weight value with the hobbies to remove from the total weight
      * @param host (Teenager) - The teenager
      * @param visitor (Teenager) - The other teenager
      * @return (double) - The edge weight got from the hobbies
      */
-    public static double hobbies_weight(Teenager host, Teenager visitor) throws RequirementNotFound {
+    public static double hobbiesWeight(Teenager host, Teenager visitor) throws RequirementNotFound {
         double hobbies_weight = 0;
         int hobbies_count = 0;
         for(String hobby : host.getHobbies()){

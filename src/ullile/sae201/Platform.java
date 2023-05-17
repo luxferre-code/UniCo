@@ -1,5 +1,7 @@
 package ullile.sae201;
 
+import ullile.sae201.exception.RequirementNotFound;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,20 +20,20 @@ public class Platform {
 
     /**
      * Add a teenager to the platform
+     *
      * @param teenager (Teenager) - The teenager to add
-     * @return (boolean) - True if the teenager is added, false otherwise
      */
-    public boolean addTeenager(Teenager teenager) {
-        return this.teenagers.add(teenager);
+    public void addTeenager(Teenager teenager) {
+        this.teenagers.add(teenager);
     }
 
     /**
      * Remove a teenager from the platform
+     *
      * @param teenager (Teenager) - The teenager to remove
-     * @return (boolean) - True if the teenager is removed, false otherwise
      */
-    public boolean removeTeenager(Teenager teenager) {
-        return this.teenagers.remove(teenager);
+    public void removeTeenager(Teenager teenager) {
+        this.teenagers.remove(teenager);
     }
 
     /**
@@ -53,7 +55,11 @@ public class Platform {
         HashSet<Teenager> toRemove = new HashSet<>();
         for(Teenager t : this.teenagers) {
             if(this.teenagers.size() - toRemove.size() < minOnTheSet) break;
-            if(t.havingIncoherent()) {
+            try {
+                if(t.havingIncoherent()) {
+                    toRemove.add(t);
+                }
+            } catch(RequirementNotFound e) {
                 toRemove.add(t);
             }
         }
@@ -86,5 +92,21 @@ public class Platform {
      */
     public Set<Teenager> getTeenagers() {
         return teenagers;
+    }
+
+    public static boolean haveCommunHobbies(Teenager host, Teenager guest) throws RequirementNotFound {
+        for(String hobby : host.getHobbies()) {
+            if(guest.getHobbies().contains(hobby)) return true;
+        }
+        return false;
+    }
+
+    public static boolean grouching(Teenager host, Teenager guest) {
+        if(!host.getCountry().isGrouch() && !guest.getCountry().isGrouch()) return false;
+        try {
+            return !haveCommunHobbies(host, guest);
+        } catch (RequirementNotFound e) {
+            return false;
+        }
     }
 }
