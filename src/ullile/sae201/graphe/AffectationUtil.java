@@ -28,7 +28,7 @@ public class AffectationUtil {
 
 
         try {
-            weigh += hobbies_weight(host, visitor);
+            weigh -= hobbiesWeight(host, visitor);
         } catch(RequirementNotFound e) {
             System.out.println("Une des deux personnes n'a pas de hobbies définis !");
         }
@@ -42,14 +42,13 @@ public class AffectationUtil {
      * @param visitor (Teenager) - The other teenager
      * @return (double) - The edge weight got from the hobbies
      */
-    public static double hobbies_weight(Teenager host, Teenager visitor) throws RequirementNotFound {
-        double hobbies_weight = 0;
-        int hobbies_count = 0;
+    public static double hobbiesWeight(Teenager host, Teenager visitor) throws RequirementNotFound {
+        double hobbiesCount = 0.0;
         for(String hobby : host.getHobbies()){
-            if(visitor.getHobbies().contains(hobby) && hobbies_count < MAXHOBBIESCOUNT) {
-                hobbies_count++;
+            if(visitor.getHobbies().contains(hobby) && hobbiesCount < MAXHOBBIESCOUNT) {
+                hobbiesCount++;
             }
         }
-        return hobbies_weight;
+        return hobbiesCount;
     }
 }
