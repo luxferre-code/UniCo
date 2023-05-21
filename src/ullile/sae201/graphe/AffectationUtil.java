@@ -26,7 +26,6 @@ public class AffectationUtil {
             weigh += 100;
         }
 
-
         try {
             weigh -= hobbiesWeight(host, visitor);
         } catch(RequirementNotFound e) {

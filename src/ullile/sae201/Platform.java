@@ -94,6 +94,13 @@ public class Platform {
         return teenagers;
     }
 
+    /**
+     * Check if two teenagers have commun hobbies
+     * @param host (Teenager)
+     * @param guest (Teenager)
+     * @return (boolean)
+     * @throws RequirementNotFound (Exception)
+     */
     public static boolean haveCommunHobbies(Teenager host, Teenager guest) throws RequirementNotFound {
         for(String hobby : host.getHobbies()) {
             if(guest.getHobbies().contains(hobby)) return true;
@@ -101,12 +108,18 @@ public class Platform {
         return false;
     }
 
+    /**
+     * Check if two teenagers are grouching (if they are from a grouch country and don't have commun hobbies)
+     * @param host - The host
+     * @param guest - The guest
+     * @return (boolean) - True if they are grouching, false otherwise
+     */
     public static boolean grouching(Teenager host, Teenager guest) {
         if(!host.getCountry().isGrouch() && !guest.getCountry().isGrouch()) return false;
         try {
             return !haveCommunHobbies(host, guest);
         } catch (RequirementNotFound e) {
-            return false;
+            return true;
         }
     }
 }

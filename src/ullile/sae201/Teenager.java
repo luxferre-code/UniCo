@@ -312,6 +312,11 @@ public class Teenager {
         return false;
     }
 
+    /**
+     * Get the list of the hobbies of the teenager
+     * @return (Set<String>) - The list of the hobbies of the teenager
+     * @throws RequirementNotFound - If the teenager doesn't have this requirement
+     */
     public Set<String> getHobbies() throws RequirementNotFound {
         if(!this.havingThisRequirement(CriterionName.HOBBIES)){
             throw new RequirementNotFound("Hobbies not found");
