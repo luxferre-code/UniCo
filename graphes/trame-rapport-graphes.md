@@ -51,17 +51,33 @@ Sera évaluée à partir du tag git `Graphes-v1`
 
 *Donner un graphe qui modélise l'Exemple 1, plus précisément, la matrice d'adjacence de ce graphe. Expliquez comment vous avez choisi le poids pour chacune des arêtes.*
 
->Pour réaliser la matrice d'adjacence on défini ...
+>Pour réaliser la matrice d'adjacence on défini un poids par défault pour chacune des arêtes à 100, auquel on rajoute 100 en cas de non compatibilité entre l'host et le guest correspondant à l'arrête, et, pour chaque hobbies en commun, on enleve 1 au poids total. 
+>
+>
+>Détail du calcul : 
+>
+>| Guest/Host    | Xolag        | Yak            | Zander      |
+>|:-:            |:-:           | :-:            | :-:         |
+>| **Adonia**    | 100 + 0 - 1  | 100 + 0 - 0    | 100 + 0 - 1 |
+>| **Bellatrix** | 100 + 0 - 1  | 100 + 100 - 1  | 100 + 0 - 0 |
+>| **Callista**  | 100 + 0 - 0  | 100 + 0 - 2    | 100 + 0 - 0 |
+>
+>Matrice d'adjacence obtenue :
 >| Guest/Host    | Xolag | Yak      | Zander |
 >|:-:            |:-:    | :-:      | :-:    |
->| **Adonia**    | 1     | 0        | 1      |
->| **Bellatrix** | 1     | &#10060; | 0      |
->| **Callista**  | 0     | 2        | 0      |
+>| **Adonia**    | 99    | 100      | 99     |
+>| **Bellatrix** | 99    | 199      | 100    |
+>| **Callista**  | 100   | 98       | 100    |
 >
+
 
 ### Modélisation pour la Version 1
 
 *Décrire une modélisation générale pour la Version 1. C'est à dire, donner une formule ou une description précise qui décrit comment, étant donné un adolescent hôte et un adolescent visiteur, on détermine le poids de l'arête entre ces deux adolescents en fonction des critères considérés dans la Version 1.*
+
+>Comme expliqué plus haut, le poids de l'arête reliant un adolescent hôte et un adolescent visiteur par défault est à 100, si l'hôte possède un animal et que le visiteur est allergiques aux animaux, alors on rajoute 100 au poids, et, pour chaque hobbies en commun qu'ont l'hôte et le visiteur, on enleve 1 au poids total. 
+>
+>Calcul : 100 + (100 si non compatible sinon 0) - 1*n (n = nombre d'hobbies en commun) 
 
 ### Implémentation de la Version 1
 
@@ -79,6 +95,9 @@ Sera évaluée à partir du tag git `Graphes-v1`
 
 Récupérez sur Moodle le fichier de données `compatibilityVsHobbies.csv`. Expliquez quelle est sa particularité de cet exemple. Écrire la méthode de test qui test qui change cet exemple, construit le graphe modèle, calcule l'affectation, et finalement vérifie qu'aucune paire d'adolescents non compatibles n'a été construite par l'algorithme.*
 
+>La particularité de ce fichier est qu'il y a énormément de hobbies en commun entre l'hôte D et le visiteur A, or ils ne sont pas compatible car l'ôte D a un animal et le visiteur A est allergique aux animaux, donc même si ils ont plein de hobbies en commun il ne peuvent pas être mis ensemble, il ne faut pas que le grand nombre d'hobbies en commun prend le dessus sur la non compatibilité.
+>
+>Dans l'exemple du csv `compatibilityVsHobbies.csv`, le visiteur A devrait faire la paire avec l'hôte C et le visiteur B avec l'hôte D.
 
 Version 2
 ---
