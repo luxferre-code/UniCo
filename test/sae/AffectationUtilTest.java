@@ -56,22 +56,21 @@ public class AffectationUtilTest {
         //t3
         t3.addRequirement(CriterionName.GUEST_ANIMAL_ALLERGY, "no");
         t3.addRequirement(CriterionName.HOST_HAS_ANIMAL, "no");
-        t3.addRequirement(CriterionName.HOBBIES, "video games,music,flowers,film, party");
+        t3.addRequirement(CriterionName.HOBBIES, "video games,music,flowers,film,party");
         //t4
         t4.addRequirement(CriterionName.GUEST_ANIMAL_ALLERGY, "no");
         t4.addRequirement(CriterionName.HOST_HAS_ANIMAL, "yes");
-        t4.addRequirement(CriterionName.HOBBIES, "flowers, party");
+        t4.addRequirement(CriterionName.HOBBIES, "flowers,party");
     }
 
     @Test
     public void testWeight(){
         //Double.valueOf nécessaire car ambiguité voir : https://stackoverflow.com/questions/1811103/java-junit-the-method-x-is-ambiguous-for-type-y
-        //assertEquals(Double.valueOf(199), AffectationUtil.weight(t1, t2));        
-        assertEquals(Double.valueOf(97), AffectationUtil.weight(t1, t3)); //passed
-        //assertEquals(Double.valueOf(200), AffectationUtil.weight(t1, t4)); //passed
-        assertEquals(Double.valueOf(99), AffectationUtil.weight(t2, t3)); //passed
-        assertEquals(Double.valueOf(100), AffectationUtil.weight(t2, t4)); //passed
-        assertEquals(Double.valueOf(98), AffectationUtil.weight(t3, t4)); //passed
+        assertEquals(Double.valueOf(199), AffectationUtil.weight(t2, t1));
+        assertEquals(Double.valueOf(97), AffectationUtil.weight(t1, t3)); 
+        assertEquals(Double.valueOf(200), AffectationUtil.weight(t4, t1)); 
+        assertEquals(Double.valueOf(99), AffectationUtil.weight(t2, t3));
+        assertEquals(Double.valueOf(100), AffectationUtil.weight(t2, t4));
+        assertEquals(Double.valueOf(98), AffectationUtil.weight(t3, t4));
     }
-
 }
