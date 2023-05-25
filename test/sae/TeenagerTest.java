@@ -6,8 +6,7 @@ import ullile.sae201.Country;
 import ullile.sae201.CriterionName;
 import ullile.sae201.Teenager;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,24 +14,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TeenagerTest {
 
     private Teenager t1, t2, t3, t4;
-    private Date d1, d2, d3, d4;
+    private LocalDate d1, d2, d3, d4;
 
     @Before
     public void setUp() {
         /* Instance of dateNaiss */
-        d1 = new Date();
-        d2 = new Date();
-        d3 = new Date();
-        d4 = new Date();
-        Calendar c = Calendar.getInstance();
-        c.set(1999, Calendar.JANUARY, 1);
-        d1 = c.getTime();
-        c.set(2000, Calendar.JANUARY, 1);
-        d2 = c.getTime();
-        c.set(2001, Calendar.JANUARY, 1);
-        d3 = c.getTime();
-        c.set(2002, Calendar.JANUARY, 1);
-        d4 = c.getTime();
+        d1 = LocalDate.of(1999, 1, 1);
+        d2 = LocalDate.of(2000, 1, 1);
+        d3 = LocalDate.of(2001, 1, 1);
+        d4 = LocalDate.of(2002, 1, 1);
 
         /* Instance of Teenager */
         t1 = new Teenager("Toto", "Machin", d1, "France");

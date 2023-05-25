@@ -5,22 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ccb1a79c-7cd8-4a08-9e17-966a0c753439" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SAE201.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/jgrapht-core-1.5.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/junit-platform-console-standalone-1.7.0-M1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/sae2_02.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ullile/sae201/Criterion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ullile/sae201/CriterionName.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ullile/sae201/Teenager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/sae/CriterionTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/sae/TeenagerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/adosAleatoires.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/adosAleatoiresAvecIncompatiblesFranceItalie.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/incompatibilityVsHobbies.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ullile/sae201/CSVFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SAE201.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SAE201.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ullile/sae201/Platform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ullile/sae201/Platform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ullile/sae201/Teenager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ullile/sae201/Teenager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/sae/AffectationUtilTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/sae/AffectationUtilTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/sae/PlatformTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/sae/PlatformTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/sae/TeenagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/sae/TeenagerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,21 +41,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/valentin/Documents/IUT/SAE201&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/home/valentin/Documents/IUT/SAE201",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -69,10 +69,16 @@
       <recent name="$PROJECT_DIR$/test/sae" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CriterionTest">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
+  <component name="RunManager" selected="Application.CSVFile">
+    <configuration name="CSVFile" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ullile.sae201.CSVFile" />
       <module name="SAE201" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ullile.sae201.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -140,11 +146,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CriterionTest" />
+        <item itemvalue="Application.CSVFile" />
         <item itemvalue="JUnit.TeenagerTest (1)" />
+        <item itemvalue="JUnit.CriterionTest" />
         <item itemvalue="JUnit.TeenagerTest.testGetter" />
         <item itemvalue="JUnit.TeenagerTest" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -159,6 +165,8 @@
       <workItem from="1681227524314" duration="683000" />
       <workItem from="1681279273870" duration="1032000" />
       <workItem from="1681281040684" duration="1956000" />
+      <workItem from="1685005400481" duration="33000" />
+      <workItem from="1685036953535" duration="1990000" />
     </task>
     <servers />
   </component>

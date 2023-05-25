@@ -124,4 +124,15 @@ public class Platform {
             return true;
         }
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Platform : \n");
+        for(Teenager t : this.teenagers) {
+            sb.append(t.toString());
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 }

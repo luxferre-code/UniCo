@@ -3,6 +3,7 @@ package ullile.sae201;
 import ullile.sae201.exception.InvalidCriterion;
 import ullile.sae201.exception.RequirementNotFound;
 
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -13,7 +14,7 @@ public class Teenager {
 
     private final String NAME, FORENAME;
     private final Country COUNTRY;
-    private final Date DATENAISS;
+    private final LocalDate DATENAISS;
     private Teenager history = null;
 
     private static final HashSet<CriterionName> REQUIDED = new HashSet<>() {{
@@ -30,7 +31,7 @@ public class Teenager {
      * @param dateNaiss (Date) - The date of birth of the teenager
      * @param country   (Country) - The country of the teenager
      */
-    public Teenager(String name, String forename, Date dateNaiss, Country country) {
+    public Teenager(String name, String forename, LocalDate dateNaiss, Country country) {
         this.NAME = name;
         this.FORENAME = forename;
         this.DATENAISS = dateNaiss;
@@ -44,7 +45,7 @@ public class Teenager {
      * @param dateNaiss (Date) - The date of birth of the teenager
      * @param country (String) - The country of the teenager
      */
-    public Teenager(String name, String forename, Date dateNaiss, String country) {
+    public Teenager(String name, String forename, LocalDate dateNaiss, String country) {
         this(name,forename,dateNaiss,Country.valueOf(country.toUpperCase()));
     }
 
@@ -203,7 +204,7 @@ public class Teenager {
      * Get the date of birth of the teenager
      * @return (Date) - The date of birth of the teenager
      */
-    public Date getDateNaiss() {
+    public LocalDate getDateNaiss() {
         return DATENAISS;
     }
 
