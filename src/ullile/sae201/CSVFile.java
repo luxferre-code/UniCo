@@ -68,10 +68,11 @@ public class CSVFile {
         return getDirWhoResourcesIs(".");
     }
 
-    public static Platform read(String fileName) {
+    public static Platform read(String fileName, boolean haveHeader) {
         Platform p = new Platform();
         try(BufferedReader br = new BufferedReader(new FileReader(getDirWhoResourcesIs() + "resources" + FIlE_DELIMITER + fileName)))  {
-            String line = br.readLine(); // Permet de sauter la première ligne
+            String line;
+            if(haveHeader) { br.readLine(); } // Skip the header
             while ((line = br.readLine()) != null) {
                 try {
                     p.addTeenager(readLine(line));
@@ -122,8 +123,8 @@ public class CSVFile {
     }
 
     public static void main(String[] args) {
-        //Platform p = read("adosAleatoires.csv");
-        Platform p = read("test.csv");
+        //Platform p = read("adosAleatoires.csv", true);
+        Platform p = read("test.csv", false);
         System.out.println(p);
         //System.out.println(exportData(p, "test.csv"));
     }
