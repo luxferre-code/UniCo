@@ -13,7 +13,7 @@ import java.util.*;
 public class CSVFile {
 
     private static final String DELIMITER = ";";
-    private static final String FIlE_DELIMITER = System.getProperty("user.separator");
+    private static final String FIlE_DELIMITER = System.getProperty("file.separator");
 
     /**
      * Read a line of the CSV file and return a Teenager object
@@ -22,22 +22,25 @@ public class CSVFile {
      * @throws IllegalArgumentException - If the line is not valid
      * @throws InvalidCriterion - If the criterion is not valid
      */
-    public static Teenager readLine(String line) throws IllegalArgumentException, InvalidCriterion {
+    public static Teenager readLine(String line) throws IllegalArgumentException, InvalidCriterion, NoSuchElementException {
         Scanner scanner = new Scanner(line);
         scanner.useDelimiter(DELIMITER);
-        String forename = scanner.next();
-        String name = scanner.next();
-        Country country = Country.valueOf(scanner.next());
-        LocalDate birthday = LocalDate.parse(scanner.next());
-        String hobbies = scanner.next();
-        Criterion guestAnimal = new Criterion(scanner.next(), CriterionName.GUEST_ANIMAL_ALLERGY);
-        Criterion hostHasAnimal = new Criterion(scanner.next(), CriterionName.HOST_HAS_ANIMAL);
-        Criterion guestFood = new Criterion(scanner.next(), CriterionName.GUEST_FOOD);
-        Criterion hostFood = new Criterion(scanner.next(), CriterionName.HOST_FOOD);
-        Criterion gender = new Criterion(scanner.next(), CriterionName.GENDER);
-        Criterion pairGender = new Criterion(scanner.next(), CriterionName.PAIR_GENDER);
-        Criterion history = new Criterion(scanner.next(), CriterionName.HISTORY);
+        String forename = scanner.next().replace("\"", "");
+        String name = scanner.next().replace("\"", "");
+        Country country = Country.valueOf(scanner.next().replace("\"", ""));
+        LocalDate birthday = LocalDate.parse(scanner.next().replace("\"", ""));
+        String hobbies = scanner.next().replace("\"", "");
+        Criterion guestAnimal = new Criterion(scanner.next().replace("\"", ""), CriterionName.GUEST_ANIMAL_ALLERGY);
+        Criterion hostHasAnimal = new Criterion(scanner.next().replace("\"", ""), CriterionName.HOST_HAS_ANIMAL);
+        Criterion guestFood = new Criterion(scanner.next().replace("\"", ""), CriterionName.GUEST_FOOD);
+        Criterion hostFood = new Criterion(scanner.next().replace("\"", ""), CriterionName.HOST_FOOD);
+        Criterion gender = new Criterion(scanner.next().replace("\"", ""), CriterionName.GENDER);
+        Criterion pairGender = new Criterion(scanner.next().replace("\"", ""), CriterionName.PAIR_GENDER);
+        Criterion history;
+        if(scanner.hasNext()) { history = new Criterion(scanner.next().replace("\"", ""), CriterionName.HISTORY); }
+        else { history = new Criterion("", CriterionName.HISTORY); }
         Teenager t = new Teenager(name, forename, birthday, country);
+        t.addRequirement(CriterionName.HOBBIES, hobbies);
         t.addRequirement(guestAnimal);
         t.addRequirement(hostHasAnimal);
         t.addRequirement(guestFood);
@@ -49,14 +52,13 @@ public class CSVFile {
     }
 
     private static String getDirWhoResourcesIs(String dir) {
-        //TODO: Not working !
         File f = new File(dir);
         if(!f.exists()) {
             return getDirWhoResourcesIs(dir + ".." + FIlE_DELIMITER);
         }
-        List<String> filesList = Arrays.asList(f.list());
+        List<String> filesList = Arrays.asList(Objects.requireNonNull(f.list()));
         if(filesList.contains("resources")) {
-            return FIlE_DELIMITER;
+            return dir + FIlE_DELIMITER;
         } else {
             return getDirWhoResourcesIs(dir + ".." + FIlE_DELIMITER);
         }
@@ -69,26 +71,61 @@ public class CSVFile {
     public static Platform read(String fileName) {
         Platform p = new Platform();
         try(BufferedReader br = new BufferedReader(new FileReader(getDirWhoResourcesIs() + "resources" + FIlE_DELIMITER + fileName)))  {
-            String line;
+            String line = br.readLine(); // Permet de sauter la première ligne
             while ((line = br.readLine()) != null) {
                 try {
                     p.addTeenager(readLine(line));
-                } catch(IllegalArgumentException e) {
+                } catch(IllegalArgumentException | NoSuchElementException e) {
                     System.out.println("Error while reading the file");
                 } catch(InvalidCriterion e) {
                     System.out.println("Invalid criterion found ! Teenager not added");
                 }
-
             }
-        } catch (RuntimeException | IOException ignored) { System.out.println("Error while reading the file"); }
+        } catch (RuntimeException | IOException e) { System.out.println("Error while reading the file"); e.printStackTrace(); }
 
         return p;
     }
 
+    private static String exportLineTeenager(Teenager t) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(t.getForename()).append(DELIMITER);
+        sb.append(t.getName()).append(DELIMITER);
+        sb.append(t.getCountry()).append(DELIMITER);
+        sb.append(t.getDateNaiss().toString()).append(DELIMITER);
+        sb.append(t.getRequirements().get(CriterionName.HOBBIES).getValue()).append(DELIMITER);
+        sb.append(t.getRequirements().get(CriterionName.GUEST_ANIMAL_ALLERGY).getValue()).append(DELIMITER);
+        sb.append(t.getRequirements().get(CriterionName.HOST_HAS_ANIMAL).getValue()).append(DELIMITER);
+        sb.append(t.getRequirements().get(CriterionName.GUEST_FOOD).getValue()).append(DELIMITER);
+        sb.append(t.getRequirements().get(CriterionName.HOST_FOOD).getValue()).append(DELIMITER);
+        sb.append(t.getRequirements().get(CriterionName.GENDER).getValue()).append(DELIMITER);
+        sb.append(t.getRequirements().get(CriterionName.PAIR_GENDER).getValue()).append(DELIMITER);
+        sb.append(t.getRequirements().get(CriterionName.HISTORY).getValue()).append(DELIMITER);
+        return sb.toString();
+    }
+
+    public static boolean exportData(Platform p, String nameFile) {
+
+        File f = new File(getDirWhoResourcesIs() + "resources" + FIlE_DELIMITER + nameFile);
+        if(f.exists()) {
+            f.delete();
+        }
+
+        try(BufferedWriter br = new BufferedWriter(new FileWriter(getDirWhoResourcesIs() + "resources" + FIlE_DELIMITER + nameFile)))  {
+            for(Teenager t : p.getTeenagers()) {
+                br.write(exportLineTeenager(t));
+                br.newLine();
+            }
+        } catch(IOException e) {
+            return false;
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
-        //System.out.println(getDirWhoResourcesIs() + "resources" + FIlE_DELIMITER);
-        Platform p = read("adosAleatoires.csv");
+        //Platform p = read("adosAleatoires.csv");
+        Platform p = read("test.csv");
         System.out.println(p);
+        //System.out.println(exportData(p, "test.csv"));
     }
 
 }

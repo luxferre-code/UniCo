@@ -121,4 +121,11 @@ public class Criterion {
         else return value.equals(other.value);
     }
 
+    @Override
+    public String toString() {
+        return "Criterion{" +
+                "label=" + label +
+                ", value='" + value + '\'' +
+                '}';
+    }
 }
