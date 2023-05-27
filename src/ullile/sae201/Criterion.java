@@ -1,5 +1,6 @@
 package ullile.sae201;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
 /**
@@ -7,7 +8,7 @@ import java.util.HashSet;
  *
  * @author Valentin Thuillier, Romain Degez
  */
-public class Criterion {
+public class Criterion implements Serializable {
 
     public final static String YES = "yes";
     public final static String NO = "no";

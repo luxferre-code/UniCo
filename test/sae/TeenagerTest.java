@@ -119,6 +119,7 @@ public class TeenagerTest {
 
     @Test
     public void testSerialize() {
+        addRequirements();
         t1.setHistory(t2);
         t2.setHistory(t1);
         try {
