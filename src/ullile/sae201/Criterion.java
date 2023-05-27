@@ -9,6 +9,8 @@ import java.util.HashSet;
  */
 public class Criterion {
 
+    public final static String YES = "yes";
+    public final static String NO = "no";
     private final static HashSet<String> GENDERS = new HashSet<>() {{
         add("male");
         add("female");
@@ -19,20 +21,17 @@ public class Criterion {
         add("vegetarian");
         add("");
     }};
-
-    public final static String YES = "yes";
-    public final static String NO = "no";
-    private final CriterionName label;
-    private final String value;
-
     private final static HashSet<String> POSSIBILITY_HISTORY = new HashSet<>() {{
         add("same");
         add("other");
         add("");
     }};
+    private final CriterionName label;
+    private final String value;
 
     /**
      * Criterion constructor
+     *
      * @param value (String) - The value of the criterion
      * @param label (CriterionName) - The label of the criterion
      */
@@ -43,6 +42,7 @@ public class Criterion {
 
     /**
      * Check if the value have the good type and the good caracteristics
+     *
      * @return (boolean) - True if the value is valid, false otherwise
      */
     public boolean isValid() {
@@ -79,6 +79,7 @@ public class Criterion {
 
     /**
      * Get the value of the label
+     *
      * @return (String) - The value of the label
      */
     public CriterionName getLabel() {
@@ -87,6 +88,7 @@ public class Criterion {
 
     /**
      * Get the value of the value
+     *
      * @return (String) - The value of the value
      */
     public String getValue() {
@@ -95,6 +97,7 @@ public class Criterion {
 
     /**
      * Hashcode method
+     *
      * @return (int) - Hashcode
      */
     @Override
@@ -108,6 +111,7 @@ public class Criterion {
 
     /**
      * Equals method
+     *
      * @return (boolean) - True if equals, false otherwise
      */
     @Override

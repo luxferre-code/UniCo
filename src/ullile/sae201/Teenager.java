@@ -3,25 +3,25 @@ package ullile.sae201;
 import ullile.sae201.exception.InvalidCriterion;
 import ullile.sae201.exception.RequirementNotFound;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
 /**
  * Teenager class
+ *
  * @author Valentin Thuillier, Romain Degez
  */
-public class Teenager {
-
-    private final String NAME, FORENAME;
-    private final Country COUNTRY;
-    private final LocalDate DATENAISS;
-    private Teenager history = null;
+public class Teenager implements Serializable {
 
     private static final HashSet<CriterionName> REQUIDED = new HashSet<>() {{
         add(CriterionName.GENDER);
     }};
-
+    private final String NAME, FORENAME;
+    private final Country COUNTRY;
+    private final LocalDate DATENAISS;
     private final HashMap<CriterionName, Criterion> requirements = new HashMap<>();
+    private Teenager history = null;
 
     /**
      * Teenager constructor
@@ -38,15 +38,44 @@ public class Teenager {
         this.COUNTRY = country;
     }
 
-       /**
+    /**
      * Teenager overcharged constructor
-     * @param name (String) - The name of the teenager
-     * @param forename (String) - The forename of the teenager
+     *
+     * @param name      (String) - The name of the teenager
+     * @param forename  (String) - The forename of the teenager
      * @param dateNaiss (Date) - The date of birth of the teenager
-     * @param country (String) - The country of the teenager
+     * @param country   (String) - The country of the teenager
      */
     public Teenager(String name, String forename, LocalDate dateNaiss, String country) {
-        this(name,forename,dateNaiss,Country.valueOf(country.toUpperCase()));
+        this(name, forename, dateNaiss, Country.valueOf(country.toUpperCase()));
+    }
+
+    /**
+     * Convert a requirement in boolean
+     *
+     * @param t         (Teenager) - The teenager
+     * @param cn        (CriterionName) - The name of the criterion
+     * @param criterion (String) - The value to test
+     * @return (boolean) - True if the requirement is valid, false otherwise
+     */
+    public static boolean booleanConverter(Teenager t, CriterionName cn, String criterion) throws RequirementNotFound {
+        return t.getCriterionValue(cn).equals(criterion);
+    }
+
+    /**
+     * Load a teenager from a file
+     *
+     * @param filename (String) - The name of the file
+     * @return (Teenager) - The teenager, null otherwise
+     */
+    public static Teenager load(String filename) {
+        Teenager t = null;
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(CSVFile.getDirWhoResourcesIs() + "resources" + CSVFile.FIlE_DELIMITER + filename))) {
+            t = (Teenager) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return t;
     }
 
     /**
@@ -72,7 +101,9 @@ public class Teenager {
      */
     public void addRequirement(CriterionName criterionName, String value) throws InvalidCriterion {
         Criterion criterion = new Criterion(value, criterionName);
-        if(!criterion.isValid()) { throw new InvalidCriterion(); }
+        if (!criterion.isValid()) {
+            throw new InvalidCriterion();
+        }
         this.requirements.put(criterionName, criterion);
     }
 
@@ -82,79 +113,85 @@ public class Teenager {
      * @param criterion (Criterion) - The criterion
      */
     public void addRequirement(Criterion criterion) throws InvalidCriterion {
-        if(!criterion.isValid()) { throw new InvalidCriterion(); }
+        if (!criterion.isValid()) {
+            throw new InvalidCriterion();
+        }
         this.requirements.put(criterion.getLabel(), criterion);
     }
 
     /**
      * Replacing a requirement to the teenager
+     *
      * @param criterionName (CriterionName) - The name of the criterion
      */
     public void replaceRequirement(CriterionName criterionName, String value) throws InvalidCriterion {
         Criterion criterion = new Criterion(value, criterionName);
-        if(!criterion.isValid()) { throw new InvalidCriterion(); }
+        if (!criterion.isValid()) {
+            throw new InvalidCriterion();
+        }
         this.requirements.replace(criterionName, criterion);
     }
 
     /**
      * Check if the teenager is compatible with a teenager
+     *
      * @param guest (Teenager) - The other teenager
      * @return (boolean) - True if the teenager is compatible with the other teenager, false otherwise
      */
     public boolean compatibleWithGuest(Teenager guest) throws RequirementNotFound {
-        if(booleanConverter(guest,CriterionName.GUEST_ANIMAL_ALLERGY,Criterion.YES) && booleanConverter(this,CriterionName.HOST_HAS_ANIMAL,Criterion.YES)){
+        if (booleanConverter(guest, CriterionName.GUEST_ANIMAL_ALLERGY, Criterion.YES) && booleanConverter(this, CriterionName.HOST_HAS_ANIMAL, Criterion.YES)) {
             return false;
         }
-        if(!this.compatibleFood(guest)){ return false; }
+        if (!this.compatibleFood(guest)) {
+            return false;
+        }
         return this.compatibleHistory(guest);
     }
 
     /**
      * Check if the teenager is compatible with a teenager (Graphe v1)
+     *
      * @param guest (Teenager) - The other teenager
      * @return (boolean) - True if the teenager is compatible with the other teenager, false otherwise
      */
     public boolean compatibleWithGuestGraphe(Teenager guest) throws RequirementNotFound {
-        return !(booleanConverter(guest,CriterionName.GUEST_ANIMAL_ALLERGY,Criterion.YES) && booleanConverter(this,CriterionName.HOST_HAS_ANIMAL,Criterion.YES));
-    }
-
-
-    /**
-     * Convert a requirement in boolean
-     * @param t (Teenager) - The teenager
-     * @param cn (CriterionName) - The name of the criterion
-     * @param criterion (String) - The value to test
-     * @return (boolean) - True if the requirement is valid, false otherwise
-     */
-    public static boolean booleanConverter(Teenager t, CriterionName cn, String criterion) throws RequirementNotFound{
-        return t.getCriterionValue(cn).equals(criterion);
+        return !(booleanConverter(guest, CriterionName.GUEST_ANIMAL_ALLERGY, Criterion.YES) && booleanConverter(this, CriterionName.HOST_HAS_ANIMAL, Criterion.YES));
     }
 
     /**
      * Check if the teenager's food is compatible with a teenager's food
+     *
      * @param guest (Teenager) - The other teenager
      * @return (boolean) - True if the teenager'food is compatible with the other teenager's food, false otherwise
      */
-    private boolean compatibleFood(Teenager guest){
+    private boolean compatibleFood(Teenager guest) {
         boolean temp;
         String[] guestFoods, hostFoods;
-        if(!this.requirements.containsKey(CriterionName.HOST_FOOD) && !guest.requirements.containsKey(CriterionName.GUEST_FOOD)){ return false; }
+        if (!this.requirements.containsKey(CriterionName.HOST_FOOD) && !guest.requirements.containsKey(CriterionName.GUEST_FOOD)) {
+            return false;
+        }
 
-        try { guestFoods = guest.getCriterionValue(CriterionName.GUEST_FOOD).split(","); }
-        catch (RequirementNotFound e) { return true; }
+        try {
+            guestFoods = guest.getCriterionValue(CriterionName.GUEST_FOOD).split(",");
+        } catch (RequirementNotFound e) {
+            return true;
+        }
 
-        try { hostFoods = this.getCriterionValue(CriterionName.HOST_FOOD).split(","); }
-        catch (RequirementNotFound e) { return guestFoods.length == 0; }
+        try {
+            hostFoods = this.getCriterionValue(CriterionName.HOST_FOOD).split(",");
+        } catch (RequirementNotFound e) {
+            return guestFoods.length == 0;
+        }
 
-        for(String gfood : guestFoods){
+        for (String gfood : guestFoods) {
             temp = false;
-            for(String hfood : hostFoods){
-                if(gfood.equals(hfood)){
+            for (String hfood : hostFoods) {
+                if (gfood.equals(hfood)) {
                     temp = true;
                     break;
                 }
             }
-            if(!temp){
+            if (!temp) {
                 return false;
             }
         }
@@ -163,14 +200,15 @@ public class Teenager {
 
     /**
      * Check if the teenager can be with the same teenager as the last year
+     *
      * @param guest (Teenager) - The other teenager
      * @return (boolean) - False if the teenager doesn't want to be with the same teenager as the last year, true otherwise
      */
     private boolean compatibleHistory(Teenager guest) throws RequirementNotFound {
-        if(this.history == null){
+        if (this.history == null) {
             return true;
         }
-        if(!this.history.equals(guest)){
+        if (!this.history.equals(guest)) {
             return true;
         }
         return !booleanConverter(this, CriterionName.HISTORY, "other") && !booleanConverter(guest, CriterionName.HISTORY, "other");
@@ -178,6 +216,7 @@ public class Teenager {
 
     /**
      * Get the name of the teenager
+     *
      * @return (String) - The name of the teenager
      */
     public String getName() {
@@ -186,6 +225,7 @@ public class Teenager {
 
     /**
      * Get the forename of the teenager
+     *
      * @return (String) - The forename of the teenager
      */
     public String getForename() {
@@ -194,6 +234,7 @@ public class Teenager {
 
     /**
      * Get the country of the teenager
+     *
      * @return (String) - The country of the teenager
      */
     public Country getCountry() {
@@ -202,6 +243,7 @@ public class Teenager {
 
     /**
      * Get the date of birth of the teenager
+     *
      * @return (Date) - The date of birth of the teenager
      */
     public LocalDate getDateNaiss() {
@@ -210,7 +252,8 @@ public class Teenager {
 
     /**
      * Get the requirements of the teenager
-     * @return (HashMap<CriterionName, Criterion>) - The requirements of the teenager
+     *
+     * @return (HashMap < CriterionName, Criterion >) - The requirements of the teenager
      */
     public HashMap<CriterionName, Criterion> getRequirements() {
         return requirements;
@@ -218,14 +261,16 @@ public class Teenager {
 
     /**
      * Get the history of the teenager
+     *
      * @return (Teenager) - The history of the teenager
      */
     public Teenager getHistory() {
         return history;
     }
-    
+
     /**
      * Set the history of the teenager
+     *
      * @param history (Teenager) - The other teenager
      */
     public void setHistory(Teenager history) {
@@ -234,11 +279,12 @@ public class Teenager {
 
     /**
      * Get value from key
+     *
      * @param criterionName (CriterionName) - The name of the criterion
      * @return (Criterion) - The value from the hashmap
      */
     private String getCriterionValue(CriterionName criterionName) throws RequirementNotFound {
-        if(!this.havingThisRequirement(criterionName)){
+        if (!this.havingThisRequirement(criterionName)) {
             throw new RequirementNotFound(criterionName.name());
         }
         return this.requirements.get(criterionName).getValue();
@@ -246,6 +292,7 @@ public class Teenager {
 
     /**
      * Hashcode method
+     *
      * @return (int) - Hashcode
      */
     @Override
@@ -262,6 +309,7 @@ public class Teenager {
 
     /**
      * Equals method
+     *
      * @return (boolean) - True if equals, false otherwise
      */
     @Override
@@ -315,11 +363,12 @@ public class Teenager {
 
     /**
      * Get the list of the hobbies of the teenager
-     * @return (Set<String>) - The list of the hobbies of the teenager
+     *
+     * @return (Set < String >) - The list of the hobbies of the teenager
      * @throws RequirementNotFound - If the teenager doesn't have this requirement
      */
     public Set<String> getHobbies() throws RequirementNotFound {
-        if(!this.havingThisRequirement(CriterionName.HOBBIES)){
+        if (!this.havingThisRequirement(CriterionName.HOBBIES)) {
             throw new RequirementNotFound("Hobbies not found");
         }
         return new HashSet<>(Arrays.asList(this.requirements.get(CriterionName.HOBBIES).getValue().split(",")));
@@ -327,10 +376,11 @@ public class Teenager {
 
     /**
      * Check if the teenager has this requirement
+     *
      * @param criterionName (CriterionName) - The name of the criterion
      * @return (boolean) - True if the teenager has this requirement, false otherwise
      */
-    public boolean havingThisRequirement(CriterionName criterionName){
+    public boolean havingThisRequirement(CriterionName criterionName) {
         return this.requirements.containsKey(criterionName);
     }
 
@@ -344,4 +394,29 @@ public class Teenager {
                 ", requirements=" + requirements +
                 '}';
     }
+
+    /**
+     * Serialize the teenager in a file
+     *
+     * @param path (String) - The path of the file
+     * @return (boolean) - True if the teenager is serialized, exception otherwise
+     * @throws IOException - If the file is not found
+     */
+    public boolean serialize(String path) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CSVFile.getDirWhoResourcesIs() + "resources" + CSVFile.FIlE_DELIMITER + path))) {
+            oos.writeObject(this);
+            return true;
+        }
+    }
+
+    /**
+     * Serialize the teenager in a file with the name of the teenager
+     *
+     * @return (boolean) - True if the teenager is serialized, exception otherwise
+     * @throws IOException - If the file is not found
+     */
+    public boolean serialize() throws IOException {
+        return this.serialize(this.NAME + "_" + this.FORENAME + ".ser");
+    }
+
 }

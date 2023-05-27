@@ -7,8 +7,6 @@ import ullile.sae201.Platform;
 import ullile.sae201.Teenager;
 
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -34,7 +32,7 @@ public class PlatformTest {
 
         /* Instance of Teenager */
         t1 = new Teenager("Toto", "Machin", d1, "France");
-        t2 = new Teenager("Tata", "Truc",  d2, "Spain");
+        t2 = new Teenager("Tata", "Truc", d2, "Spain");
         t3 = new Teenager("Titi", "Bidule", d3, "Italy");
         t4 = new Teenager("Tati", "Chouette", d4, "germany");
     }

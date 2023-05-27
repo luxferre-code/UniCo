@@ -2,6 +2,7 @@ package ullile.sae201;
 
 /**
  * CriterionName enum
+ *
  * @author Valentin Thuillier
  */
 public enum CriterionName {
@@ -19,14 +20,20 @@ public enum CriterionName {
 
     /**
      * CriterionName constructor
+     *
      * @param type (char) - The type of the criterion
      */
-    private CriterionName(char type) { this.TYPE = type; }
+    CriterionName(char type) {
+        this.TYPE = type;
+    }
 
     /**
      * Get the type of the criterion
+     *
      * @return (char) - The type of the criterion
      */
-    public char getType() { return this.TYPE; }
+    public char getType() {
+        return this.TYPE;
+    }
 
 }

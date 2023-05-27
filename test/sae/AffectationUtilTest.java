@@ -2,29 +2,26 @@ package sae;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
-
 import ullile.sae201.CriterionName;
 import ullile.sae201.Teenager;
 import ullile.sae201.exception.InvalidCriterion;
 import ullile.sae201.graphe.AffectationUtil;
 
+import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * @author Elise Leroy
  */
 public class AffectationUtilTest {
-    
+
     private Teenager t1, t2, t3, t4;
     private LocalDate d1, d2, d3, d4;
-    
+
     @Before
-    public void setUp() throws InvalidCriterion{
-    /*Instancing birth dates */
+    public void setUp() throws InvalidCriterion {
+        /*Instancing birth dates */
         d1 = LocalDate.of(1999, 1, 1);
         d2 = LocalDate.of(2000, 1, 1);
         d3 = LocalDate.of(2001, 1, 1);
@@ -32,7 +29,7 @@ public class AffectationUtilTest {
 
         /* Instance of Teenager */
         t1 = new Teenager("Toto", "Machin", d1, "France");
-        t2 = new Teenager("Tata", "Truc",  d2, "Spain");
+        t2 = new Teenager("Tata", "Truc", d2, "Spain");
         t3 = new Teenager("Titi", "Bidule", d3, "Italy");
         t4 = new Teenager("Tati", "Chouette", d4, "germany");
 
@@ -56,7 +53,7 @@ public class AffectationUtilTest {
     }
 
     @Test
-    public void testWeight(){
+    public void testWeight() {
         //Double.valueOf nécessaire car ambiguité voir : https://stackoverflow.com/questions/1811103/java-junit-the-method-x-is-ambiguous-for-type-y
         //assertEquals(Double.valueOf(199), AffectationUtil.weight(t1, t2));        
         assertEquals(Double.valueOf(97), AffectationUtil.weight(t1, t3)); //passed

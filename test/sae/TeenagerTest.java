@@ -2,15 +2,24 @@ package sae;
 
 import org.junit.Before;
 import org.junit.Test;
+import ullile.sae201.CSVFile;
 import ullile.sae201.Country;
 import ullile.sae201.CriterionName;
 import ullile.sae201.Teenager;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * TeenagerTest class - Test the Teenager class
+ *
+ * @author Valentin Thuillier
+ * @see Teenager
+ */
 public class TeenagerTest {
 
     private Teenager t1, t2, t3, t4;
@@ -26,7 +35,7 @@ public class TeenagerTest {
 
         /* Instance of Teenager */
         t1 = new Teenager("Toto", "Machin", d1, "France");
-        t2 = new Teenager("Tata", "Truc",  d2, "Spain");
+        t2 = new Teenager("Tata", "Truc", d2, "Spain");
         t3 = new Teenager("Titi", "Bidule", d3, "Italy");
         t4 = new Teenager("Tati", "Chouette", d4, "germany");
     }
@@ -106,6 +115,33 @@ public class TeenagerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testSerialize() {
+        t1.setHistory(t2);
+        t2.setHistory(t1);
+        try {
+            assertTrue(t1.serialize("testSerialize.ser"));
+            assertTrue(t2.serialize("testSerialize2.ser"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail();
+        }
+
+        Teenager t1bis = Teenager.load("testSerialize.ser");
+        Teenager t2bis = Teenager.load("testSerialize2.ser");
+        assertEquals(t1, t1bis);
+        assertEquals(t2, t2bis);
+
+        assertEquals(t1.getHistory(), t1bis.getHistory());
+        assertEquals(t2.getHistory(), t2bis.getHistory());
+
+        File file = new File(CSVFile.getDirWhoResourcesIs() + "resources" + CSVFile.FIlE_DELIMITER + "testSerialize.ser");
+        file.delete();
+        file = new File(CSVFile.getDirWhoResourcesIs() + "resources" + CSVFile.FIlE_DELIMITER + "testSerialize2.ser");
+        file.delete();
+
     }
 
 }

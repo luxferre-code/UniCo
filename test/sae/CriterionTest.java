@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * CriterionTest class - Test the Criterion class
+ *
  * @author Valentin Thuillier
  */
 public class CriterionTest {

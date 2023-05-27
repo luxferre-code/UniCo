@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ullile.sae201.*;
 
+import java.io.File;
 import java.time.LocalDate;
 
 import static org.junit.Assert.assertEquals;
@@ -11,8 +12,9 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * CSVFileTest class - Test the CSVFile class
- * @see CSVFile
+ *
  * @author Valentin Thuillier
+ * @see CSVFile
  */
 public class CSvFileTest {
 
@@ -69,10 +71,10 @@ public class CSvFileTest {
     public void testRead() {
         Platform p = CSVFile.read(FILENAME, false);
         assertEquals(p.getTeenagers().size(), platform.getTeenagers().size());
-        for(Teenager t : platform.getTeenagers()) {
+        for (Teenager t : platform.getTeenagers()) {
             boolean found = false;
-            for(Teenager t2 : p.getTeenagers()) {
-                if(t.equals(t2)) {
+            for (Teenager t2 : p.getTeenagers()) {
+                if (t.equals(t2)) {
                     found = true;
                     break;
                 }
@@ -86,16 +88,18 @@ public class CSvFileTest {
         CSVFile.exportData(platform, FILENAME + ".test");
         Platform p = CSVFile.read(FILENAME + ".test", false);
         assertEquals(p.getTeenagers().size(), platform.getTeenagers().size());
-        for(Teenager t : platform.getTeenagers()) {
+        for (Teenager t : platform.getTeenagers()) {
             boolean found = false;
-            for(Teenager t2 : p.getTeenagers()) {
-                if(t.equals(t2)) {
+            for (Teenager t2 : p.getTeenagers()) {
+                if (t.equals(t2)) {
                     found = true;
                     break;
                 }
             }
             assertTrue(found);
         }
+        File f = new File(CSVFile.getDirWhoResourcesIs() + "resources" + CSVFile.FIlE_DELIMITER + FILENAME + ".test");
+        f.delete();
     }
 
 
