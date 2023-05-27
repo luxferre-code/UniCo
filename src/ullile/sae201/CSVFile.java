@@ -72,12 +72,12 @@ public class CSVFile {
         Platform p = new Platform();
         try(BufferedReader br = new BufferedReader(new FileReader(getDirWhoResourcesIs() + "resources" + FIlE_DELIMITER + fileName)))  {
             String line;
-            if(haveHeader) { br.readLine(); } // Skip the header
+            if(haveHeader) { br.readLine(); } // Skip the header if the file have one
             while ((line = br.readLine()) != null) {
                 try {
                     p.addTeenager(readLine(line));
                 } catch(IllegalArgumentException | NoSuchElementException e) {
-                    System.out.println("Error while reading the file");
+                    System.out.println("Error while reading the line");
                 } catch(InvalidCriterion e) {
                     System.out.println("Invalid criterion found ! Teenager not added");
                 }
@@ -100,7 +100,7 @@ public class CSVFile {
         sb.append(t.getRequirements().get(CriterionName.HOST_FOOD).getValue()).append(DELIMITER);
         sb.append(t.getRequirements().get(CriterionName.GENDER).getValue()).append(DELIMITER);
         sb.append(t.getRequirements().get(CriterionName.PAIR_GENDER).getValue()).append(DELIMITER);
-        sb.append(t.getRequirements().get(CriterionName.HISTORY).getValue()).append(DELIMITER);
+        sb.append(t.getRequirements().get(CriterionName.HISTORY).getValue());
         return sb.toString();
     }
 
@@ -122,11 +122,5 @@ public class CSVFile {
         return true;
     }
 
-    public static void main(String[] args) {
-        //Platform p = read("adosAleatoires.csv", true);
-        Platform p = read("test.csv", false);
-        System.out.println(p);
-        //System.out.println(exportData(p, "test.csv"));
-    }
 
 }
