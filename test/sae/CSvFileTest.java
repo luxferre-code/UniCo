@@ -69,7 +69,7 @@ public class CSvFileTest {
 
     @Test
     public void testRead() {
-        Platform p = CSVFile.read(FILENAME, false);
+        Platform p = CSVFile.read(FILENAME, true);
         assertEquals(p.getTeenagers().size(), platform.getTeenagers().size());
         for (Teenager t : platform.getTeenagers()) {
             boolean found = false;
@@ -86,7 +86,7 @@ public class CSvFileTest {
     @Test
     public void testWrite() {
         CSVFile.exportData(platform, FILENAME + ".test");
-        Platform p = CSVFile.read(FILENAME + ".test", false);
+        Platform p = CSVFile.read(FILENAME + ".test", true);
         assertEquals(p.getTeenagers().size(), platform.getTeenagers().size());
         for (Teenager t : platform.getTeenagers()) {
             boolean found = false;
