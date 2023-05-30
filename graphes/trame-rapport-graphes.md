@@ -114,6 +114,35 @@ Sera évaluée à partir du tag git `Graphes-v2`
 
 *Puis, donner un appariement optimal qui tient compte des données d'historique, et expliquer pourquoi il est optimal. L'explication ne doit pas parler des graphes, mais uniquement des adolescents et les critères exprimés.*
 
+
+<!-- >Exemple étudiants rempli :
+>|FORENAME  |NAME        |COUNTRY   |BIRTH_DATE |HOBBIES                 |GUEST_ANIMAL_ALLERGY|HOST_HAS_ANIMAL|GUEST_FOOD |HOST_FOOD         |GENDER  |PAIR_GENDER|HISTORY|
+>|:-:       |:-:         | :-:      | :-:       | :-:                    | :-:                | :-:           | :-:       | :-:              | :-:    | :-:       | :-:   |
+>|Dalthu    |Tanjin      |ITALY     |2009-06-22 |                        |no                  |no             |vegetarian |vegetarian,nonuts |female  |female     |same   |
+>|Lilly     |Damon       |ITALY     |2006-10-23 |                        |no                  |yes            |           |nonuts,vegetarian |male    |male       |same   |
+>|Jensmebur |Ekey        |ITALY     |2008-08-19 |culture                 |no                  |no             |nonuts     |nonuts,vegetarian |male    |           |same   |
+>|Himimtoss |Ozith       |ITALY     |2007-04-25 |culture                 |no                  |no             |           |nonuts,vegetarian |female  |           |other  |
+>|Laris     |Rex         |GERMANY   |2006-03-17 |                        |no                  |no             |           |vegetarian        |male    |           |       |
+>|Bellatrix |Interfector |GERMANY   |2008-01-25 |reading,science,culture |no                  |yes            |           |nonuts,vegetarian |female  |           |other  |
+>|Mave      |Crane       |GERMANY   |2007-09-09 |sports                  |no                  |no             |           |nonuts,vegetarian |male    |male       |same   |
+>|Hinkkost  |Enaxx       |GERMANY   |2009-02-06 |sports,culture,reading  |no                  |yes            |           |                  |female  |female     |       | -->
+
+
+>Exemple étudiants :
+>|FORENAME  |NAME        |COUNTRY   |BIRTH_DATE |HOBBIES                 |GUEST_ANIMAL_ALLERGY|HOST_HAS_ANIMAL|GUEST_FOOD |HOST_FOOD         |GENDER  |PAIR_GENDER|HISTORY|
+>|:-:       |:-:         | :-:      | :-:       | :-:                    | :-:                | :-:           | :-:       | :-:              | :-:    | :-:       | :-:   |
+>|Dalthu    |Tanjin      |ITALY     |           |                        |no                  |no             |vegetarian |vegetarian,nonuts |female  |female     |same   |
+>|Lilly     |Damon       |ITALY     |           |                        |no                  |yes            |           |nonuts,vegetarian |male    |male       |same   |
+>|Jensmebur |Ekey        |ITALY     |           |                        |no                  |no             |nonuts     |nonuts,vegetarian |male    |           |same   |
+>|Himimtoss |Ozith       |ITALY     |           |                        |no                  |no             |           |nonuts,vegetarian |female  |           |other  |
+>|Laris     |Rex         |GERMANY   |           |                        |no                  |no             |           |vegetarian        |male    |           |       |
+>|Bellatrix |Interfector |GERMANY   |           |                        |no                  |yes            |           |nonuts,vegetarian |female  |           |other  |
+>|Mave      |Crane       |GERMANY   |           |                        |no                  |no             |           |nonuts,vegetarian |male    |male       |same   |
+>|Hinkkost  |Enaxx       |GERMANY   |           |                        |no                  |yes            |           |                  |female  |female     |       |
+
+
+
+
 ### Deuxième exemple pour la gestion d'historique
 
 *Modifiez l'exemple précédent en ajoutant des préférences liées aux passe-temps. Donnez l'appariement que vous considérez optimal dans ce cas. En particulier, expliquez comment vous comptez combiner une éventuelle affinité liée à l'historique avec l'affinité liée aux passe-temps. Rappelons que l'historique peut compter comme une contrainte rédhibitoire ou comme une préférence, voir le sujet pour plus de précisions.*
