@@ -24,7 +24,7 @@ Sera évaluée à partir du tag git `Graphes-v1`
 
 *Énumérer tous les appariements acceptables (c'est à dire qui asocient des adolescents compatibles) pour les données de l'Exemple 1, en supposant que les français rendent visite aux italiens.*
 
->Les couples d'étudiants compatibles sont :
+>**Les couples d'étudiants compatibles sont :**
 >
 >| Host/Guest    | Xolag    | Yak | Zander |
 >|:-:            |:-:       | :-: | :-:    |
@@ -37,7 +37,7 @@ Sera évaluée à partir du tag git `Graphes-v1`
 
 *Justifier pourquoi l'appariement optimal est Bellatrix--Xolag, Adonia--Zander, et Callista--Yak; cette explication ne doit pas parler de graphes, mais se baser uniquement sur les données du problème.*
 
->Parmi les appariement possibles on va chercher celui pour lequel les éleves ont le plus d'affinitées entre eux donc ayant le plus d'hobbies en commun :
+>**Parmi les appariement possibles on va chercher celui pour lequel les éleves ont le plus d'affinitées entre eux donc ayant le plus d'hobbies en commun :**
 >
 >| Guest/Host    | Xolag | Yak      | Zander |
 >|:-:            |:-:    | :-:      | :-:    |
@@ -54,7 +54,7 @@ Sera évaluée à partir du tag git `Graphes-v1`
 >Pour réaliser la matrice d'adjacence on défini un poids par défault pour chacune des arêtes à 100, auquel on rajoute 100 en cas de non compatibilité entre l'host et le guest correspondant à l'arrête, et, pour chaque hobbies en commun, on enleve 1 au poids total. 
 >
 >
->Détail du calcul : 
+>**Détail du calcul :**
 >
 >| Guest/Host    | Xolag        | Yak            | Zander      |
 >|:-:            |:-:           | :-:            | :-:         |
@@ -62,7 +62,7 @@ Sera évaluée à partir du tag git `Graphes-v1`
 >| **Bellatrix** | 100 + 0 - 1  | 100 + 100 - 1  | 100 + 0 - 0 |
 >| **Callista**  | 100 + 0 - 0  | 100 + 0 - 2    | 100 + 0 - 0 |
 >
->Matrice d'adjacence obtenue :
+>**Matrice d'adjacence obtenue :**
 >| Guest/Host    | Xolag | Yak      | Zander |
 >|:-:            |:-:    | :-:      | :-:    |
 >| **Adonia**    | 99    | 100      | 99     |
@@ -75,9 +75,9 @@ Sera évaluée à partir du tag git `Graphes-v1`
 
 *Décrire une modélisation générale pour la Version 1. C'est à dire, donner une formule ou une description précise qui décrit comment, étant donné un adolescent hôte et un adolescent visiteur, on détermine le poids de l'arête entre ces deux adolescents en fonction des critères considérés dans la Version 1.*
 
->Comme expliqué plus haut, le poids de l'arête reliant un adolescent hôte et un adolescent visiteur par défault est à 100, si l'hôte possède un animal et que le visiteur est allergiques aux animaux, alors on rajoute 100 au poids, et, pour chaque hobbies en commun qu'ont l'hôte et le visiteur, on enleve 1 au poids total. 
+>Comme expliqué plus haut, le poids de l'arête reliant un adolescent hôte et un adolescent visiteur par défault est à 100, si l'hôte possède un animal et que le visiteur est allergiques aux animaux, alors on rajoute 100 au poids, et, pour chaque hobbies en commun qu'ont l'hôte et le visiteur, on enleve 1 au poids total pour un maximum de 3 hobbies en commun compté (on enlèvera jusqu'à 3 points au maximum si il y a plus de trois hobbies en commun).
 >
->Calcul : 100 + (100 si non compatible sinon 0) - 1*n (n = nombre d'hobbies en commun) 
+>Calcul : 100 + (100 si non compatible sinon 0) - 1*n (n = nombre d'hobbies en commun <=3) 
 
 ### Implémentation de la Version 1
 
@@ -128,17 +128,51 @@ Sera évaluée à partir du tag git `Graphes-v2`
 >|Hinkkost  |Enaxx       |GERMANY   |2009-02-06 |sports,culture,reading  |no                  |yes            |           |                  |female  |female     |       | -->
 
 
->Exemple étudiants :
+>**Exemple étudiants :**
 >|FORENAME  |NAME        |COUNTRY   |BIRTH_DATE |HOBBIES                 |GUEST_ANIMAL_ALLERGY|HOST_HAS_ANIMAL|GUEST_FOOD |HOST_FOOD         |GENDER  |PAIR_GENDER|HISTORY|
 >|:-:       |:-:         | :-:      | :-:       | :-:                    | :-:                | :-:           | :-:       | :-:              | :-:    | :-:       | :-:   |
->|Dalthu    |Tanjin      |ITALY     |           |                        |no                  |no             |vegetarian |vegetarian,nonuts |female  |female     |same   |
->|Lilly     |Damon       |ITALY     |           |                        |no                  |yes            |           |nonuts,vegetarian |male    |male       |same   |
->|Jensmebur |Ekey        |ITALY     |           |                        |no                  |no             |nonuts     |nonuts,vegetarian |male    |           |same   |
->|Himimtoss |Ozith       |ITALY     |           |                        |no                  |no             |           |nonuts,vegetarian |female  |           |other  |
->|Laris     |Rex         |GERMANY   |           |                        |no                  |no             |           |vegetarian        |male    |           |       |
->|Bellatrix |Interfector |GERMANY   |           |                        |no                  |yes            |           |nonuts,vegetarian |female  |           |other  |
->|Mave      |Crane       |GERMANY   |           |                        |no                  |no             |           |nonuts,vegetarian |male    |male       |same   |
->|Hinkkost  |Enaxx       |GERMANY   |           |                        |no                  |yes            |           |                  |female  |female     |       |
+>|Dalthu    |Tanjin      |ITALY     |           |                        |no                  |               |           |                  |        |           |same   |
+>|Lilly     |Damon       |ITALY     |           |                        |no                  |               |           |                  |        |           |same   |
+>|Jensmebur |Ekey        |ITALY     |           |                        |no                  |               |           |                  |        |           |same   |
+>|Himimtoss |Ozith       |ITALY     |           |                        |no                  |               |           |                  |        |           |       |
+>|Laris     |Rex         |GERMANY   |           |                        |                    |no             |           |                  |        |           |same   |
+>|Bellatrix |Interfector |GERMANY   |           |                        |                    |yes            |           |                  |        |           |other  |
+>|Mave      |Crane       |GERMANY   |           |                        |                    |no             |           |                  |        |           |same   |
+>|Hinkkost  |Enaxx       |GERMANY   |           |                        |                    |yes            |           |                  |        |           |       |
+>
+>
+>**Historique :**
+>
+>Dalthu--Mave
+Lilly--Hinkkost
+Jensmebur--Bellatrix
+Himimtoss--Laris
+>
+>Parmi les appariement possibles on va chercher celui pour lequel aucun éleve ayant précisé other se retrouve avec le même étudiant que l'année dernière, tous les anciens couples d'étudiants ayant tous les deux précisé same se retrouve absolument ensemble, et les anciens couples dont un seul des deux a précisé same sont priorisé.
+>
+>Voici les représentation utilisée pour y voir clair :
+>
+>- Ne doit pas être ensemble : &#10060;
+>- Doit être ensemble : &#10004;
+>- Est priorisé : &#128578;
+>- Pas de particularitée :  &#128528;
+>
+>| Guest/Host    | Laris    | Bellatrix | Mave     | Hinkkost |
+>|:-:            |:-:       | :-:       | :-:      | :-:      |
+>| **Dalthu**    |&#128528; |&#128528;  |&#10004;  |&#128528; |
+>| **Lilly**     |&#128528; |&#128528;  |&#128528; |&#128578; |
+>| **Jensmebur** |&#128528; |&#10060;   |&#128528; |&#128528; |
+>| **Himimtoss** |&#128578; |&#128528;  |&#128528; |&#128528; |
+>
+>
+> D'après ce tableau on peut déterminer un appariement optimale comme étant :
+>- Dalthu--Mave 
+>- Laris--Jensmebur
+>- Lilly--Hinkkost
+>- Himimtoss--Bellatrix
+>
+>Dalthu--Mave étant un ancien couple d'étudiant ayant mis same tous les deux ils sont donc obligatoirement ensemble , Jensmebur--Xolag en ayant 1, et Adonia--Zander en ayant 1 aussi pur un total d'hobbies en commun de 4, cette appariement correspondant pour chaque guest au nombre d'hobbies en commun maximum possible avec un host et donc ayant le maximum possible d'hobbies en commun pour un appariement. (a finir)
+
 
 
 
