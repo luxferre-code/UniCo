@@ -215,19 +215,117 @@ Cet appariement correspond à l'un des deux appariement optimal possible pour ce
 >| **Himimtoss** |&#128578; / 1 |&#128528; / 1 |&#128528; / 0 |&#128528; / 1 |
 >
 >
-> D'après ce tableau on peut déterminer un appariement optimale comme étant : (a modifier)
+> D'après ce tableau on peut déterminer un appariement optimale comme étant : 
 >- Dalthu--Mave 
->- Jensmebur--Laris
->- Lilly--Hinkkost
->- Himimtoss--Bellatrix
+>- Jensmebur--Hinkkost
+>- Himimtoss--Laris
+>- Lilly--Bellatrix
+>
+>Comme précédemment cela ne change pas, **Dalthu--Mave** étant une ancienne paire d'étudiant ayant mis "same" tous les deux ils sont donc obligatoirement ensemble.
+Comme précédemment Jensmebur--Bellatrix étant une ancienne paire d'étudiant dont l'un à mis other, le couple ne doit surtout pas être ensemble, il faut donc associer Jensmebur avec quelqu'un d'autre, cependant cette fois-ci on a ajouter les hobbies à prendre en compte, on l'associe donc avec Hinkkost **Jensmebur--Hinkkost** car ils ont un hobbie en commun alors que l'autre possibilité Jensmebur--Laris n'ont pas d'hobbies en commun.
+Ensuite on peut voir que **Himimtoss--Laris** on une affinité entre eux puisque l'un a mis same mais l'autre n'a rien mis, on peut donc les mettre ensemble (à voir de plus qu'ils ont un hobbie en commun que la paire choisit pour l'exemple précédent n'en a actuellemnt pas donc ce choit de couple est plus optimal).
+Pour finir, la paire **Lilly--Bellatrix** est par défault la dernière n'ayant pas de particularité par rapport aux autres choix possibles.
+Cet appariement correspond au seul appariement optimal possible pour cet exemple puisque les hobbies permettent de décider d'un appariement entre les deux optimaux de l'exemple précédent.
 
 ### Modélisation pour les exemples
 
 *Pour chacun des deux exemples précédents, donnez un graphe (donné par sa matrice d'adjacence) tel que l'affectation minimale dans ce graphe correspond à l'appariement optimal identifié plus haut. Expliquez comment vous avez choisi le poids pour chacune des arêtes.*
 
+
+#### Modélisation 1
+>
+>Pour réaliser la matrice d'adjacence on défini un poids par défault pour chacune des arêtes à 100 comme pour la version 1, auquel on :
+>
+>- Enlève 100 lorsque les deux étudiants étant ensemble l'année précédente on écrit "same".
+>- Enlève 4 lorsque l'un des deux étudiants étant ensemble l'année précédente a écrit "same" et l'autre n'a rien renseigné.
+>- Rajoute 100 lorsque l'un des deux étudiants étant ensemble l'année précédente a écrit "other" peu importe ce qu'a écrit l'autre.
+>
+>
+>**Détail du calcul :**
+>
+>| Guest/Host    | Laris    | Bellatrix | Mave      | Hinkkost |
+>|:-:            |:-:       | :-:       | :-:       | :-:      |
+>| **Dalthu**    | 100 +- 0 | 100 +- 0  | 100 - 100 | 100 +- 0 |
+>| **Lilly**     | 100 +- 0 | 100 +- 0  | 100 +- 0  | 100 - 4  |
+>| **Jensmebur** | 100 +- 0 | 100 + 100 | 100 +- 0  | 100 +- 0 |
+>| **Himimtoss** | 100 - 4  | 100 +- 0  | 100 +- 0  | 100 +- 0 |
+>
+>**Matrice d'adjacence obtenue :**
+>
+>| Guest/Host    | Laris    | Bellatrix | Mave     | Hinkkost |
+>|:-:            |:-:       | :-:       | :-:      | :-:      |
+>| **Dalthu**    | 100      | 100       | 0        | 100      |
+>| **Lilly**     | 100      | 100       | 100      | 96       |
+>| **Jensmebur** | 100      | 200       | 100      | 100      |
+>| **Himimtoss** | 96       | 100       | 100      | 100      |
+>
+>
+>Selon la matrice plus haut on prend pour chaque visiteur le poids avec l'hôte le plus faible :
+>
+>- Dalthu a le poids optimal avec Mave pour un poids de 0 **Dalthu--Mave**.
+>- Lilly a le poids optimal avec Hinkkost pour un poids de 96 **Lilly--Hinkkost**.
+>- Jensmebur a l'un des poids optimal avec Laris pour un poids de 100 **Jensmebur--Laris**.
+>- Himimtoss n'a pas le poids optimal avec Bellatrix pour un poids de 100 mais c'est le dernier choix possible **Himimtoss--Bellatrix**.
+>
+>Cette confinaison permet d'avoir l'un des deux appariement optimal pour un poid de 0 + 96 + 100 + 100 = 296.
+
+
+
+#### Modélisation 2
+>
+>Pour réaliser la matrice d'adjacence on défini un poids par défault pour chacune des arêtes à 100 comme pour la version 1, auquel soit on :
+>
+>- Enlève 100 lorsque les deux étudiants étant ensemble l'année précédente on écrit "same".
+>- Enlève 4 lorsque l'un des deux étudiants étant ensemble l'année précédente a écrit "same" et l'autre n'a rien renseigné.
+>- Rajoute 100 lorsque l'un des deux étudiants étant ensemble l'année précédente a écrit "other" peu importe ce qu'a écrit l'autre.
+>
+>Puis comme pour la modélisation de l'exemple de la version1, pour chaque hobbies en commun, on enleve 1 au poids total pour un maximum de 3 hobbies en commun compté (on enlève jusqu'à 3 points au maximum si il y a plus de trois hobbies en commun).
+>
+>
+>
+>**Détail du calcul :**
+>
+>| Guest/Host    | Laris        | Bellatrix     | Mave          | Hinkkost     |
+>|:-:            |:-:           | :-:           | :-:           | :-:          |
+>| **Dalthu**    | 100 +- 0 - 0 | 100 +- 0 - 0  | 100 - 100 - 0 | 100 +- 0 - 0 |
+>| **Lilly**     | 100 +- 0 - 0 | 100 +- 0 - 1  | 100 +- 0 - 0  | 100 - 4 - 0  |
+>| **Jensmebur** | 100 +- 0 - 0 | 100 + 100 - 1 | 100 +- 0 - 0  | 100 +- 0 - 1 |
+>| **Himimtoss** | 100 - 4 - 1  | 100 +- 0 - 1  | 100 +- 0 - 0  | 100 +- 0 - 1 |
+>
+>**Matrice d'adjacence obtenue :**
+>
+>| Guest/Host    | Laris    | Bellatrix | Mave     | Hinkkost |
+>|:-:            |:-:       | :-:       | :-:      | :-:      |
+>| **Dalthu**    | 100      | 100       | 0        | 100      |
+>| **Lilly**     | 100      | 99        | 100      | 96       |
+>| **Jensmebur** | 100      | 199       | 100      | 99       |
+>| **Himimtoss** | 95       | 99        | 100      | 99       |
+>
+>Selon la matrice plus haut on prend pour chaque visiteur le poids avec l'hôte le plus faible :
+>
+>- Dalthu a le poids optimal avec Mave pour un poids de 0 **Dalthu--Mave**.
+>- Himimtoss a le poids optimal avec Laris pour un poids de 95 **Himimtoss--Laris**.
+>- Jensmebur a l'un des poids optimal avec Hinkkost pour un poids de 99 **Jensmebur--Hinkkost**.
+>- Lilly n'a pas le poids optimal avec Bellatrix pour un poids de 99 mais c'est le dernier choix possible **Lilly--Bellatrix**.
+>
+>Cette confinaison permet d'avoir l'appariement optimal pour un poids total de 0 + 95 + 99 + 99 = 293.
+>
+>Pour comparaison si on avait choisit l'appariement de la modélisation 1, on aurait un poids total de 0 + 96 + 100 + 99 = 295
+
+
 ### Modélisation pour l'historique de la Version 2
 
-*Décrire une modélisation générale pour la Version 1. C'est à dire, donner une formule ou une description précise qui décrit comment, étant donné un adolescent hôte et un adolescent visiteur, on détermine le poids de l'arête entre ces deux adolescents en fonction des critères considérés dans la Version 1. Décrire également comment vous construisez le graphe modèle à partir des données en entrée.*
+*Décrire une modélisation générale pour la Version 2. C'est à dire, donner une formule ou une description précise qui décrit comment, étant donné un adolescent hôte et un adolescent visiteur, on détermine le poids de l'arête entre ces deux adolescents en fonction des critères considérés dans la Version 2. Décrire également comment vous construisez le graphe modèle à partir des données en entrée.*
+
+>Comme expliquer dans la modélisation précédente le poids de l'arête reliant un adolescent hôte et un adolescent visiteur par défault est à 100 comme pour la version 1, auquel soit on :
+>
+>- Enlève 100 lorsque les deux étudiants étant ensemble l'année précédente on écrit "same".
+>- Enlève 4 lorsque l'un des deux étudiants étant ensemble l'année précédente a écrit "same" et l'autre n'a rien renseigné.
+>- Rajoute 100 lorsque l'un des deux étudiants étant ensemble l'année précédente a écrit "other" peu importe ce qu'a écrit l'autre.
+>
+>Puis comme pour la modélisation de l'exemple de la version1, pour chaque hobbies en commun, on enleve 1 au poids total pour un maximum de 3 hobbies en commun compté (on enlève jusqu'à 3 points au maximum si il y a plus de trois hobbies en commun).
+>
+>Calcul : 100 ( - 100 si compatibilité forcée historique ou - 4 si affinité historique ou +100 si incompatibilité historique sinon 0) - 1*n (n = nombre d'hobbies en commun <=3)
 
 ### Implémentation de l'historique de la Version 2
 
