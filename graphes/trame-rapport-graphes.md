@@ -1,3 +1,5 @@
+[TOC]
+>
 Vous pouvez télécharger le présent fichier au format .md depuis la page Moodle de la SAÉ à l'aide d'un clic droit sur le lien, "Enregistrer la cible du lien" ou équivalent.
 
 Le rapport à rendre doit être au format pdf ou html (éventuellement format md lisible sur gitlab) et doit suivre le plan donné ici. 
@@ -15,7 +17,7 @@ SAE S2.02 -- Rapport pour la ressource Graphes
 
 *Noms des auteurs, groupe*
 
-Version 1
+## Version 1
 ---
 
 Sera évaluée à partir du tag git `Graphes-v1`
@@ -45,7 +47,7 @@ Sera évaluée à partir du tag git `Graphes-v1`
 >| **Bellatrix** | 1     | &#10060; | 0      |
 >| **Callista**  | 0     | 2        | 0      |
 >
-> D'après ce tableau on peut déterminer le meilleur appariement comme étant Callista--Yak ayant 2 hobbies en commun, Bellatrix--Xolag en ayant 1, et Adonia--Zander en ayant 1 aussi pur un total d'hobbies en commun de 4, cette appariement correspondant pour chaque guest au nombre d'hobbies en commun maximum possible avec un host et donc ayant le maximum possible d'hobbies en commun pour un appariement.
+> D'après ce tableau on peut déterminer le meilleur appariement comme étant Callista--Yak ayant 2 hobbies en commun, Bellatrix--Xolag en ayant 1, et Adonia--Zander en ayant 1 aussi pur un total d'hobbies en commun de 4, cet appariement correspondant pour chaque guest au nombre d'hobbies en commun maximum possible avec un host et donc ayant le maximum possible d'hobbies en commun pour un appariement.
 
 ### Modélisation de l'exemple
 
@@ -99,7 +101,7 @@ Récupérez sur Moodle le fichier de données `compatibilityVsHobbies.csv`. Expl
 >
 >Dans l'exemple du csv `compatibilityVsHobbies.csv`, le visiteur A devrait faire la paire avec l'hôte C et le visiteur B avec l'hôte D.
 
-Version 2
+## Version 2
 ---
 
 Sera évaluée à partir du tag git `Graphes-v2`
@@ -114,18 +116,6 @@ Sera évaluée à partir du tag git `Graphes-v2`
 
 *Puis, donner un appariement optimal qui tient compte des données d'historique, et expliquer pourquoi il est optimal. L'explication ne doit pas parler des graphes, mais uniquement des adolescents et les critères exprimés.*
 
-
-<!-- >Exemple étudiants rempli :
->|FORENAME  |NAME        |COUNTRY   |BIRTH_DATE |HOBBIES                 |GUEST_ANIMAL_ALLERGY|HOST_HAS_ANIMAL|GUEST_FOOD |HOST_FOOD         |GENDER  |PAIR_GENDER|HISTORY|
->|:-:       |:-:         | :-:      | :-:       | :-:                    | :-:                | :-:           | :-:       | :-:              | :-:    | :-:       | :-:   |
->|Dalthu    |Tanjin      |ITALY     |2009-06-22 |                        |no                  |no             |vegetarian |vegetarian,nonuts |female  |female     |same   |
->|Lilly     |Damon       |ITALY     |2006-10-23 |                        |no                  |yes            |           |nonuts,vegetarian |male    |male       |same   |
->|Jensmebur |Ekey        |ITALY     |2008-08-19 |culture                 |no                  |no             |nonuts     |nonuts,vegetarian |male    |           |same   |
->|Himimtoss |Ozith       |ITALY     |2007-04-25 |culture                 |no                  |no             |           |nonuts,vegetarian |female  |           |other  |
->|Laris     |Rex         |GERMANY   |2006-03-17 |                        |no                  |no             |           |vegetarian        |male    |           |       |
->|Bellatrix |Interfector |GERMANY   |2008-01-25 |reading,science,culture |no                  |yes            |           |nonuts,vegetarian |female  |           |other  |
->|Mave      |Crane       |GERMANY   |2007-09-09 |sports                  |no                  |no             |           |nonuts,vegetarian |male    |male       |same   |
->|Hinkkost  |Enaxx       |GERMANY   |2009-02-06 |sports,culture,reading  |no                  |yes            |           |                  |female  |female     |       | -->
 
 
 >**Exemple étudiants :**
@@ -143,19 +133,19 @@ Sera évaluée à partir du tag git `Graphes-v2`
 >
 >**Historique :**
 >
->Dalthu--Mave
-Lilly--Hinkkost
-Jensmebur--Bellatrix
-Himimtoss--Laris
+>- Dalthu--Mave
+>- Lilly--Hinkkost
+>- Jensmebur--Bellatrix
+>- Himimtoss--Laris
 >
->Parmi les appariement possibles on va chercher celui pour lequel aucun éleve ayant précisé other se retrouve avec le même étudiant que l'année dernière, tous les anciens couples d'étudiants ayant tous les deux précisé same se retrouve absolument ensemble, et les anciens couples dont un seul des deux a précisé same sont priorisé.
+>Parmi les appariement possibles on va chercher celui pour lequel aucun éleve ayant précisé "other" se retrouve avec le même étudiant que l'année dernière, tous les anciens couples d'étudiants ayant tous les deux précisé "same" se retrouve absolument ensemble, et les anciens couples dont un seul des deux a précisé "same" sont priorisé.
 >
 >Voici les représentation utilisée pour y voir clair :
 >
->- Ne doit pas être ensemble : &#10060;
 >- Doit être ensemble : &#10004;
 >- Est priorisé : &#128578;
 >- Pas de particularitée :  &#128528;
+>- Ne doit pas être ensemble : &#10060;
 >
 >| Guest/Host    | Laris    | Bellatrix | Mave     | Hinkkost |
 >|:-:            |:-:       | :-:       | :-:      | :-:      |
@@ -167,11 +157,15 @@ Himimtoss--Laris
 >
 > D'après ce tableau on peut déterminer un appariement optimale comme étant :
 >- Dalthu--Mave 
->- Laris--Jensmebur
+>- Jensmebur--Laris
 >- Lilly--Hinkkost
 >- Himimtoss--Bellatrix
 >
->Dalthu--Mave étant un ancien couple d'étudiant ayant mis same tous les deux ils sont donc obligatoirement ensemble , Jensmebur--Xolag en ayant 1, et Adonia--Zander en ayant 1 aussi pur un total d'hobbies en commun de 4, cette appariement correspondant pour chaque guest au nombre d'hobbies en commun maximum possible avec un host et donc ayant le maximum possible d'hobbies en commun pour un appariement. (a finir)
+>**Dalthu--Mave** étant une ancienne paire d'étudiant ayant mis "same" tous les deux ils sont donc obligatoirement ensemble.
+Jensmebur--Bellatrix étant une ancienne paire d'étudiant dont l'un à mis other, le couple ne doit surtout pas être ensemble, il faut donc associer Jensmebur avec quelqu'un d'autre, on l'associe donc avec Laris car dans les deux cas il n'y a pas d'affinité **Jensmebur--Laris**.
+Ensuite on peut voir que **Lilly--Hinkkost** on une affinité entre eux puisque l'un a mis same mais l'autre n'a rien mis, on peut donc les mettre ensemble.
+Pour finir, la paire **Himimtoss--Bellatrix** est par défault la dernière n'ayant pas de particularité.
+Cet appariement correspond à l'un des deux appariement optimal possible pour cet exemple.
 
 
 
@@ -182,6 +176,50 @@ Himimtoss--Laris
 *Modifiez l'exemple précédent en ajoutant des préférences liées aux passe-temps. Donnez l'appariement que vous considérez optimal dans ce cas. En particulier, expliquez comment vous comptez combiner une éventuelle affinité liée à l'historique avec l'affinité liée aux passe-temps. Rappelons que l'historique peut compter comme une contrainte rédhibitoire ou comme une préférence, voir le sujet pour plus de précisions.*
 
 *Donner l'appariement que vous considérez optimal dans ce deuxième exemple, toujours sans parler de graphes.*
+
+>
+>**Exemple étudiants modifié :**
+>|FORENAME  |NAME        |COUNTRY   |BIRTH_DATE |HOBBIES                 |GUEST_ANIMAL_ALLERGY|HOST_HAS_ANIMAL|GUEST_FOOD |HOST_FOOD         |GENDER  |PAIR_GENDER|HISTORY|
+>|:-:       |:-:         | :-:      | :-:       | :-:                    | :-:                | :-:           | :-:       | :-:              | :-:    | :-:       | :-:   |
+>|Dalthu    |Tanjin      |ITALY     |           |                        |no                  |               |           |                  |        |           |same   |
+>|Lilly     |Damon       |ITALY     |           |reading                 |no                  |               |           |                  |        |           |same   |
+>|Jensmebur |Ekey        |ITALY     |           |culture                 |no                  |               |           |                  |        |           |same   |
+>|Himimtoss |Ozith       |ITALY     |           |culture,science         |no                  |               |           |                  |        |           |       |
+>|Laris     |Rex         |GERMANY   |           |science                 |                    |no             |           |                  |        |           |same   |
+>|Bellatrix |Interfector |GERMANY   |           |reading,culture         |                    |yes            |           |                  |        |           |other  |
+>|Mave      |Crane       |GERMANY   |           |sports                  |                    |no             |           |                  |        |           |same   |
+>|Hinkkost  |Enaxx       |GERMANY   |           |sports,culture,reading  |                    |yes            |           |                  |        |           |       |
+>
+>
+>**Historique :**
+>
+>- Dalthu--Mave
+>- Lilly--Hinkkost
+>- Jensmebur--Bellatrix
+>- Himimtoss--Laris
+>
+>Pour ce nouvel exemple on va reprendre la notation précédente à laquelle on va rajouter le nombre de hobbies en communs comme pour l'exemple de la version 1.
+>
+>Voici les représentation utilisée pour y voir clair :
+>
+>- Doit être ensemble : &#10004;
+>- Est priorisé : &#128578;
+>- Pas de particularitée :  &#128528;
+>- Ne doit pas être ensemble : &#10060;
+>
+>| Guest/Host    | Laris        | Bellatrix    | Mave         | Hinkkost     |
+>|:-:            |:-:           | :-:          | :-:          | :-:          |
+>| **Dalthu**    |&#128528; / 0 |&#128528; / 0 |&#10004; / 0 |&#128528; / 0  |
+>| **Lilly**     |&#128528; / 0 |&#128528; / 1 |&#128528; / 0 |&#128578; / 0 |
+>| **Jensmebur** |&#128528; / 0 |&#10060; / 1  |&#128528; / 0 |&#128528; / 1 |
+>| **Himimtoss** |&#128578; / 1 |&#128528; / 1 |&#128528; / 0 |&#128528; / 1 |
+>
+>
+> D'après ce tableau on peut déterminer un appariement optimale comme étant : (a modifier)
+>- Dalthu--Mave 
+>- Jensmebur--Laris
+>- Lilly--Hinkkost
+>- Himimtoss--Bellatrix
 
 ### Modélisation pour les exemples
 
