@@ -325,11 +325,27 @@ Cet appariement correspond au seul appariement optimal possible pour cet exemple
 >
 >Puis comme pour la modélisation de l'exemple de la version1, pour chaque hobbies en commun, on enleve 1 au poids total pour un maximum de 3 hobbies en commun compté (on enlève jusqu'à 3 points au maximum si il y a plus de trois hobbies en commun).
 >
->Calcul : 100 ( - 100 si compatibilité forcée historique ou - 4 si affinité historique ou +100 si incompatibilité historique sinon 0) - 1*n (n = nombre d'hobbies en commun <=3)
+>Calcul : 100 +- ( - 100 si compatibilité forcée historique ou - 4 si affinité historique ou +100 si incompatibilité historique sinon 0) - 1*n (n = nombre d'hobbies en commun <=3)
+>
+>Pour construire le graphe modèle à partir des données en entrée il faut tout d'abord créer un nouveau objet graphe de type GrapheNonOrienteValue\<Student>.
+Ensuite après avoir chargé à partir d'un CSV des Teenager dans un HashSet, on parcourt ce set d'élèves, et pour chaque élèves on en crée un sommet dans le graphe.
+Finalement on relie chaque sommet à tous les autres sommet par une arêtes valuée dont le poids de l'arête est calculé grâce à la méthode ```weight``` de la classe ```AffectationUtil``` prenant en paramètre les Teenager des deux sommets .
 
 ### Implémentation de l'historique de la Version 2
 
 *Quelles fonctions de votre code avez-vous modifié pour prendre en compte le critère historique ? Donnez ici les noms des méthodes (et leur classe), à quoi elles servent, et quelles modifications vous avez apportées. Essayez d'être synthétique.*
+
+>Pour prendre en compte le critère historique nous avons modifié plusieurs méthodes, que ce soit au niveau de l'affinité ou de l'incompatibilité.
+>
+>Pour gérer l'incompatibilité on a créé une méthode ```boolean compatibleHistory(Teenager guest)``` dans la classe ```Teenager``` qui vérifie si les deux adolescents sont compatible sur l'historique.
+Nous avons donc dans cette méthode vérifié si les deux étudiants été ensemble l'année précédente.
+Puis si ils étaient ensemble ont vérifie si l'un des deux a la valeur other pour son attribut historique
+dans quel cas la méthode retourne false, sinon si aucun n'a la valeur other pour l'attribut historique ou si les Teenager n'étaient pas ensemble l'année précédente alors la mé"thode retourne true.
+On a finalement modifié la méthode ```boolean compatibleWithGuestGraphe(Teenager guest)``` de la classe ```Teenager``` étant la version pour le graphe de la méthode ```boolean compatibleWithGuest(Teenager guest)``` reprenant la même chose que pour la version 1 mais en plus retourne false si la méthode ```boolean compatibleHistory(Teenager guest)``` retourne false, sinon elle retourne true.
+>
+>Pour gérer l'affinité nous avons créé une méthode ```double historyWeight(Teenager host, Teenager visitor)``` dans la classe ```AffectationUtil``` qui retourne le poids calculé à partir de l'history des deux Teenager à retirer du poids total.
+Pour calculer ce poid on vérifie que les deux Teenager étaient ensemble l'année précédente, si ils l'étaient alors on regarde si les deux Teenager ont la valeur "same" dans leur critère history, si ils l'ont alors la méthode retourne 100, sinon on vérifie l'un après l'autre si un seul à la valeur "same" dans quel cas la méthode retourne 4, sinon elle retourne 0.
+Cette méthode est ensuite utilisée dans la méthode ```double weight(Teenager host, Teenager visitor)``` dont on soustrait au poids total la valeur retourné.
 
 ### Test pour l'historique de la Version 2
 
