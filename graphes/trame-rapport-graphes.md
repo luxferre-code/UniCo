@@ -355,7 +355,35 @@ Cette méthode est ensuite utilisée dans la méthode ```double weight(Teenager 
 
 *Pour chacun des autres critères d'affinité que vous décidez de prendre en compte, décrire comment vous changez la fonction weight de la classe AffectationUtil.*
 
+>- Pour le critère de genre, nous avons créé une méthode ```double genreWeight(Teenager host, Teenager visitor)``` dans la classe ```AffectationUtil``` qui retourne le poids à retirer du poids total calculé à partir des préférences de genre et du genre des deux Teenager.
+Pour calculer ce poid on vérifie la valeur du critère de genre de l'hôte, si il est null on ajoute 1 au poids car le critère est satisfait peu importe le genre du visiteur, si il ne l'est pas on regarde si le critère de genre de l'hôte et le genre du visiteur sont la même valeur dans quel cas on rajoute 1.
+On fait la même chose pour le visiteur.
+Cette méthode est ensuite utilisée dans la méthode ```double weight(Teenager host, Teenager visitor)``` dont on soustrait au poids total la valeur retourné.
+>
+>- Pour le critère d'âge, nous avons créé une méthode ```double ageWeight(Teenager host, Teenager visitor)``` dans la classe ```AffectationUtil``` qui retourne le poids à retirer du poids total calculé à partir des dates de naissances des deux Teenager.
+Pour calculer ce poids on vérifie l'écart entre les deux dates de naissances, si l'écart est inférieur à 18 mois alors la méthode retourne 2, sinon elle retourne 0.
+Cette méthode est ensuite utilisée dans la méthode ```double weight(Teenager host, Teenager visitor)``` dont on soustrait au poids total la valeur retourné.
+
 ### L'incompatibilité en tant que malus
 
 *Proposer une formule ou une description précise qui explique comment calculer le poids d'une arête en considérant les incompatibilités comme des malus et les critères satisfaits comme des bonus. Implémenter cette formule dans une seconde méthode appelée `weightAdvanced`, ceci pour éviter de casser votre code. Puis, écrire une méthode de test qui permet d'illustrer le calcul d'affectation basé sur `weightAdvanced`. Vous pouvez égalmente tester l'affectation en utilisant le fichier de données `incompatibilityVsBonus.csv`.*
 
+>Pour calculer le poids d'une arête en considérant les incompatibilités comme des malus et les critères satisfaits comme des bonus on reprend le même calcul que précédemment auquel on modifie comme présenté : 
+>Le poids de l'arête reliant un adolescent hôte et un adolescent visiteur par défault est à 100, auquel soit on :
+>
+>- Enlève 6 lorsque les deux étudiants étant ensemble l'année précédente on écrit "same".
+>- Enlève 4 lorsque l'un des deux étudiants étant ensemble l'année précédente a écrit "same" et l'autre n'a rien renseigné.
+>- Rajoute 6 lorsque l'un des deux étudiants étant ensemble l'année précédente a écrit "other" peu importe ce qu'a écrit l'autre (incompatibilité).
+>
+>Puis pour chaque hobbies en commun, on enleve 1 au poids total pour un maximum de 3 hobbies en commun compté (on enlève jusqu'à 3 points au maximum si il y a plus de trois hobbies en commun).
+>
+>Ensuite si la valeur du critère de genre de l'hôte est null on enleve 1 au poids car le critère est satisfait peu importe le genre du visiteur, si il ne l'est pas on regarde si le critère de genre de l'hôte et le genre du visiteur sont la même valeur dans quel cas on enleve 1.
+On fait cela une deuxième fois cette fois ci en regardant le critère de genre du visiteur et le genre de l'hôte .
+>
+>Par la suite si l'écart entre les deux dates de naissances est inférieur à 18 mois alors on enleve 2 au poids.
+>
+>On rajoute au poids 3 si l'hôte a un animal et que le visiteur y est allergique
+>
+>Enfin pour chaque régime allimentaire requis par le visiteur, on rajoute 1 au poids total si l'hôte ne fournit pas le régime alimentaire pour un maximum de 3 régime non fournit compté (on rajoute jusqu'à 3 points au maximum si il y a plus de trois régime non fournit).
+>
+>Calcul : 100 +- ( - 6 si compatibilité forcée historique ou - 4 si affinité historique ou +6 si incompatibilité historique sinon 0) - 1\*n (n = nombre d'hobbies en commun <=3) - (0 si aucun critère de genre validé ou 1 si un seul validé ou 2 si les deux sont validé) - (2 si l'écart d'âge < 1.5 ans) + (3 si incompatibilité allergies) + 1\*n (n = nombre de régime non validés <=3)

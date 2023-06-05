@@ -239,7 +239,7 @@ public class Teenager {
      * @param criterionName (CriterionName) - The name of the criterion
      * @return (Criterion) - The value from the hashmap
      */
-    private String getCriterionValue(CriterionName criterionName) throws RequirementNotFound {
+    public String getCriterionValue(CriterionName criterionName) throws RequirementNotFound {
         if(!this.havingThisRequirement(criterionName)){
             throw new RequirementNotFound(criterionName.name());
         }
