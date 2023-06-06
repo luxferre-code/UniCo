@@ -2,11 +2,16 @@ package ullile.sae201.graphe;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 
 import ullile.sae201.Criterion;
 import ullile.sae201.CriterionName;
 import ullile.sae201.Teenager;
 import ullile.sae201.exception.RequirementNotFound;
+import fr.ulille.but.sae2_02.graphes.GrapheNonOrienteValue;
+
 
 /**
  * AffectationUtil class
@@ -338,4 +343,77 @@ public class AffectationUtil {
 
         return weight;
     }
+
+    /**
+     * Crée un graphe GrapheNonOrienteValue<Teenager> à partir d'un set de Teenager hosts et d'un set de Teenager guest en définissant les Teenager comme sommets du graphe et en définissant entre chaque étudiant host et chaque étudiants guest une arête dont le poids est défini par la fonction {@link #weight(Teenager, Teenager) }
+     * @param hosts Un set de Teenager hôtes
+     * @param guests Un set de Teenager visiteurs
+     * @return (GrapheNonOrienteValue<Teenager>) - Le graphe créé à partir des étudiants
+     */
+    public static GrapheNonOrienteValue<Teenager> creerGrapheTeenager(HashSet<Teenager> hosts, HashSet<Teenager> guests){
+        GrapheNonOrienteValue<Teenager> teenagerGraphe = new GrapheNonOrienteValue<Teenager>();
+        for (Teenager host : hosts) {
+            teenagerGraphe.ajouterSommet(host);
+        }
+        for (Teenager guest : guests) {
+            teenagerGraphe.ajouterSommet(guest);
+        }
+
+        for (Teenager host : hosts) {
+            for (Teenager guest : guests) {
+                teenagerGraphe.ajouterArete(host, guest, weight(host, guest));
+            }
+        }
+        return teenagerGraphe;
+    }
+
+    /**
+     * Crée un graphe GrapheNonOrienteValue<Teenager> à partir d'un set de Teenager hosts et d'un set de Teenager guest en définissant les Teenager comme sommets du graphe et en définissant entre chaque étudiant host et chaque étudiants guest une arête dont le poids est défini par la fonction {@link #weightV1(Teenager, Teenager) }
+     * @param hosts Un set de Teenager hôtes
+     * @param guests Un set de Teenager visiteurs
+     * @return (GrapheNonOrienteValue<Teenager>) - Le graphe créé à partir des étudiants
+     */
+    public static GrapheNonOrienteValue<Teenager> creerGrapheTeenagerV1(Collection<Teenager> hosts, Collection<Teenager> guests){
+        GrapheNonOrienteValue<Teenager> teenagerGraphe = new GrapheNonOrienteValue<Teenager>();
+        for (Teenager host : hosts) {
+            teenagerGraphe.ajouterSommet(host);
+        }
+        for (Teenager guest : guests) {
+            teenagerGraphe.ajouterSommet(guest);
+        }
+
+        for (Teenager host : hosts) {
+            for (Teenager guest : guests) {
+                teenagerGraphe.ajouterArete(host, guest, weightV1(host, guest));
+            }
+        }
+        return teenagerGraphe;
+    }
+
+    /**
+     * Crée un graphe GrapheNonOrienteValue<Teenager> à partir d'un set de Teenager hosts et d'un set de Teenager guest en définissant les Teenager comme sommets du graphe et en définissant entre chaque étudiant host et chaque étudiants guest une arête dont le poids est défini par la fonction {@link #weightV2(Teenager, Teenager) }
+     * @param hosts Un set de Teenager hôtes
+     * @param guests Un set de Teenager visiteurs
+     * @return (GrapheNonOrienteValue<Teenager>) - Le graphe créé à partir des étudiants
+     */
+    public static GrapheNonOrienteValue<Teenager> creerGrapheTeenagerV2(Collection<Teenager> hosts, Collection<Teenager> guests){
+        GrapheNonOrienteValue<Teenager> teenagerGraphe = new GrapheNonOrienteValue<Teenager>();
+        for (Teenager host : hosts) {
+            teenagerGraphe.ajouterSommet(host);
+        }
+        for (Teenager guest : guests) {
+            teenagerGraphe.ajouterSommet(guest);
+        }
+
+        for (Teenager host : hosts) {
+            for (Teenager guest : guests) {
+                teenagerGraphe.ajouterArete(host, guest, weightV2(host, guest));
+            }
+        }
+        return teenagerGraphe;
+    }
+
+
+
+
 }

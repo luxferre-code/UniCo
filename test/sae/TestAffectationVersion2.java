@@ -8,9 +8,9 @@ import fr.ulille.but.sae2_02.graphes.GrapheNonOrienteValue;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 
 import ullile.sae201.CriterionName;
 import ullile.sae201.Teenager;
@@ -24,6 +24,11 @@ import ullile.sae201.graphe.AffectationUtil;
 public class TestAffectationVersion2 {
     private Teenager t1, t2, t3, t4, t5, t6, t7, t8;
     private Date d1, d2, d3, d4, d5, d6, d7, d8;
+    private ArrayList<Teenager> guestList;
+    private ArrayList<Teenager> hostList;
+    private GrapheNonOrienteValue<Teenager> graphe;
+    private CalculAffectation<Teenager> affectation;
+
     
     @Before
     public void setUp() throws InvalidCriterion{
@@ -61,22 +66,22 @@ public class TestAffectationVersion2 {
         t2 = new Teenager("Damon", "Lilly",  d2, "ITALY");
         t3 = new Teenager("Ekey", "Jensmebur", d3, "ITALY");
         t4 = new Teenager("Ozith", "Himimtoss", d4, "ITALY");
-        HashSet<Teenager> guestSet = new HashSet<Teenager>() ;
-        guestSet.add(t1);
-        guestSet.add(t2);
-        guestSet.add(t3);
-        guestSet.add(t4);
+        guestList = new ArrayList<Teenager>() ;
+        guestList.add(t1);
+        guestList.add(t2);
+        guestList.add(t3);
+        guestList.add(t4);
 
 
         t5 = new Teenager("Rex","Laris", d5,"GERMANY");
         t6 = new Teenager("Interfector", "Bellatrix", d6, "GERMANY");
         t7 = new Teenager("Crane", "Mave", d7, "GERMANY");
         t8 = new Teenager("Enaxx", "Hinkkost",  d8, "GERMANY");
-        HashSet<Teenager> hostSet = new HashSet<Teenager>() ;
-        hostSet.add(t5);
-        hostSet.add(t6);
-        hostSet.add(t7);
-        hostSet.add(t8);
+        hostList = new ArrayList<Teenager>() ;
+        hostList.add(t5);
+        hostList.add(t6);
+        hostList.add(t7);
+        hostList.add(t8);
 
 
         /*Adding requirement to the test teenagers */
@@ -128,10 +133,16 @@ public class TestAffectationVersion2 {
         assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t4, t7));
         assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t4, t8));
 
+        graphe = AffectationUtil.creerGrapheTeenagerV2(hostList, guestList);
+
+        affectation = new CalculAffectation<Teenager>(graphe,hostList,guestList);
+        affectation.calculerAffectation();
+
+        
+
     }
 
     public void addRequirements() {
-        //T1
         try {
             t2.addRequirement(CriterionName.HOBBIES, "reading");
             t3.addRequirement(CriterionName.HOBBIES, "culture");
@@ -169,6 +180,10 @@ public class TestAffectationVersion2 {
         assertEquals(Double.valueOf(99),AffectationUtil.weightV2(t4, t6));
         assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t4, t7));
         assertEquals(Double.valueOf(99),AffectationUtil.weightV2(t4, t8));
+
+        graphe = AffectationUtil.creerGrapheTeenagerV2(hostList, guestList);
+
+        affectation = new CalculAffectation<Teenager>(graphe,hostList,guestList);
 
     }
 }
