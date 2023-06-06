@@ -4,11 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.ulille.but.sae2_02.graphes.CalculAffectation;
+import fr.ulille.but.sae2_02.graphes.GrapheNonOrienteValue;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 
 import ullile.sae201.CriterionName;
 import ullile.sae201.Teenager;
@@ -59,87 +61,114 @@ public class TestAffectationVersion2 {
         t2 = new Teenager("Damon", "Lilly",  d2, "ITALY");
         t3 = new Teenager("Ekey", "Jensmebur", d3, "ITALY");
         t4 = new Teenager("Ozith", "Himimtoss", d4, "ITALY");
+        HashSet<Teenager> guestSet = new HashSet<Teenager>() ;
+        guestSet.add(t1);
+        guestSet.add(t2);
+        guestSet.add(t3);
+        guestSet.add(t4);
+
 
         t5 = new Teenager("Rex","Laris", d5,"GERMANY");
         t6 = new Teenager("Interfector", "Bellatrix", d6, "GERMANY");
         t7 = new Teenager("Crane", "Mave", d7, "GERMANY");
         t8 = new Teenager("Enaxx", "Hinkkost",  d8, "GERMANY");
+        HashSet<Teenager> hostSet = new HashSet<Teenager>() ;
+        hostSet.add(t5);
+        hostSet.add(t6);
+        hostSet.add(t7);
+        hostSet.add(t8);
 
 
         /*Adding requirement to the test teenagers */
         //t1
-        t1.addRequirement(CriterionName.GUEST_ANIMAL_ALLERGY, "no");
-        t1.addRequirement(CriterionName.HOBBIES, "sports,technology");
+        t1.addRequirement(CriterionName.HISTORY, "same");
+        t1.setHistory(t7);
         //t2
-        t2.addRequirement(CriterionName.GUEST_ANIMAL_ALLERGY, "yes");
-        t2.addRequirement(CriterionName.HOBBIES, "culture,science");
+        t2.addRequirement(CriterionName.HISTORY, "same");
+        t2.setHistory(t8);
         //t3
-        t3.addRequirement(CriterionName.GUEST_ANIMAL_ALLERGY, "no");
-        t3.addRequirement(CriterionName.HOBBIES, "science,reading");
+        t3.addRequirement(CriterionName.HISTORY, "same");
+        t3.setHistory(t6);
         //t4
-        t4.addRequirement(CriterionName.HOST_HAS_ANIMAL, "no");
-        t4.addRequirement(CriterionName.HOBBIES, "culture,technology");
+        t4.setHistory(t5);
         //t5
-        t5.addRequirement(CriterionName.HOST_HAS_ANIMAL, "yes");
-        t5.addRequirement(CriterionName.HOBBIES, "science,reading");
+        t5.addRequirement(CriterionName.HISTORY, "same");
+        t5.setHistory(t4);
         //t6
-        t6.addRequirement(CriterionName.HOST_HAS_ANIMAL, "no");
-        t6.addRequirement(CriterionName.HOBBIES, "technology");
+        t6.addRequirement(CriterionName.HISTORY, "other");
+        t6.setHistory(t3);
         //t7
-        t7.addRequirement(CriterionName.GUEST_ANIMAL_ALLERGY, "yes");
-        t7.addRequirement(CriterionName.HOST_HAS_ANIMAL, "yes");
-        t7.addRequirement(CriterionName.HOBBIES, "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,aa,bb,cc,dd,ee,ff,gg,hh,ii,jj,kk,ll,mm,nn,oo,pp,qq,rr,ss,tt,uu,vv,ww,xx");
-        t7.addRequirement(CriterionName.GENDER, "female");
+        t7.addRequirement(CriterionName.HISTORY, "same");
+        t7.setHistory(t1);
         //t8
-        t8.addRequirement(CriterionName.GUEST_ANIMAL_ALLERGY, "no");
-        t8.addRequirement(CriterionName.HOST_HAS_ANIMAL, "yes");
-        t8.addRequirement(CriterionName.GENDER, "male");
-        //t9
-        t9.addRequirement(CriterionName.GUEST_ANIMAL_ALLERGY, "no");
-        t9.addRequirement(CriterionName.HOST_HAS_ANIMAL, "no");
-        t9.addRequirement(CriterionName.GENDER, "female");
-        //t10
-        t10.addRequirement(CriterionName.GUEST_ANIMAL_ALLERGY, "no");
-        t10.addRequirement(CriterionName.HOST_HAS_ANIMAL, "yes");
-        t10.addRequirement(CriterionName.HOBBIES, "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,aa,bb,cc,dd,ee,ff,gg,hh,ii,jj,kk,ll,mm,nn,oo,pp,qq,rr,ss,tt,uu,vv,ww,xx");
-        t10.addRequirement(CriterionName.GENDER, "male");
+        t8.setHistory(t2);
     }
 
 
     @Test
-    public void testweightV1(){
+    public void testweightV2Exemple1(){
         //Double.valueOf nécessaire car ambiguité voir : https://stackoverflow.com/questions/1811103/java-junit-the-method-x-is-ambiguous-for-type-y 
-        assertEquals(Double.valueOf(99),AffectationUtil.weightV1(t4, t1));
-        assertEquals(Double.valueOf(99),AffectationUtil.weightV1(t4,t2));
-        assertEquals(Double.valueOf(100),AffectationUtil.weightV1(t4,t3));
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t1, t5));
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t1, t6));
+        assertEquals(Double.valueOf(0),AffectationUtil.weightV2(t1, t7));
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t1, t8));
 
-        assertEquals(Double.valueOf(100),AffectationUtil.weightV1(t5,t1));
-        assertEquals(Double.valueOf(199),AffectationUtil.weightV1(t5,t2));
-        assertEquals(Double.valueOf(98),AffectationUtil.weightV1(t5,t3));
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t2, t5));
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t2, t6));
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t2, t7));
+        assertEquals(Double.valueOf(96),AffectationUtil.weightV2(t2, t8));
 
-        assertEquals(Double.valueOf(99),AffectationUtil.weightV1(t6,t1));
-        assertEquals(Double.valueOf(100),AffectationUtil.weightV1(t6,t2));
-        assertEquals(Double.valueOf(100),AffectationUtil.weightV1(t6,t3));
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t3, t5));
+        assertEquals(Double.valueOf(200),AffectationUtil.weightV2(t3, t6));
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t3, t7));
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t3, t8));
 
-        assertEquals(Double.valueOf(99),AffectationUtil.weightV1(t6,t1));
-        assertEquals(Double.valueOf(100),AffectationUtil.weightV1(t6,t2));
-        assertEquals(Double.valueOf(100),AffectationUtil.weightV1(t6,t3));
+        assertEquals(Double.valueOf(96),AffectationUtil.weightV2(t4, t5));
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t4, t6));
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t4, t7));
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t4, t8));
 
-        //Tests incompatibilityVsHobbies
-        assertEquals(Double.valueOf(100),AffectationUtil.weightV1(t7,t8));
-        assertEquals(Double.valueOf(100),AffectationUtil.weightV1(t7,t9));
-        assertEquals(Double.valueOf(97),AffectationUtil.weightV1(t7,t10));
+    }
 
-        assertEquals(Double.valueOf(200),AffectationUtil.weightV1(t8,t7));
-        assertEquals(Double.valueOf(100),AffectationUtil.weightV1(t8,t9));
-        assertEquals(Double.valueOf(100),AffectationUtil.weightV1(t8,t10));
+    public void addRequirements() {
+        //T1
+        try {
+            t2.addRequirement(CriterionName.HOBBIES, "reading");
+            t3.addRequirement(CriterionName.HOBBIES, "culture");
+            t4.addRequirement(CriterionName.HOBBIES, "culture,science");
+            t5.addRequirement(CriterionName.HOBBIES, "science");
+            t6.addRequirement(CriterionName.HOBBIES, "reading,culture");
+            t7.addRequirement(CriterionName.HOBBIES, "sports");
+            t8.addRequirement(CriterionName.HOBBIES, "sports,culture,reading");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        assertEquals(Double.valueOf(100),AffectationUtil.weightV1(t9,t7));
-        assertEquals(Double.valueOf(100),AffectationUtil.weightV1(t9,t8));
-        assertEquals(Double.valueOf(100),AffectationUtil.weightV1(t9,t10));
+    }
 
-        assertEquals(Double.valueOf(197),AffectationUtil.weightV1(t10,t7));
-        assertEquals(Double.valueOf(100),AffectationUtil.weightV1(t10,t8));
-        assertEquals(Double.valueOf(100),AffectationUtil.weightV1(t10,t9));
+    @Test
+    public void testweightV2Exemple2() throws InvalidCriterion{
+        addRequirements();
+        //Double.valueOf nécessaire car ambiguité voir : https://stackoverflow.com/questions/1811103/java-junit-the-method-x-is-ambiguous-for-type-y 
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t1, t5));
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t1, t6));
+        assertEquals(Double.valueOf(0),AffectationUtil.weightV2(t1, t7));
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t1, t8));
+
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t2, t5));
+        assertEquals(Double.valueOf(99),AffectationUtil.weightV2(t2, t6));
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t2, t7));
+        assertEquals(Double.valueOf(95),AffectationUtil.weightV2(t2, t8));
+
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t3, t5));
+        assertEquals(Double.valueOf(199),AffectationUtil.weightV2(t3, t6));
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t3, t7));
+        assertEquals(Double.valueOf(99),AffectationUtil.weightV2(t3, t8));
+
+        assertEquals(Double.valueOf(95),AffectationUtil.weightV2(t4, t5));
+        assertEquals(Double.valueOf(99),AffectationUtil.weightV2(t4, t6));
+        assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t4, t7));
+        assertEquals(Double.valueOf(99),AffectationUtil.weightV2(t4, t8));
+
     }
 }

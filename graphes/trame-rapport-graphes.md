@@ -210,7 +210,7 @@ Cet appariement correspond à l'un des deux appariement optimal possible pour ce
 >| Guest/Host    | Laris        | Bellatrix    | Mave         | Hinkkost     |
 >|:-:            |:-:           | :-:          | :-:          | :-:          |
 >| **Dalthu**    |&#128528; / 0 |&#128528; / 0 |&#10004; / 0 |&#128528; / 0  |
->| **Lilly**     |&#128528; / 0 |&#128528; / 1 |&#128528; / 0 |&#128578; / 0 |
+>| **Lilly**     |&#128528; / 0 |&#128528; / 1 |&#128528; / 0 |&#128578; / 1 |
 >| **Jensmebur** |&#128528; / 0 |&#10060; / 1  |&#128528; / 0 |&#128528; / 1 |
 >| **Himimtoss** |&#128578; / 1 |&#128528; / 1 |&#128528; / 0 |&#128528; / 1 |
 >
@@ -223,7 +223,7 @@ Cet appariement correspond à l'un des deux appariement optimal possible pour ce
 >
 >Comme précédemment cela ne change pas, **Dalthu--Mave** étant une ancienne paire d'étudiant ayant mis "same" tous les deux ils sont donc obligatoirement ensemble.
 Comme précédemment Jensmebur--Bellatrix étant une ancienne paire d'étudiant dont l'un à mis other, le couple ne doit surtout pas être ensemble, il faut donc associer Jensmebur avec quelqu'un d'autre, cependant cette fois-ci on a ajouter les hobbies à prendre en compte, on l'associe donc avec Hinkkost **Jensmebur--Hinkkost** car ils ont un hobbie en commun alors que l'autre possibilité Jensmebur--Laris n'ont pas d'hobbies en commun.
-Ensuite on peut voir que **Himimtoss--Laris** on une affinité entre eux puisque l'un a mis same mais l'autre n'a rien mis, on peut donc les mettre ensemble (à voir de plus qu'ils ont un hobbie en commun que la paire choisit pour l'exemple précédent n'en a actuellemnt pas donc ce choit de couple est plus optimal).
+Ensuite on peut voir que **Himimtoss--Laris** on une affinité entre eux puisque l'un a mis same mais l'autre n'a rien mis, on peut donc les mettre ensemble.
 Pour finir, la paire **Lilly--Bellatrix** est par défault la dernière n'ayant pas de particularité par rapport aux autres choix possibles.
 Cet appariement correspond au seul appariement optimal possible pour cet exemple puisque les hobbies permettent de décider d'un appariement entre les deux optimaux de l'exemple précédent.
 
@@ -288,7 +288,7 @@ Cet appariement correspond au seul appariement optimal possible pour cet exemple
 >| Guest/Host    | Laris        | Bellatrix     | Mave          | Hinkkost     |
 >|:-:            |:-:           | :-:           | :-:           | :-:          |
 >| **Dalthu**    | 100 +- 0 - 0 | 100 +- 0 - 0  | 100 - 100 - 0 | 100 +- 0 - 0 |
->| **Lilly**     | 100 +- 0 - 0 | 100 +- 0 - 1  | 100 +- 0 - 0  | 100 - 4 - 0  |
+>| **Lilly**     | 100 +- 0 - 0 | 100 +- 0 - 1  | 100 +- 0 - 0  | 100 - 4 - 1  |
 >| **Jensmebur** | 100 +- 0 - 0 | 100 + 100 - 1 | 100 +- 0 - 0  | 100 +- 0 - 1 |
 >| **Himimtoss** | 100 - 4 - 1  | 100 +- 0 - 1  | 100 +- 0 - 0  | 100 +- 0 - 1 |
 >
@@ -297,7 +297,7 @@ Cet appariement correspond au seul appariement optimal possible pour cet exemple
 >| Guest/Host    | Laris    | Bellatrix | Mave     | Hinkkost |
 >|:-:            |:-:       | :-:       | :-:      | :-:      |
 >| **Dalthu**    | 100      | 100       | 0        | 100      |
->| **Lilly**     | 100      | 99        | 100      | 96       |
+>| **Lilly**     | 100      | 99        | 100      | 95       |
 >| **Jensmebur** | 100      | 199       | 100      | 99       |
 >| **Himimtoss** | 95       | 99        | 100      | 99       |
 >
@@ -310,7 +310,7 @@ Cet appariement correspond au seul appariement optimal possible pour cet exemple
 >
 >Cette confinaison permet d'avoir l'appariement optimal pour un poids total de 0 + 95 + 99 + 99 = 293.
 >
->Pour comparaison si on avait choisit l'appariement de la modélisation 1, on aurait un poids total de 0 + 96 + 100 + 99 = 295
+>Pour comparaison si on avait choisit l'appariement de la modélisation 1, on aurait un poids total de 0 + 95 + 100 + 99 = 294
 
 
 ### Modélisation pour l'historique de la Version 2
@@ -350,6 +350,8 @@ Cette méthode est ensuite utilisée dans la méthode ```double weight(Teenager 
 ### Test pour l'historique de la Version 2
 
 *Créer la classe de TestAffectationVersion2 qui contiendra deux méthodes de test, une pour chacun des exemples. Chacune de ces méthodes doit avoir la même structure que pour TestAffectationVersion1, c'est à dire créer les données d'entrée (adolescents, historique), créer le graphe, calculer l'affectation, et tester que le résultat est comme attendu.*
+
+>Pour la classe test nous avons d'abord ... (**A FINIR**) 
 
 ### Prendre en compte les autres préférences
 

@@ -83,7 +83,7 @@ public class AffectationUtil {
         try {
             if(!host.compatibleWithGuestGrapheV2(visitor)) weight += 100;
         } catch(RequirementNotFound e) {
-            weight += 100;
+
         }
 
         try {
