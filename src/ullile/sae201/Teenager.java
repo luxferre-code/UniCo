@@ -109,14 +109,21 @@ public class Teenager {
     }
 
     /**
+     * Check if the teenager is compatible with a teenager (Graphe v1)
+     * @param guest (Teenager) - The other teenager
+     * @return (boolean) - True if the teenager is compatible with the other teenager, false otherwise
+     */
+    public boolean compatibleWithGuestGrapheV1(Teenager guest) throws RequirementNotFound {
+        return !(booleanConverter(guest,CriterionName.GUEST_ANIMAL_ALLERGY,Criterion.YES) && booleanConverter(this,CriterionName.HOST_HAS_ANIMAL,Criterion.YES));
+    }
+
+
+    /**
      * Check if the teenager is compatible with a teenager (Graphe v2)
      * @param guest (Teenager) - The other teenager
      * @return (boolean) - True if the teenager is compatible with the other teenager, false otherwise
      */
-    public boolean compatibleWithGuestGraphe(Teenager guest) throws RequirementNotFound {
-        if(booleanConverter(guest,CriterionName.GUEST_ANIMAL_ALLERGY,Criterion.YES) && booleanConverter(this,CriterionName.HOST_HAS_ANIMAL,Criterion.YES)){
-            return false;
-        }
+    public boolean compatibleWithGuestGrapheV2(Teenager guest) throws RequirementNotFound {
         return this.compatibleHistory(guest);
     }
 

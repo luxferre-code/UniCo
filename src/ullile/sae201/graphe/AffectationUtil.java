@@ -27,7 +27,7 @@ public class AffectationUtil {
     public static double weight(Teenager host, Teenager visitor) {
         double weight = 100;
         try {
-            if(!host.compatibleWithGuestGraphe(visitor)) weight += 100;
+            if(!host.compatibleWithGuest(visitor)) weight += 100;
         } catch(RequirementNotFound e) {
             weight += 100;
         }
@@ -43,6 +43,56 @@ public class AffectationUtil {
         weight -= genderWeight(host, visitor);
 
         weight -= ageWeight(host, visitor);
+
+        return weight;
+    }
+
+    /** Calcule le poids de l’arête entre host et visitor dans le graphe modèle (Graphe Version 1).
+     * Doit faire appel à la méthode compatibleWithGuest(Teenager) de Teenager.
+     * Peut avoir d’autres paramètres si nécessaire.
+     * @param host (Teenager) - The teenager
+     * @param visitor (Teenager) - The other teenager
+     * @return (double) - The edge weight
+     */
+    public static double weightV1(Teenager host, Teenager visitor) {
+        double weight = 100;
+        try {
+            if(!host.compatibleWithGuestGrapheV1(visitor)) weight += 100;
+        } catch(RequirementNotFound e) {
+            weight += 100;
+        }
+
+        try {
+            weight -= hobbiesWeight(host, visitor);
+        } catch(RequirementNotFound e) {
+            System.out.println("Une des deux personnes n'a pas de hobbies définis !");
+        }
+
+        return weight;
+    }
+
+        /** Calcule le poids de l’arête entre host et visitor dans le graphe modèle.
+     * Doit faire appel à la méthode compatibleWithGuest(Teenager) de Teenager.
+     * Peut avoir d’autres paramètres si nécessaire.
+     * @param host (Teenager) - The teenager
+     * @param visitor (Teenager) - The other teenager
+     * @return (double) - The edge weight
+     */
+    public static double weightV2(Teenager host, Teenager visitor) {
+        double weight = 100;
+        try {
+            if(!host.compatibleWithGuestGrapheV2(visitor)) weight += 100;
+        } catch(RequirementNotFound e) {
+            weight += 100;
+        }
+
+        try {
+            weight -= hobbiesWeight(host, visitor);
+        } catch(RequirementNotFound e) {
+            System.out.println("Une des deux personnes n'a pas de hobbies définis !");
+        }
+
+        weight -= historyWeight(host, visitor);  
 
         return weight;
     }

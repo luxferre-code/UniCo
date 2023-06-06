@@ -16,13 +16,12 @@ import ullile.sae201.exception.InvalidCriterion;
 import ullile.sae201.graphe.AffectationUtil;
 
 /**
- * AffectationUtil test class V1
- * @author Elise Leroy, Romain Degez
+ * AffectationUtil test class V2
+ * @author Romain Degez
  */
-public class TestAffectationVersion1 {
-    
-    private Teenager t1, t2, t3, t4, t5, t6, t7, t8, t9, t10;
-    private Date d1, d2, d3, d4, d5, d6, d7, d8, d9, d10;
+public class TestAffectationVersion2 {
+    private Teenager t1, t2, t3, t4, t5, t6, t7, t8;
+    private Date d1, d2, d3, d4, d5, d6, d7, d8;
     
     @Before
     public void setUp() throws InvalidCriterion{
@@ -35,8 +34,6 @@ public class TestAffectationVersion1 {
         d6 = new Date();
         d7 = new Date();
         d8 = new Date();
-        d9 = new Date();
-        d10 = new Date();
 
         Calendar c = Calendar.getInstance();
         c.set(1999, Calendar.JANUARY, 1);
@@ -55,24 +52,18 @@ public class TestAffectationVersion1 {
         d7 = c.getTime();
         c.set(2009, Calendar.JUNE, 1);
         d8 = c.getTime();
-        c.set(2009, Calendar.JUNE, 1);
-        d9 = c.getTime();
-        c.set(2009, Calendar.JUNE, 1);
-        d10 = c.getTime();
 
 
         /*Instancing teenagers */
-        t1 = new Teenager("A", "Adonia", d1, "France");
-        t2 = new Teenager("B", "Bellatrix",  d2, "France");
-        t3 = new Teenager("C", "Callista", d3, "France");
-        t4 = new Teenager("X", "xolag", d4, "Italy");
-        t5 = new Teenager("Y","Yak", d5,"Italy");
-        t6 = new Teenager("Z", "Zander", d6, "Italy");
+        t1 = new Teenager("Tanjin", "Dalthu", d1, "ITALY");
+        t2 = new Teenager("Damon", "Lilly",  d2, "ITALY");
+        t3 = new Teenager("Ekey", "Jensmebur", d3, "ITALY");
+        t4 = new Teenager("Ozith", "Himimtoss", d4, "ITALY");
 
-        t7 = new Teenager("A", "A", d7, "ITALY");
-        t8 = new Teenager("B", "B",  d8, "ITALY");
-        t9 = new Teenager("C", "C", d9, "GERMANY");
-        t10 = new Teenager("D", "D", d10, "GERMANY");
+        t5 = new Teenager("Rex","Laris", d5,"GERMANY");
+        t6 = new Teenager("Interfector", "Bellatrix", d6, "GERMANY");
+        t7 = new Teenager("Crane", "Mave", d7, "GERMANY");
+        t8 = new Teenager("Enaxx", "Hinkkost",  d8, "GERMANY");
 
 
         /*Adding requirement to the test teenagers */

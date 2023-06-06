@@ -14,7 +14,7 @@ import ullile.sae201.exception.InvalidCriterion;
 import ullile.sae201.graphe.AffectationUtil;
 
 /**
- * @author Elise Leroy
+ * @author Elise Leroy, Romain Degez
  */
 public class AffectationUtilTest {
     
@@ -64,13 +64,13 @@ public class AffectationUtilTest {
     }
 
     @Test
-    public void testWeight(){
+    public void testweightV1(){
         //Double.valueOf nécessaire car ambiguité voir : https://stackoverflow.com/questions/1811103/java-junit-the-method-x-is-ambiguous-for-type-y
-        assertEquals(Double.valueOf(199), AffectationUtil.weight(t2, t1));
-        assertEquals(Double.valueOf(97), AffectationUtil.weight(t1, t3)); 
-        assertEquals(Double.valueOf(200), AffectationUtil.weight(t4, t1)); 
-        assertEquals(Double.valueOf(99), AffectationUtil.weight(t2, t3));
-        assertEquals(Double.valueOf(100), AffectationUtil.weight(t2, t4));
-        assertEquals(Double.valueOf(98), AffectationUtil.weight(t3, t4));
+        assertEquals(Double.valueOf(199), AffectationUtil.weightV1(t2, t1));
+        assertEquals(Double.valueOf(97), AffectationUtil.weightV1(t1, t3)); 
+        assertEquals(Double.valueOf(200), AffectationUtil.weightV1(t4, t1)); 
+        assertEquals(Double.valueOf(99), AffectationUtil.weightV1(t2, t3));
+        assertEquals(Double.valueOf(100), AffectationUtil.weightV1(t2, t4));
+        assertEquals(Double.valueOf(98), AffectationUtil.weightV1(t3, t4));
     }
 }
