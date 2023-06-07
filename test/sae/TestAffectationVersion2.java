@@ -63,7 +63,9 @@ public class TestAffectationVersion2 {
         d8 = c.getTime();
 
 
-        /*Instancing teenagers */
+        /*Instancing teenagers and List of Teenager */
+
+        //Guests
         t1 = new Teenager("Tanjin", "Dalthu", d1, "ITALY");
         t2 = new Teenager("Damon", "Lilly",  d2, "ITALY");
         t3 = new Teenager("Ekey", "Jensmebur", d3, "ITALY");
@@ -74,7 +76,7 @@ public class TestAffectationVersion2 {
         guestList.add(t3);
         guestList.add(t4);
 
-
+        //Hosts
         t5 = new Teenager("Rex","Laris", d5,"GERMANY");
         t6 = new Teenager("Interfector", "Bellatrix", d6, "GERMANY");
         t7 = new Teenager("Crane", "Mave", d7, "GERMANY");
@@ -115,6 +117,8 @@ public class TestAffectationVersion2 {
     @Test
     public void testweightV2Exemple1(){
         //Double.valueOf nécessaire car ambiguité voir : https://stackoverflow.com/questions/1811103/java-junit-the-method-x-is-ambiguous-for-type-y 
+        
+        //Test the value calculated by the weight method
         assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t1, t5));
         assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t1, t6));
         assertEquals(Double.valueOf(0),AffectationUtil.weightV2(t1, t7));
@@ -135,13 +139,31 @@ public class TestAffectationVersion2 {
         assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t4, t7));
         assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t4, t8));
 
+
+        //Create the graphe and calculate affectation
         graphe = AffectationUtil.creerGrapheTeenagerV2(hostList, guestList);
         affectation = new CalculAffectation<Teenager>(graphe,hostList,guestList);
         appariment.addAll(affectation.calculerAffectation());
 
+        //Display the affectation result in the terminal
+        System.out.println(AffectationUtil.afficherAppariement(appariment));
+        //Have to get this affectation (the one chose from the example):
+        //Mave--Dalthu(0.0)
+        //Hinkkost--Lilly(96.0)
+        //Laris--Jensmebur(100.0)
+        //Bellatrix--Himimtoss(100.0)
+        //OR
+        //Have to get this affectation (the other possible one not choose in the example):
+        //Mave--Dalthu(0.0)
+        //Hinkkost--Jensmebur(96.0)
+        //Laris--Himimtoss(100.0)
+        //Bellatrix--Lilly(100.0)
+
+        //Test the total value got from the affectation
         assertEquals(Double.valueOf(296),affectation.getCout());
     }
 
+    /*Method to add more requirements to the test teenagers */
     public void addRequirements() {
         try {
             t2.addRequirement(CriterionName.HOBBIES, "reading");
@@ -159,8 +181,14 @@ public class TestAffectationVersion2 {
 
     @Test
     public void testweightV2Exemple2() throws InvalidCriterion{
+    
+        /*Adding more requirements to the test teenagers */
         addRequirements();
+        
+
         //Double.valueOf nécessaire car ambiguité voir : https://stackoverflow.com/questions/1811103/java-junit-the-method-x-is-ambiguous-for-type-y 
+        
+        //Test the value calculated by the weight method
         assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t1, t5));
         assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t1, t6));
         assertEquals(Double.valueOf(0),AffectationUtil.weightV2(t1, t7));
@@ -181,10 +209,21 @@ public class TestAffectationVersion2 {
         assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t4, t7));
         assertEquals(Double.valueOf(99),AffectationUtil.weightV2(t4, t8));
 
+
+        //Create the graphe and calculate affectation
         graphe = AffectationUtil.creerGrapheTeenagerV2(hostList, guestList);
         affectation = new CalculAffectation<Teenager>(graphe,hostList,guestList);
         appariment.addAll(affectation.calculerAffectation());
 
+        //Display the affectation result in the terminal
+        System.out.println(AffectationUtil.afficherAppariement(appariment));
+        //Have to get this affectation :
+        //Mave--Dalthu(0.0)
+        //Laris--Himimtoss(95.0)
+        //Hinkkost--Jensmebur(99.0)
+        //Bellatrix--Lilly(99.0)
+
+        //Test the total value got from the affectation
         assertEquals(Double.valueOf(293),affectation.getCout());
 
     }

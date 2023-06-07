@@ -71,6 +71,14 @@ Sera évaluée à partir du tag git `Graphes-v1`
 >| **Bellatrix** | 99    | 199      | 100    |
 >| **Callista**  | 100   | 98       | 100    |
 >
+>
+>Selon la matrice plus haut on prend pour chaque visiteur le poids avec l'hôte le plus faible :
+>
+>- Callista a le poids optimal avec Yak pour un poids de 98 **Callista--Yak**.
+>- Bellatrix a le poids optimal avec Xolag pour un poids de 99 **Bellatrix--Xolag**.
+>- Adonia a l'un des poids optimal avec Zander pour un poids de 99 (on choisit celui ci car l'autre possibilité n'est plus disponible) **Adonia--Zander**.
+>
+>Cette confinaison permet d'avoir l'appariement optimal pour un poid de 98 + 99 + 99 = 296.
 
 
 ### Modélisation pour la Version 1
@@ -354,6 +362,7 @@ Cette méthode est ensuite utilisée dans la méthode ```double weight(Teenager 
 >Pour la classe test nous avons d'abord créé les étudiants en les définissant comme dans les deux examples, nous avons mis les étudiants hôtes dans une liste et les étudiants visiteurs dans une autre.
 Ensuite on a testé que le poids entre chaque étudiants obtenue grâce à la méthode weight est bien celui calculé dans les deux exemples.
 Puis on a créé le graphe pour les deux exemples, on a calculé l'affectation et on a vérifié que le poids total de l'affectation est bien celui obtenue dans les deux exemples.
+On a finalement affiché l'affectation obtenue qui correspond bien à ce que nous avons déduit dans les examples.
 
 ### Prendre en compte les autres préférences
 
