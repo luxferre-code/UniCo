@@ -3,6 +3,7 @@ package sae;
 import org.junit.Before;
 import org.junit.Test;
 
+import fr.ulille.but.sae2_02.graphes.Arete;
 import fr.ulille.but.sae2_02.graphes.CalculAffectation;
 import fr.ulille.but.sae2_02.graphes.GrapheNonOrienteValue;
 
@@ -28,6 +29,7 @@ public class TestAffectationVersion2 {
     private ArrayList<Teenager> hostList;
     private GrapheNonOrienteValue<Teenager> graphe;
     private CalculAffectation<Teenager> affectation;
+    ArrayList<Arete<Teenager>> appariment = new ArrayList<Arete<Teenager>>(); 
 
     
     @Before
@@ -134,12 +136,10 @@ public class TestAffectationVersion2 {
         assertEquals(Double.valueOf(100),AffectationUtil.weightV2(t4, t8));
 
         graphe = AffectationUtil.creerGrapheTeenagerV2(hostList, guestList);
-
         affectation = new CalculAffectation<Teenager>(graphe,hostList,guestList);
-        affectation.calculerAffectation();
+        appariment.addAll(affectation.calculerAffectation());
 
-        
-
+        assertEquals(Double.valueOf(296),affectation.getCout());
     }
 
     public void addRequirements() {
@@ -182,8 +182,10 @@ public class TestAffectationVersion2 {
         assertEquals(Double.valueOf(99),AffectationUtil.weightV2(t4, t8));
 
         graphe = AffectationUtil.creerGrapheTeenagerV2(hostList, guestList);
-
         affectation = new CalculAffectation<Teenager>(graphe,hostList,guestList);
+        appariment.addAll(affectation.calculerAffectation());
+
+        assertEquals(Double.valueOf(293),affectation.getCout());
 
     }
 }

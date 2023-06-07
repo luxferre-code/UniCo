@@ -351,7 +351,9 @@ Cette méthode est ensuite utilisée dans la méthode ```double weight(Teenager 
 
 *Créer la classe de TestAffectationVersion2 qui contiendra deux méthodes de test, une pour chacun des exemples. Chacune de ces méthodes doit avoir la même structure que pour TestAffectationVersion1, c'est à dire créer les données d'entrée (adolescents, historique), créer le graphe, calculer l'affectation, et tester que le résultat est comme attendu.*
 
->Pour la classe test nous avons d'abord ... (**A FINIR**) 
+>Pour la classe test nous avons d'abord créé les étudiants en les définissant comme dans les deux examples, nous avons mis les étudiants hôtes dans une liste et les étudiants visiteurs dans une autre.
+Ensuite on a testé que le poids entre chaque étudiants obtenue grâce à la méthode weight est bien celui calculé dans les deux exemples.
+Puis on a créé le graphe pour les deux exemples, on a calculé l'affectation et on a vérifié que le poids total de l'affectation est bien celui obtenue dans les deux exemples.
 
 ### Prendre en compte les autres préférences
 

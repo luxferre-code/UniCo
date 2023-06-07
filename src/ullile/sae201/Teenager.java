@@ -342,4 +342,11 @@ public class Teenager {
     public boolean havingThisRequirement(CriterionName criterionName){
         return this.requirements.containsKey(criterionName);
     }
+
+    @Override
+    public String toString() {
+        return  FORENAME ;
+    }
+
+    
 }

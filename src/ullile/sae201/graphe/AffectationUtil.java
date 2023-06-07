@@ -3,13 +3,13 @@ package ullile.sae201.graphe;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 
 import ullile.sae201.Criterion;
 import ullile.sae201.CriterionName;
 import ullile.sae201.Teenager;
 import ullile.sae201.exception.RequirementNotFound;
+import fr.ulille.but.sae2_02.graphes.Arete;
+import fr.ulille.but.sae2_02.graphes.CalculAffectation;
 import fr.ulille.but.sae2_02.graphes.GrapheNonOrienteValue;
 
 
@@ -345,12 +345,12 @@ public class AffectationUtil {
     }
 
     /**
-     * Crée un graphe GrapheNonOrienteValue<Teenager> à partir d'un set de Teenager hosts et d'un set de Teenager guest en définissant les Teenager comme sommets du graphe et en définissant entre chaque étudiant host et chaque étudiants guest une arête dont le poids est défini par la fonction {@link #weight(Teenager, Teenager) }
-     * @param hosts Un set de Teenager hôtes
-     * @param guests Un set de Teenager visiteurs
+     * Crée un graphe GrapheNonOrienteValue<Teenager> à partir d'une liste de Teenager hosts et d'une liste de Teenager guest en définissant les Teenager comme sommets du graphe et en définissant entre chaque étudiant host et chaque étudiants guest une arête dont le poids est défini par la fonction {@link #weight(Teenager, Teenager) }
+     * @param hosts Une liste de Teenager hôtes
+     * @param guests Une lsite de Teenager visiteurs
      * @return (GrapheNonOrienteValue<Teenager>) - Le graphe créé à partir des étudiants
      */
-    public static GrapheNonOrienteValue<Teenager> creerGrapheTeenager(HashSet<Teenager> hosts, HashSet<Teenager> guests){
+    public static GrapheNonOrienteValue<Teenager> creerGrapheTeenager(ArrayList<Teenager> hosts, ArrayList<Teenager> guests){
         GrapheNonOrienteValue<Teenager> teenagerGraphe = new GrapheNonOrienteValue<Teenager>();
         for (Teenager host : hosts) {
             teenagerGraphe.ajouterSommet(host);
@@ -368,12 +368,12 @@ public class AffectationUtil {
     }
 
     /**
-     * Crée un graphe GrapheNonOrienteValue<Teenager> à partir d'un set de Teenager hosts et d'un set de Teenager guest en définissant les Teenager comme sommets du graphe et en définissant entre chaque étudiant host et chaque étudiants guest une arête dont le poids est défini par la fonction {@link #weightV1(Teenager, Teenager) }
-     * @param hosts Un set de Teenager hôtes
-     * @param guests Un set de Teenager visiteurs
+     * Crée un graphe GrapheNonOrienteValue<Teenager> à partir d'une liste de Teenager hosts et d'une liste de Teenager guest en définissant les Teenager comme sommets du graphe et en définissant entre chaque étudiant host et chaque étudiants guest une arête dont le poids est défini par la fonction {@link #weightV1(Teenager, Teenager) }
+     * @param hosts Une liste de Teenager hôtes
+     * @param guests Une lsite de Teenager visiteurs
      * @return (GrapheNonOrienteValue<Teenager>) - Le graphe créé à partir des étudiants
      */
-    public static GrapheNonOrienteValue<Teenager> creerGrapheTeenagerV1(Collection<Teenager> hosts, Collection<Teenager> guests){
+    public static GrapheNonOrienteValue<Teenager> creerGrapheTeenagerV1(ArrayList<Teenager> hosts, ArrayList<Teenager> guests){
         GrapheNonOrienteValue<Teenager> teenagerGraphe = new GrapheNonOrienteValue<Teenager>();
         for (Teenager host : hosts) {
             teenagerGraphe.ajouterSommet(host);
@@ -391,12 +391,12 @@ public class AffectationUtil {
     }
 
     /**
-     * Crée un graphe GrapheNonOrienteValue<Teenager> à partir d'un set de Teenager hosts et d'un set de Teenager guest en définissant les Teenager comme sommets du graphe et en définissant entre chaque étudiant host et chaque étudiants guest une arête dont le poids est défini par la fonction {@link #weightV2(Teenager, Teenager) }
-     * @param hosts Un set de Teenager hôtes
-     * @param guests Un set de Teenager visiteurs
+     * Crée un graphe GrapheNonOrienteValue<Teenager> à partir d'une liste de Teenager hosts et d'une liste de Teenager guest en définissant les Teenager comme sommets du graphe et en définissant entre chaque étudiant host et chaque étudiants guest une arête dont le poids est défini par la fonction {@link #weightV2(Teenager, Teenager) }
+     * @param hosts Une liste de Teenager hôtes
+     * @param guests Une lsite de Teenager visiteurs
      * @return (GrapheNonOrienteValue<Teenager>) - Le graphe créé à partir des étudiants
      */
-    public static GrapheNonOrienteValue<Teenager> creerGrapheTeenagerV2(Collection<Teenager> hosts, Collection<Teenager> guests){
+    public static GrapheNonOrienteValue<Teenager> creerGrapheTeenagerV2(ArrayList<Teenager> hosts, ArrayList<Teenager> guests){
         GrapheNonOrienteValue<Teenager> teenagerGraphe = new GrapheNonOrienteValue<Teenager>();
         for (Teenager host : hosts) {
             teenagerGraphe.ajouterSommet(host);
@@ -411,6 +411,20 @@ public class AffectationUtil {
             }
         }
         return teenagerGraphe;
+    }
+
+        /**
+     * Crée et affiche l'appariement optimal à partir d'un graphe de Teenager, d'une liste de Teenager hosts et d'une liste de Teenager guest grâce à la méthode {@link CalculAffectation#calculerAffectation() }
+     * @param hosts Une liste de Teenager hôtes
+     * @param guests Une lsite de Teenager visiteurs
+     * @return (GrapheNonOrienteValue<Teenager>) - Le graphe créé à partir des étudiants
+     */
+    public static String afficherAppariement(ArrayList<Arete<Teenager>> appariment){
+        String affichage = "";;
+        for (Arete<Teenager> arete : appariment) {
+           affichage += arete.getExtremite1() + "--" + arete.getExtremite2() + "(" + arete.getPoids() + ")\n"; 
+        }
+        return affichage;
     }
 
 
