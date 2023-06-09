@@ -2,34 +2,45 @@ package sae;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.Calendar;
+import java.util.Date;
+
 import ullile.sae201.CriterionName;
 import ullile.sae201.Teenager;
 import ullile.sae201.exception.InvalidCriterion;
 import ullile.sae201.graphe.AffectationUtil;
 
-import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 /**
- * @author Elise Leroy
+ * @author Elise Leroy, Romain Degez
  */
 public class AffectationUtilTest {
-
+    
     private Teenager t1, t2, t3, t4;
-    private LocalDate d1, d2, d3, d4;
-
+    private Date d1, d2, d3, d4;
+    
     @Before
-    public void setUp() throws InvalidCriterion {
-        /*Instancing birth dates */
-        d1 = LocalDate.of(1999, 1, 1);
-        d2 = LocalDate.of(2000, 1, 1);
-        d3 = LocalDate.of(2001, 1, 1);
-        d4 = LocalDate.of(2002, 1, 1);
+    public void setUp() throws InvalidCriterion{
+    /*Instancing birth dates */
+        d1 = new Date();
+        d2 = new Date();
+        d3 = new Date();
+        d4 = new Date();
+        Calendar c = Calendar.getInstance();
+        c.set(1999, Calendar.JANUARY, 1);
+        d1 = c.getTime();
+        c.set(2000, Calendar.JANUARY, 1);
+        d2 = c.getTime();
+        c.set(2001, Calendar.JANUARY, 1);
+        d3 = c.getTime();
+        c.set(2002, Calendar.JANUARY, 1);
+        d4 = c.getTime();
 
-        /* Instance of Teenager */
+        /*Instancing teenagers */
         t1 = new Teenager("Toto", "Machin", d1, "France");
-        t2 = new Teenager("Tata", "Truc", d2, "Spain");
+        t2 = new Teenager("Tata", "Truc",  d2, "Spain");
         t3 = new Teenager("Titi", "Bidule", d3, "Italy");
         t4 = new Teenager("Tati", "Chouette", d4, "germany");
 
@@ -53,13 +64,13 @@ public class AffectationUtilTest {
     }
 
     @Test
-    public void testWeight() {
+    public void testweightV1(){
         //Double.valueOf nécessaire car ambiguité voir : https://stackoverflow.com/questions/1811103/java-junit-the-method-x-is-ambiguous-for-type-y
-        assertEquals(Double.valueOf(199), AffectationUtil.weight(t2, t1));
-        assertEquals(Double.valueOf(97), AffectationUtil.weight(t1, t3)); 
-        assertEquals(Double.valueOf(200), AffectationUtil.weight(t4, t1)); 
-        assertEquals(Double.valueOf(99), AffectationUtil.weight(t2, t3));
-        assertEquals(Double.valueOf(100), AffectationUtil.weight(t2, t4));
-        assertEquals(Double.valueOf(98), AffectationUtil.weight(t3, t4));
+        assertEquals(Double.valueOf(199), AffectationUtil.weightV1(t2, t1));
+        assertEquals(Double.valueOf(97), AffectationUtil.weightV1(t1, t3)); 
+        assertEquals(Double.valueOf(200), AffectationUtil.weightV1(t4, t1)); 
+        assertEquals(Double.valueOf(99), AffectationUtil.weightV1(t2, t3));
+        assertEquals(Double.valueOf(100), AffectationUtil.weightV1(t2, t4));
+        assertEquals(Double.valueOf(98), AffectationUtil.weightV1(t3, t4));
     }
 }
