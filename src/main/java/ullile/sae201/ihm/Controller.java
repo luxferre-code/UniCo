@@ -2,6 +2,7 @@ package ullile.sae201.ihm;
 
 import javafx.stage.FileChooser;
 import ullile.sae201.CSVFile;
+import ullile.sae201.exception.InvalidCSVException;
 
 import java.io.File;
 
@@ -26,7 +27,7 @@ public class Controller {
         Main.goTo(MAIN_MENU_FXML);
     }
 
-    public void fileChooser() {
+    public void fileChooser() throws InvalidCSVException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
         fileChooser.setTitle("Open Resource File");

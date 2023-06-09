@@ -1,10 +1,14 @@
 package ullile.sae201;
 
+import ullile.sae201.exception.InvalidCSVException;
 import ullile.sae201.exception.InvalidCriterion;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  * CSVFile class
@@ -56,6 +60,7 @@ public class CSVFile {
                 map.put(HEADER.get(idx), scanner.next().replace("\"", ""));
             }
         }
+        scanner.close();
 
         Teenager t = new Teenager(map.get("NAME"), map.get("FORENAME"), LocalDate.parse(map.get("BIRTH_DATE")), Country.valueOf(map.get("COUNTRY")));
         t.addRequirement(CriterionName.HOBBIES, map.get("HOBBIES"));
@@ -89,8 +94,9 @@ public class CSVFile {
      * @param fileName   (String) - The name of the file to read
      * @param haveHeader (boolean) - If the file have a header
      * @return (Platform) - The platform object
+     * @throws InvalidCSVException
      */
-    public static Platform read(String fileName, boolean haveHeader) {
+    public static Platform read(String fileName, boolean haveHeader) throws InvalidCSVException {
         Platform p = new Platform();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -102,20 +108,22 @@ public class CSVFile {
                     p.addTeenager(readLine(line));
                 } catch (IllegalArgumentException | NoSuchElementException e) {
                     System.out.println("Error while reading the line");
-                    e.printStackTrace();
+                    //throw new InvalidCSVException();
                 } catch (InvalidCriterion e) {
                     System.out.println("Invalid criterion found ! Teenager not added");
+                    //throw new InvalidCSVException();
                 }
             }
         } catch (RuntimeException | IOException e) {
             System.out.println("Error while reading the file");
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new InvalidCSVException();
         }
 
         return p;
     }
 
-    public static Platform read(String filename) {
+    public static Platform read(String filename) throws InvalidCSVException {
         return read(filename, true);
     }
 
@@ -125,7 +133,7 @@ public class CSVFile {
      * @param t (Platform) - The teenager to export
      * @return (String) - The string to write in the file
      */
-    private static String exportLineTeenager(Teenager t) {
+    public static String exportLineTeenager(Teenager t) {
         StringBuilder sb = new StringBuilder();
         sb.append(t.getForename()).append(DELIMITER);
         sb.append(t.getName()).append(DELIMITER);
@@ -168,7 +176,7 @@ public class CSVFile {
         return true;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvalidCSVException {
         Platform p = read("testCSVReader.csv");
         System.out.println(p);
         exportData(p, "test2.csv");
