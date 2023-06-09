@@ -17,6 +17,8 @@ SAE S2.02 -- Rapport pour la ressource Graphes
 
 *Noms des auteurs, groupe*
 
+**Degez Romain, B**
+
 ## Version 1
 ---
 
@@ -101,9 +103,9 @@ Sera évaluée à partir du tag git `Graphes-v1`
 
 ### Exemple de vérification de l'incompatibilité 
 
-*Cet exemple va mettre au défi votre modèle vis à vis de la prise en compte de l'incompatibilité entre adolescents 
+*Cet exemple va mettre au défi votre modèle vis à vis de la prise en compte de l'incompatibilité entre adolescents* 
 
-Récupérez sur Moodle le fichier de données `compatibilityVsHobbies.csv`. Expliquez quelle est sa particularité de cet exemple. Écrire la méthode de test qui test qui change cet exemple, construit le graphe modèle, calcule l'affectation, et finalement vérifie qu'aucune paire d'adolescents non compatibles n'a été construite par l'algorithme.*
+*Récupérez sur Moodle le fichier de données `compatibilityVsHobbies.csv`. Expliquez quelle est sa particularité de cet exemple. Écrire la méthode de test qui test qui change cet exemple, construit le graphe modèle, calcule l'affectation, et finalement vérifie qu'aucune paire d'adolescents non compatibles n'a été construite par l'algorithme.*
 
 >La particularité de ce fichier est qu'il y a énormément de hobbies en commun entre l'hôte D et le visiteur A, or ils ne sont pas compatibles car l'ôte D a un animal et le visiteur A est allergique aux animaux, donc même s'ils ont plein de hobbies en commun ils ne peuvent pas être mis ensemble, il ne faut pas que le grand nombre d'hobbies en commun prenne le dessus sur la non compatibilité.
 >
