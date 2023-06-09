@@ -5,17 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ccb1a79c-7cd8-4a08-9e17-966a0c753439" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/adosAleatoires.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/adosAleatoiresAvecIncompatiblesFranceItalie.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/incompatibilityVsHobbies.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ullile/sae201/CSVFile.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SAE201.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SAE201.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ullile/sae201/Platform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ullile/sae201/Platform.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ullile/sae201/Teenager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ullile/sae201/Teenager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ullile/sae201/graphe/AffectationUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ullile/sae201/graphe/AffectationUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/sae/AffectationUtilTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/sae/AffectationUtilTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/sae/PlatformTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/sae/PlatformTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/sae/TeenagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/sae/TeenagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/sae/TestAffectationVersion1.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/sae/TestAffectationVersion1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/sae/TestAffectationVersion2.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/sae/TestAffectationVersion2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +47,7 @@
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "/home/valentin/Documents/IUT/SAE201",
@@ -69,16 +67,18 @@
       <recent name="$PROJECT_DIR$/test/sae" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.CSVFile">
-    <configuration name="CSVFile" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ullile.sae201.CSVFile" />
+  <component name="RunManager" selected="JUnit.PlatformTest">
+    <configuration name="CSvFileTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="SAE201" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="ullile.sae201.*" />
+          <option name="PATTERN" value="sae.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="sae" />
+      <option name="MAIN_CLASS_NAME" value="sae.CSvFileTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -93,6 +93,21 @@
       </extension>
       <option name="PACKAGE_NAME" value="sae" />
       <option name="MAIN_CLASS_NAME" value="sae.CriterionTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PlatformTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SAE201" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="sae.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="sae" />
+      <option name="MAIN_CLASS_NAME" value="sae.PlatformTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -113,22 +128,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TeenagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="SAE201" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.sae.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test.sae" />
-      <option name="MAIN_CLASS_NAME" value="test.sae.TeenagerTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TeenagerTest.testGetter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestAffectationVersion1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="SAE201" />
       <extension name="coverage">
         <pattern>
@@ -137,20 +137,19 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="sae" />
-      <option name="MAIN_CLASS_NAME" value="sae.TeenagerTest" />
-      <option name="METHOD_NAME" value="testGetter" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="sae.TestAffectationVersion1" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.CSVFile" />
-        <item itemvalue="JUnit.TeenagerTest (1)" />
+        <item itemvalue="JUnit.PlatformTest" />
+        <item itemvalue="JUnit.CSvFileTest" />
         <item itemvalue="JUnit.CriterionTest" />
-        <item itemvalue="JUnit.TeenagerTest.testGetter" />
-        <item itemvalue="JUnit.TeenagerTest" />
+        <item itemvalue="JUnit.TeenagerTest (1)" />
+        <item itemvalue="JUnit.TestAffectationVersion1" />
       </list>
     </recent_temporary>
   </component>
@@ -167,6 +166,7 @@
       <workItem from="1681281040684" duration="1956000" />
       <workItem from="1685005400481" duration="33000" />
       <workItem from="1685036953535" duration="1990000" />
+      <workItem from="1686317783587" duration="857000" />
     </task>
     <servers />
   </component>

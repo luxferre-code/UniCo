@@ -87,9 +87,7 @@ public class AffectationUtil {
         double weight = 100;
         try {
             if(!host.compatibleWithGuestGrapheV2(visitor)) weight += 100;
-        } catch(RequirementNotFound e) {
-
-        }
+        } catch(RequirementNotFound ignored) { }
 
         try {
             weight -= hobbiesWeight(host, visitor);
@@ -191,8 +189,8 @@ public class AffectationUtil {
      * @return (double) - The edge weight got from the dateBirth
      */
     private static double ageWeight(Teenager host, Teenager visitor) {
-        LocalDate hostBirthDate = LocalDate.of(host.getDateNaiss().getYear(), host.getDateNaiss().getMonth(), host.getDateNaiss().getDay());
-        LocalDate visitorBirthDate = LocalDate.of(visitor.getDateNaiss().getYear(), visitor.getDateNaiss().getMonth(), visitor.getDateNaiss().getDay());
+        LocalDate hostBirthDate = host.getDateNaiss();
+        LocalDate visitorBirthDate = visitor.getDateNaiss();
         if(hostBirthDate.until(visitorBirthDate, ChronoUnit.MONTHS) <= 18){
             return 2;
         }
@@ -415,12 +413,10 @@ public class AffectationUtil {
 
         /**
      * Crée et affiche l'appariement optimal à partir d'un graphe de Teenager, d'une liste de Teenager hosts et d'une liste de Teenager guest grâce à la méthode {@link CalculAffectation#calculerAffectation() }
-     * @param hosts Une liste de Teenager hôtes
-     * @param guests Une lsite de Teenager visiteurs
      * @return (GrapheNonOrienteValue<Teenager>) - Le graphe créé à partir des étudiants
      */
     public static String afficherAppariement(ArrayList<Arete<Teenager>> appariment){
-        String affichage = "";;
+        String affichage = "";
         for (Arete<Teenager> arete : appariment) {
            affichage += arete.getExtremite1() + "--" + arete.getExtremite2() + "(" + arete.getPoids() + ")\n"; 
         }

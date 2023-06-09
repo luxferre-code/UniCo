@@ -9,6 +9,7 @@ import fr.ulille.but.sae2_02.graphes.GrapheNonOrienteValue;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,7 +25,14 @@ import ullile.sae201.graphe.AffectationUtil;
  */
 public class TestAffectationVersion2 {
     private Teenager t1, t2, t3, t4, t5, t6, t7, t8;
-    private Date d1, d2, d3, d4, d5, d6, d7, d8;
+    private LocalDate d1;
+    private LocalDate d2;
+    private LocalDate d3;
+    private LocalDate d4;
+    private LocalDate d5;
+    private LocalDate d6;
+    private LocalDate d7;
+    private LocalDate d8;
     private ArrayList<Teenager> guestList;
     private ArrayList<Teenager> hostList;
     private GrapheNonOrienteValue<Teenager> graphe;
@@ -35,32 +43,16 @@ public class TestAffectationVersion2 {
     @Before
     public void setUp() throws InvalidCriterion{
     /*Instancing birth dates (needed for our constructor)*/
-        d1 = new Date();
-        d2 = new Date();
-        d3 = new Date();
-        d4 = new Date();
-        d5 = new Date();
-        d6 = new Date();
-        d7 = new Date();
-        d8 = new Date();
 
-        Calendar c = Calendar.getInstance();
-        c.set(1999, Calendar.JANUARY, 1);
-        d1 = c.getTime();
-        c.set(2000, Calendar.JANUARY, 1);
-        d2 = c.getTime();
-        c.set(2001, Calendar.JANUARY, 1);
-        d3 = c.getTime();
-        c.set(2002, Calendar.JANUARY, 1);
-        d4 = c.getTime();
-        c.set(2002, Calendar.JANUARY, 1);
-        d5 = c.getTime();
-        c.set(2002, Calendar.JANUARY, 1);
-        d6 = c.getTime();
-        c.set(2009, Calendar.JUNE, 1);
-        d7 = c.getTime();
-        c.set(2009, Calendar.JUNE, 1);
-        d8 = c.getTime();
+        d1 = LocalDate.of(1999, 1, 1);
+        d2 = LocalDate.of(2000, 1, 1);
+        d3 = LocalDate.of(2001, 1, 1);
+        d4 = LocalDate.of(2002, 1, 1);
+        d5 = LocalDate.of(2002, 1, 1);
+        d6 = LocalDate.of(2002, 1, 1);
+        d7 = LocalDate.of(2009, 6, 1);
+        d8 = LocalDate.of(2009, 6, 1);
+
 
 
         /*Instancing teenagers and List of Teenager */

@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -19,24 +20,18 @@ import ullile.sae201.graphe.AffectationUtil;
 public class AffectationUtilTest {
     
     private Teenager t1, t2, t3, t4;
-    private Date d1, d2, d3, d4;
+    private LocalDate d1;
+    private LocalDate d2;
+    private LocalDate d3;
+    private LocalDate d4;
     
     @Before
     public void setUp() throws InvalidCriterion{
-    /*Instancing birth dates */
-        d1 = new Date();
-        d2 = new Date();
-        d3 = new Date();
-        d4 = new Date();
-        Calendar c = Calendar.getInstance();
-        c.set(1999, Calendar.JANUARY, 1);
-        d1 = c.getTime();
-        c.set(2000, Calendar.JANUARY, 1);
-        d2 = c.getTime();
-        c.set(2001, Calendar.JANUARY, 1);
-        d3 = c.getTime();
-        c.set(2002, Calendar.JANUARY, 1);
-        d4 = c.getTime();
+
+        d1 = LocalDate.of(1999, 1, 1);
+        d2 = LocalDate.of(2000, 1, 1);
+        d3 = LocalDate.of(2001, 1, 1);
+        d4 = LocalDate.of(2002, 1, 1);
 
         /*Instancing teenagers */
         t1 = new Teenager("Toto", "Machin", d1, "France");

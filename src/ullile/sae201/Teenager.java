@@ -3,17 +3,19 @@ package ullile.sae201;
 import ullile.sae201.exception.InvalidCriterion;
 import ullile.sae201.exception.RequirementNotFound;
 
+import java.io.*;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
  * Teenager class
  * @author Valentin Thuillier, Romain Degez
  */
-public class Teenager {
+public class Teenager implements Serializable {
 
     private final String NAME, FORENAME;
     private final Country COUNTRY;
-    private final Date DATENAISS;
+    private final LocalDate DATENAISS;
     private Teenager history = null;
 
     private static final HashSet<CriterionName> REQUIDED = new HashSet<>() {{
@@ -30,7 +32,7 @@ public class Teenager {
      * @param dateNaiss (Date) - The date of birth of the teenager
      * @param country   (Country) - The country of the teenager
      */
-    public Teenager(String name, String forename, Date dateNaiss, Country country) {
+    public Teenager(String name, String forename, LocalDate dateNaiss, Country country) {
         this.NAME = name;
         this.FORENAME = forename;
         this.DATENAISS = dateNaiss;
@@ -44,7 +46,7 @@ public class Teenager {
      * @param dateNaiss (Date) - The date of birth of the teenager
      * @param country (String) - The country of the teenager
      */
-    public Teenager(String name, String forename, Date dateNaiss, String country) {
+    public Teenager(String name, String forename, LocalDate dateNaiss, String country) {
         this(name,forename,dateNaiss,Country.valueOf(country.toUpperCase()));
     }
 
@@ -213,7 +215,7 @@ public class Teenager {
      * Get the date of birth of the teenager
      * @return (Date) - The date of birth of the teenager
      */
-    public Date getDateNaiss() {
+    public LocalDate getDateNaiss() {
         return DATENAISS;
     }
 
@@ -246,7 +248,7 @@ public class Teenager {
      * @param criterionName (CriterionName) - The name of the criterion
      * @return (Criterion) - The value from the hashmap
      */
-    private String getCriterionValue(CriterionName criterionName) throws RequirementNotFound {
+    public String getCriterionValue(CriterionName criterionName) throws RequirementNotFound {
         if(!this.havingThisRequirement(criterionName)){
             throw new RequirementNotFound(criterionName.name());
         }
@@ -346,6 +348,29 @@ public class Teenager {
     @Override
     public String toString() {
         return  FORENAME ;
+    }
+
+    public boolean serialize(String fileName) throws IOException {
+        FileOutputStream fileOut = new FileOutputStream(fileName);
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(this);
+        out.close();
+        fileOut.close();
+        return true;
+    }
+
+    public static Teenager load(String fileName) {
+        try {
+            FileInputStream fileIn = new FileInputStream(fileName);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            Teenager t = (Teenager) in.readObject();
+            in.close();
+            fileIn.close();
+            return t;
+        } catch (IOException | ClassNotFoundException i) {
+            i.printStackTrace();
+            return null;
+        }
     }
 
 
