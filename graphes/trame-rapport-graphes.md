@@ -53,7 +53,7 @@ Sera évaluée à partir du tag git `Graphes-v1`
 
 *Donner un graphe qui modélise l'Exemple 1, plus précisément, la matrice d'adjacence de ce graphe. Expliquez comment vous avez choisi le poids pour chacune des arêtes.*
 
->Pour réaliser la matrice d'adjacence on défini un poids par défault pour chacune des arêtes à 100, auquel on rajoute 100 en cas de non compatibilité entre l'host et le guest correspondant à l'arrête, et, pour chaque hobbies en commun, on enleve 1 au poids total. 
+>Pour réaliser la matrice d'adjacence on définit un poids par défaut pour chacune des arêtes à 100, auquel on rajoute 100 en cas de non compatibilité entre l'host et le guest correspondant à l'arête, et, pour chaque hobbie en commun, on enlève 1 au poids total. 
 >
 >
 >**Détail du calcul :**
@@ -76,16 +76,16 @@ Sera évaluée à partir du tag git `Graphes-v1`
 >
 >- Callista a le poids optimal avec Yak pour un poids de 98 **Callista--Yak**.
 >- Bellatrix a le poids optimal avec Xolag pour un poids de 99 **Bellatrix--Xolag**.
->- Adonia a l'un des poids optimal avec Zander pour un poids de 99 (on choisit celui ci car l'autre possibilité n'est plus disponible) **Adonia--Zander**.
+>- Adonia a l'un des poids optimaux avec Zander pour un poids de 99 (on choisit celui-ci car l'autre possibilité n'est plus disponible) **Adonia--Zander**.
 >
->Cette confinaison permet d'avoir l'appariement optimal pour un poid de 98 + 99 + 99 = 296.
+>Cette combinaison permet d'avoir l'appariement optimal pour un poids de 98 + 99 + 99 = 296.
 
 
 ### Modélisation pour la Version 1
 
 *Décrire une modélisation générale pour la Version 1. C'est à dire, donner une formule ou une description précise qui décrit comment, étant donné un adolescent hôte et un adolescent visiteur, on détermine le poids de l'arête entre ces deux adolescents en fonction des critères considérés dans la Version 1.*
 
->Comme expliqué plus haut, le poids de l'arête reliant un adolescent hôte et un adolescent visiteur par défault est à 100, si l'hôte possède un animal et que le visiteur est allergiques aux animaux, alors on rajoute 100 au poids, et, pour chaque hobbies en commun qu'ont l'hôte et le visiteur, on enleve 1 au poids total pour un maximum de 3 hobbies en commun compté (on enlèvera jusqu'à 3 points au maximum si il y a plus de trois hobbies en commun).
+>Comme expliqué plus haut, le poids de l'arête reliant un adolescent hôte et un adolescent visiteur par défaut est à 100, si l'hôte possède un animal et que le visiteur est allergique aux animaux, alors on rajoute 100 au poids, et, pour chaque hobbie en commun qu'ont l'hôte et le visiteur, on enlève 1 au poids total pour un maximum de 3 hobbies en commun compté (on enlèvera jusqu'à 3 points au maximum s'il y a plus de trois hobbies en commun).
 >
 >Calcul : 100 + (100 si non compatible sinon 0) - 1*n (n = nombre d'hobbies en commun <=3) 
 
@@ -105,7 +105,7 @@ Sera évaluée à partir du tag git `Graphes-v1`
 
 Récupérez sur Moodle le fichier de données `compatibilityVsHobbies.csv`. Expliquez quelle est sa particularité de cet exemple. Écrire la méthode de test qui test qui change cet exemple, construit le graphe modèle, calcule l'affectation, et finalement vérifie qu'aucune paire d'adolescents non compatibles n'a été construite par l'algorithme.*
 
->La particularité de ce fichier est qu'il y a énormément de hobbies en commun entre l'hôte D et le visiteur A, or ils ne sont pas compatible car l'ôte D a un animal et le visiteur A est allergique aux animaux, donc même si ils ont plein de hobbies en commun il ne peuvent pas être mis ensemble, il ne faut pas que le grand nombre d'hobbies en commun prend le dessus sur la non compatibilité.
+>La particularité de ce fichier est qu'il y a énormément de hobbies en commun entre l'hôte D et le visiteur A, or ils ne sont pas compatibles car l'ôte D a un animal et le visiteur A est allergique aux animaux, donc même s'ils ont plein de hobbies en commun ils ne peuvent pas être mis ensemble, il ne faut pas que le grand nombre d'hobbies en commun prenne le dessus sur la non compatibilité.
 >
 >Dans l'exemple du csv `compatibilityVsHobbies.csv`, le visiteur A devrait faire la paire avec l'hôte C et le visiteur B avec l'hôte D.
 
@@ -146,13 +146,13 @@ Sera évaluée à partir du tag git `Graphes-v2`
 >- Jensmebur--Bellatrix
 >- Himimtoss--Laris
 >
->Parmi les appariement possibles on va chercher celui pour lequel aucun éleve ayant précisé "other" se retrouve avec le même étudiant que l'année dernière, tous les anciens couples d'étudiants ayant tous les deux précisé "same" se retrouve absolument ensemble, et les anciens couples dont un seul des deux a précisé "same" sont priorisé.
+>Parmi les appariements possibles on va chercher celui pour lequel aucun élève ayant précisé "other" se retrouve avec le même étudiant que l'année dernière, tous les anciens couples d'étudiants ayant tous les deux précisé "same" se retrouve absolument ensemble, et les anciens couples dont un seul des deux a précisé "same" sont priorisé.
 >
->Voici les représentation utilisée pour y voir clair :
+>Voici les représentations utilisées pour y voir clair :
 >
 >- Doit être ensemble : &#10004;
 >- Est priorisé : &#128578;
->- Pas de particularitée :  &#128528;
+>- Pas de particularité :  &#128528;
 >- Ne doit pas être ensemble : &#10060;
 >
 >| Guest/Host    | Laris    | Bellatrix | Mave     | Hinkkost |
@@ -163,17 +163,17 @@ Sera évaluée à partir du tag git `Graphes-v2`
 >| **Himimtoss** |&#128578; |&#128528;  |&#128528; |&#128528; |
 >
 >
-> D'après ce tableau on peut déterminer un appariement optimale comme étant :
+> D'après ce tableau on peut déterminer un appariement optimal comme étant :
 >- Dalthu--Mave 
 >- Jensmebur--Laris
 >- Lilly--Hinkkost
 >- Himimtoss--Bellatrix
 >
 >**Dalthu--Mave** étant une ancienne paire d'étudiant ayant mis "same" tous les deux ils sont donc obligatoirement ensemble.
-Jensmebur--Bellatrix étant une ancienne paire d'étudiant dont l'un à mis other, le couple ne doit surtout pas être ensemble, il faut donc associer Jensmebur avec quelqu'un d'autre, on l'associe donc avec Laris car dans les deux cas il n'y a pas d'affinité **Jensmebur--Laris**.
-Ensuite on peut voir que **Lilly--Hinkkost** on une affinité entre eux puisque l'un a mis same mais l'autre n'a rien mis, on peut donc les mettre ensemble.
-Pour finir, la paire **Himimtoss--Bellatrix** est par défault la dernière n'ayant pas de particularité.
-Cet appariement correspond à l'un des deux appariement optimal possible pour cet exemple.
+Jensmebur--Bellatrix étant une ancienne paire d'étudiants dont l'un à mis other, le couple ne doit surtout pas être ensemble, il faut donc associer Jensmebur avec quelqu'un d'autre, on l'associe donc avec Laris car dans les deux cas il n'y a pas d'affinité **Jensmebur--Laris**.
+Ensuite on peut voir que **Lilly--Hinkkost** ont une affinité entre eux puisque l'un a mis same mais l'autre n'a rien mis, on peut donc les mettre ensemble.
+Pour finir, la paire **Himimtoss--Bellatrix** est par défaut la dernière n'ayant pas de particularité.
+Cet appariement correspond à l'un des deux appariements optimaux possibles pour cet exemple.
 
 
 
@@ -206,13 +206,13 @@ Cet appariement correspond à l'un des deux appariement optimal possible pour ce
 >- Jensmebur--Bellatrix
 >- Himimtoss--Laris
 >
->Pour ce nouvel exemple on va reprendre la notation précédente à laquelle on va rajouter le nombre de hobbies en communs comme pour l'exemple de la version 1.
+>Pour ce nouvel exemple on va reprendre la notation précédente à laquelle on va rajouter le nombre de hobbies en commun comme pour l'exemple de la version 1.
 >
->Voici les représentation utilisée pour y voir clair :
+>Voici les représentations utilisées pour y voir clair :
 >
 >- Doit être ensemble : &#10004;
 >- Est priorisé : &#128578;
->- Pas de particularitée :  &#128528;
+>- Pas de particularité :  &#128528;
 >- Ne doit pas être ensemble : &#10060;
 >
 >| Guest/Host    | Laris        | Bellatrix    | Mave         | Hinkkost     |
@@ -223,16 +223,16 @@ Cet appariement correspond à l'un des deux appariement optimal possible pour ce
 >| **Himimtoss** |&#128578; / 1 |&#128528; / 1 |&#128528; / 0 |&#128528; / 1 |
 >
 >
-> D'après ce tableau on peut déterminer un appariement optimale comme étant : 
+> D'après ce tableau on peut déterminer un appariement optimal comme étant : 
 >- Dalthu--Mave 
 >- Jensmebur--Hinkkost
 >- Himimtoss--Laris
 >- Lilly--Bellatrix
 >
 >Comme précédemment cela ne change pas, **Dalthu--Mave** étant une ancienne paire d'étudiant ayant mis "same" tous les deux ils sont donc obligatoirement ensemble.
-Comme précédemment Jensmebur--Bellatrix étant une ancienne paire d'étudiant dont l'un à mis other, le couple ne doit surtout pas être ensemble, il faut donc associer Jensmebur avec quelqu'un d'autre, cependant cette fois-ci on a ajouter les hobbies à prendre en compte, on l'associe donc avec Hinkkost **Jensmebur--Hinkkost** car ils ont un hobbie en commun alors que l'autre possibilité Jensmebur--Laris n'ont pas d'hobbies en commun.
-Ensuite on peut voir que **Himimtoss--Laris** on une affinité entre eux puisque l'un a mis same mais l'autre n'a rien mis, on peut donc les mettre ensemble.
-Pour finir, la paire **Lilly--Bellatrix** est par défault la dernière n'ayant pas de particularité par rapport aux autres choix possibles.
+Comme précédemment Jensmebur--Bellatrix étant une ancienne paire d'étudiants dont l'un à mis other, le couple ne doit surtout pas être ensemble, il faut donc associer Jensmebur avec quelqu'un d'autre, cependant cette fois-ci on a ajouté les hobbies à prendre en compte, on l'associe donc avec Hinkkost **Jensmebur--Hinkkost** car ils ont un hobbie en commun alors que l'autre possibilité Jensmebur--Laris n'ont pas d'hobbies en commun.
+Ensuite on peut voir que **Himimtoss--Laris** ont une affinité entre eux puisque l'un a mis same mais l'autre n'a rien mis, on peut donc les mettre ensemble.
+Pour finir, la paire **Lilly--Bellatrix** est par défaut la dernière n'ayant pas de particularité par rapport aux autres choix possibles.
 Cet appariement correspond au seul appariement optimal possible pour cet exemple puisque les hobbies permettent de décider d'un appariement entre les deux optimaux de l'exemple précédent.
 
 ### Modélisation pour les exemples
@@ -242,7 +242,7 @@ Cet appariement correspond au seul appariement optimal possible pour cet exemple
 
 #### Modélisation 1
 >
->Pour réaliser la matrice d'adjacence on défini un poids par défault pour chacune des arêtes à 100 comme pour la version 1, auquel on :
+>Pour réaliser la matrice d'adjacence on définit un poids par défaut pour chacune des arêtes à 100 comme pour la version 1, auquel on :
 >
 >- Enlève 100 lorsque les deux étudiants étant ensemble l'année précédente on écrit "same".
 >- Enlève 4 lorsque l'un des deux étudiants étant ensemble l'année précédente a écrit "same" et l'autre n'a rien renseigné.
@@ -272,22 +272,22 @@ Cet appariement correspond au seul appariement optimal possible pour cet exemple
 >
 >- Dalthu a le poids optimal avec Mave pour un poids de 0 **Dalthu--Mave**.
 >- Lilly a le poids optimal avec Hinkkost pour un poids de 96 **Lilly--Hinkkost**.
->- Jensmebur a l'un des poids optimal avec Laris pour un poids de 100 **Jensmebur--Laris**.
+>- Jensmebur a l'un des poids optimaux avec Laris pour un poids de 100 **Jensmebur--Laris**.
 >- Himimtoss n'a pas le poids optimal avec Bellatrix pour un poids de 100 mais c'est le dernier choix possible **Himimtoss--Bellatrix**.
 >
->Cette confinaison permet d'avoir l'un des deux appariement optimal pour un poid de 0 + 96 + 100 + 100 = 296.
+>Cette combinaison permet d'avoir l'un des deux appariements optimaux pour un poids de 0 + 96 + 100 + 100 = 296.
 
 
 
 #### Modélisation 2
 >
->Pour réaliser la matrice d'adjacence on défini un poids par défault pour chacune des arêtes à 100 comme pour la version 1, auquel soit on :
+>Pour réaliser la matrice d'adjacence on définit un poids par défaut pour chacune des arêtes à 100 comme pour la version 1, auquel soit on :
 >
->- Enlève 100 lorsque les deux étudiants étant ensemble l'année précédente on écrit "same".
+>- Enlève 100 lorsque les deux étudiants étant ensemble l'année précédente ont écrit "same".
 >- Enlève 4 lorsque l'un des deux étudiants étant ensemble l'année précédente a écrit "same" et l'autre n'a rien renseigné.
 >- Rajoute 100 lorsque l'un des deux étudiants étant ensemble l'année précédente a écrit "other" peu importe ce qu'a écrit l'autre.
 >
->Puis comme pour la modélisation de l'exemple de la version1, pour chaque hobbies en commun, on enleve 1 au poids total pour un maximum de 3 hobbies en commun compté (on enlève jusqu'à 3 points au maximum si il y a plus de trois hobbies en commun).
+>Puis comme pour la modélisation de l'exemple de la version1, pour chaque hobbies en commun, on enlève 1 au poids total pour un maximum de 3 hobbies en commun compté (on enlève jusqu'à 3 points au maximum s'il y a plus de trois hobbies en commun).
 >
 >
 >
@@ -313,31 +313,31 @@ Cet appariement correspond au seul appariement optimal possible pour cet exemple
 >
 >- Dalthu a le poids optimal avec Mave pour un poids de 0 **Dalthu--Mave**.
 >- Himimtoss a le poids optimal avec Laris pour un poids de 95 **Himimtoss--Laris**.
->- Jensmebur a l'un des poids optimal avec Hinkkost pour un poids de 99 **Jensmebur--Hinkkost**.
+>- Jensmebur a l'un des poids optimaux avec Hinkkost pour un poids de 99 **Jensmebur--Hinkkost**.
 >- Lilly n'a pas le poids optimal avec Bellatrix pour un poids de 99 mais c'est le dernier choix possible **Lilly--Bellatrix**.
 >
->Cette confinaison permet d'avoir l'appariement optimal pour un poids total de 0 + 95 + 99 + 99 = 293.
+>Cette combinaison permet d'avoir l'appariement optimal pour un poids total de 0 + 95 + 99 + 99 = 293.
 >
->Pour comparaison si on avait choisit l'appariement de la modélisation 1, on aurait un poids total de 0 + 95 + 100 + 99 = 294
+>Pour comparaison si on avait choisi l'appariement de la modélisation 1, on aurait un poids total de 0 + 95 + 100 + 99 = 294
 
 
 ### Modélisation pour l'historique de la Version 2
 
 *Décrire une modélisation générale pour la Version 2. C'est à dire, donner une formule ou une description précise qui décrit comment, étant donné un adolescent hôte et un adolescent visiteur, on détermine le poids de l'arête entre ces deux adolescents en fonction des critères considérés dans la Version 2. Décrire également comment vous construisez le graphe modèle à partir des données en entrée.*
 
->Comme expliquer dans la modélisation précédente le poids de l'arête reliant un adolescent hôte et un adolescent visiteur par défault est à 100 comme pour la version 1, auquel soit on :
+>Comme expliquer dans la modélisation précédente le poids de l'arête reliant un adolescent hôte et un adolescent visiteur par défaut est à 100 comme pour la version 1, auquel soit on :
 >
->- Enlève 100 lorsque les deux étudiants étant ensemble l'année précédente on écrit "same".
+>- Enlève 100 lorsque les deux étudiants étant ensemble l'année précédente ont écrit "same".
 >- Enlève 4 lorsque l'un des deux étudiants étant ensemble l'année précédente a écrit "same" et l'autre n'a rien renseigné.
 >- Rajoute 100 lorsque l'un des deux étudiants étant ensemble l'année précédente a écrit "other" peu importe ce qu'a écrit l'autre.
 >
->Puis comme pour la modélisation de l'exemple de la version1, pour chaque hobbies en commun, on enleve 1 au poids total pour un maximum de 3 hobbies en commun compté (on enlève jusqu'à 3 points au maximum si il y a plus de trois hobbies en commun).
+>Puis comme pour la modélisation de l'exemple de la version1, pour chaque hobbies en commun, on enlève 1 au poids total pour un maximum de 3 hobbies en commun compté (on enlève jusqu'à 3 points au maximum s'il y a plus de trois hobbies en commun).
 >
 >Calcul : 100 +- ( - 100 si compatibilité forcée historique ou - 4 si affinité historique ou +100 si incompatibilité historique sinon 0) - 1*n (n = nombre d'hobbies en commun <=3)
 >
->Pour construire le graphe modèle à partir des données en entrée il faut tout d'abord créer un nouveau objet graphe de type GrapheNonOrienteValue\<Student>.
-Ensuite après avoir chargé à partir d'un CSV des Teenager dans un HashSet, on parcourt ce set d'élèves, et pour chaque élèves on en crée un sommet dans le graphe.
-Finalement on relie chaque sommet à tous les autres sommet par une arêtes valuée dont le poids de l'arête est calculé grâce à la méthode ```weight``` de la classe ```AffectationUtil``` prenant en paramètre les Teenager des deux sommets .
+>Pour construire le graphe modèle à partir des données en entrée il faut tout d'abord créer un nouvel objet graphe du type GrapheNonOrienteValue\<Student>.
+Ensuite après avoir chargé à partir d'un CSV des Teenager dans un HashSet, on parcourt ce set d'élèves, et pour chaque élève on en crée un sommet dans le graphe.
+Finalement on relie chaque sommet à tous les autres sommets par une arête valuée dont le poids de l'arête est calculé grâce à la méthode ```weight``` de la classe ```AffectationUtil``` prenant en paramètre les Teenager des deux sommets .
 
 ### Implémentation de l'historique de la Version 2
 
@@ -345,58 +345,57 @@ Finalement on relie chaque sommet à tous les autres sommet par une arêtes valu
 
 >Pour prendre en compte le critère historique nous avons modifié plusieurs méthodes, que ce soit au niveau de l'affinité ou de l'incompatibilité.
 >
->Pour gérer l'incompatibilité on a créé une méthode ```boolean compatibleHistory(Teenager guest)``` dans la classe ```Teenager``` qui vérifie si les deux adolescents sont compatible sur l'historique.
-Nous avons donc dans cette méthode vérifié si les deux étudiants été ensemble l'année précédente.
-Puis si ils étaient ensemble ont vérifie si l'un des deux a la valeur other pour son attribut historique
-dans quel cas la méthode retourne false, sinon si aucun n'a la valeur other pour l'attribut historique ou si les Teenager n'étaient pas ensemble l'année précédente alors la mé"thode retourne true.
+>Pour gérer l'incompatibilité on a créé une méthode ```boolean compatibleHistory(Teenager guest)``` dans la classe ```Teenager``` qui vérifie si les deux adolescents sont compatibles sur l'historique.
+Nous avons donc dans cette méthode vérifiée si les deux étudiants étés ensemble l'année précédente.
+Puis s'ils étaient ensemble on vérifie si l'un des deux a la valeur other pour son attribut historique dans quel cas la méthode retourne false, sinon si aucun n'a la valeur other pour l'attribut historique ou si les Teenager n'étaient pas ensemble l'année précédente alors la méthode retourne true.
 On a finalement modifié la méthode ```boolean compatibleWithGuestGraphe(Teenager guest)``` de la classe ```Teenager``` étant la version pour le graphe de la méthode ```boolean compatibleWithGuest(Teenager guest)``` reprenant la même chose que pour la version 1 mais en plus retourne false si la méthode ```boolean compatibleHistory(Teenager guest)``` retourne false, sinon elle retourne true.
 >
 >Pour gérer l'affinité nous avons créé une méthode ```double historyWeight(Teenager host, Teenager visitor)``` dans la classe ```AffectationUtil``` qui retourne le poids calculé à partir de l'history des deux Teenager à retirer du poids total.
-Pour calculer ce poid on vérifie que les deux Teenager étaient ensemble l'année précédente, si ils l'étaient alors on regarde si les deux Teenager ont la valeur "same" dans leur critère history, si ils l'ont alors la méthode retourne 100, sinon on vérifie l'un après l'autre si un seul à la valeur "same" dans quel cas la méthode retourne 4, sinon elle retourne 0.
-Cette méthode est ensuite utilisée dans la méthode ```double weight(Teenager host, Teenager visitor)``` dont on soustrait au poids total la valeur retourné.
+Pour calculer ce poids on vérifie que les deux Teenager étaient ensemble l'année précédente, s'ils l'étaient alors on regarde si les deux Teenager ont la valeur "same" dans leur critère history, s'ils l'ont alors la méthode retourne 100, sinon on vérifie l'un après l'autre si un seul à la valeur "same" dans quel cas la méthode retourne 4, sinon elle retourne 0.
+Cette méthode est ensuite utilisée dans la méthode ```double weight(Teenager host, Teenager visitor)``` dont on soustrait au poids total la valeur retournée.
 
 ### Test pour l'historique de la Version 2
 
 *Créer la classe de TestAffectationVersion2 qui contiendra deux méthodes de test, une pour chacun des exemples. Chacune de ces méthodes doit avoir la même structure que pour TestAffectationVersion1, c'est à dire créer les données d'entrée (adolescents, historique), créer le graphe, calculer l'affectation, et tester que le résultat est comme attendu.*
 
->Pour la classe test nous avons d'abord créé les étudiants en les définissant comme dans les deux examples, nous avons mis les étudiants hôtes dans une liste et les étudiants visiteurs dans une autre.
-Ensuite on a testé que le poids entre chaque étudiants obtenue grâce à la méthode weight est bien celui calculé dans les deux exemples.
-Puis on a créé le graphe pour les deux exemples, on a calculé l'affectation et on a vérifié que le poids total de l'affectation est bien celui obtenue dans les deux exemples.
-On a finalement affiché l'affectation obtenue qui correspond bien à ce que nous avons déduit dans les examples.
+>Pour la classe test nous avons d'abord créé les étudiants en les définissant comme dans les deux exemples, nous avons mis les étudiants hôtes dans une liste et les étudiants visiteurs dans une autre.
+Ensuite on a testé que le poids entre chaque étudiant obtenu grâce à la méthode weight est bien celui calculé dans les deux exemples.
+Puis on a créé le graphe pour les deux exemples, on a calculé l'affectation et on a vérifié que le poids total de l'affectation est bien celui obtenu dans les deux exemples.
+On a finalement affiché l'affectation obtenue qui correspond bien à ce que nous avons déduit dans les exemples.
 
 ### Prendre en compte les autres préférences
 
 *Pour chacun des autres critères d'affinité que vous décidez de prendre en compte, décrire comment vous changez la fonction weight de la classe AffectationUtil.*
 
 >- Pour le critère de genre, nous avons créé une méthode ```double genreWeight(Teenager host, Teenager visitor)``` dans la classe ```AffectationUtil``` qui retourne le poids à retirer du poids total calculé à partir des préférences de genre et du genre des deux Teenager.
-Pour calculer ce poid on vérifie la valeur du critère de genre de l'hôte, si il est null on ajoute 1 au poids car le critère est satisfait peu importe le genre du visiteur, si il ne l'est pas on regarde si le critère de genre de l'hôte et le genre du visiteur sont la même valeur dans quel cas on rajoute 1.
+Pour calculer ce poids on vérifie la valeur du critère de genre de l'hôte, s'il est nul on ajoute 1 au poids car le critère est satisfait peu importe le genre du visiteur, s'il ne l'est pas on regarde si le critère de genre de l'hôte et le genre du visiteur sont la même valeur dans quel cas on rajoute 1.
 On fait la même chose pour le visiteur.
-Cette méthode est ensuite utilisée dans la méthode ```double weight(Teenager host, Teenager visitor)``` dont on soustrait au poids total la valeur retourné.
+Cette méthode est ensuite utilisée dans la méthode ```double weight(Teenager host, Teenager visitor)``` dont on soustrait au poids total la valeur retournée.
 >
 >- Pour le critère d'âge, nous avons créé une méthode ```double ageWeight(Teenager host, Teenager visitor)``` dans la classe ```AffectationUtil``` qui retourne le poids à retirer du poids total calculé à partir des dates de naissances des deux Teenager.
 Pour calculer ce poids on vérifie l'écart entre les deux dates de naissances, si l'écart est inférieur à 18 mois alors la méthode retourne 2, sinon elle retourne 0.
-Cette méthode est ensuite utilisée dans la méthode ```double weight(Teenager host, Teenager visitor)``` dont on soustrait au poids total la valeur retourné.
+Cette méthode est ensuite utilisée dans la méthode ```double weight(Teenager host, Teenager visitor)``` dont on soustrait au poids total la valeur retournée.
 
 ### L'incompatibilité en tant que malus
 
 *Proposer une formule ou une description précise qui explique comment calculer le poids d'une arête en considérant les incompatibilités comme des malus et les critères satisfaits comme des bonus. Implémenter cette formule dans une seconde méthode appelée `weightAdvanced`, ceci pour éviter de casser votre code. Puis, écrire une méthode de test qui permet d'illustrer le calcul d'affectation basé sur `weightAdvanced`. Vous pouvez égalmente tester l'affectation en utilisant le fichier de données `incompatibilityVsBonus.csv`.*
 
 >Pour calculer le poids d'une arête en considérant les incompatibilités comme des malus et les critères satisfaits comme des bonus on reprend le même calcul que précédemment auquel on modifie comme présenté : 
->Le poids de l'arête reliant un adolescent hôte et un adolescent visiteur par défault est à 100, auquel soit on :
+>Le poids de l'arête reliant un adolescent hôte et un adolescent visiteur par défaut est à 100, auquel soit on :
 >
 >- Enlève 6 lorsque les deux étudiants étant ensemble l'année précédente on écrit "same".
 >- Enlève 4 lorsque l'un des deux étudiants étant ensemble l'année précédente a écrit "same" et l'autre n'a rien renseigné.
 >- Rajoute 6 lorsque l'un des deux étudiants étant ensemble l'année précédente a écrit "other" peu importe ce qu'a écrit l'autre (incompatibilité).
 >
->Puis pour chaque hobbies en commun, on enleve 1 au poids total pour un maximum de 3 hobbies en commun compté (on enlève jusqu'à 3 points au maximum si il y a plus de trois hobbies en commun).
+>Puis pour chaque hobby en commun, on enlève 1 au poids total pour un maximum de 3 hobbies en commun compté (on enlève jusqu'à 3 points au maximum s'il y a plus de trois hobbies en commun).
 >
->Ensuite si la valeur du critère de genre de l'hôte est null on enleve 1 au poids car le critère est satisfait peu importe le genre du visiteur, si il ne l'est pas on regarde si le critère de genre de l'hôte et le genre du visiteur sont la même valeur dans quel cas on enleve 1.
-On fait cela une deuxième fois cette fois ci en regardant le critère de genre du visiteur et le genre de l'hôte .
+>Ensuite si la valeur du critère de genre de l'hôte est nulle on enlève 1 au poids car le critère est satisfait peu importe le genre du visiteur, s'il ne l'est pas on regarde si le critère de genre de l'hôte et le genre du visiteur sont la même valeur dans quel cas on enlève 1.
+On fait cela une deuxième fois cette fois-ci en regardant le critère de genre du visiteur et le genre de l'hôte .
 >
->Par la suite si l'écart entre les deux dates de naissances est inférieur à 18 mois alors on enleve 2 au poids.
+>Par la suite si l'écart entre les deux dates de naissances est inférieur à 18 mois alors on enlève 2 au poids.
 >
 >On rajoute au poids 3 si l'hôte a un animal et que le visiteur y est allergique
 >
->Enfin pour chaque régime allimentaire requis par le visiteur, on rajoute 1 au poids total si l'hôte ne fournit pas le régime alimentaire pour un maximum de 3 régime non fournit compté (on rajoute jusqu'à 3 points au maximum si il y a plus de trois régime non fournit).
+>Enfin pour chaque régime alimentaire requis par le visiteur, on rajoute 1 au poids total si l'hôte ne fournit pas le régime alimentaire pour un maximum de 3 régimes non fourni compté (on rajoute jusqu'à 3 points au maximum s'il y a plus de trois régimes non fournis).
 >
->Calcul : 100 +- ( - 6 si compatibilité forcée historique ou - 4 si affinité historique ou +6 si incompatibilité historique sinon 0) - 1\*n (n = nombre d'hobbies en commun <=3) - (0 si aucun critère de genre validé ou 1 si un seul validé ou 2 si les deux sont validé) - (2 si l'écart d'âge < 1.5 ans) + (3 si incompatibilité allergies) + 1\*n (n = nombre de régime non validés <=3)
+>Calcul : 100 +- ( - 6 si compatibilité forcée historique ou - 4 si affinité historique ou +6 si incompatibilité historique sinon 0) - 1\*n (n = nombre d'hobbies en commun <=3) - (0 si aucun critère de genre validé ou 1 si un seul validé ou 2 si les deux sont validés) - (2 si l'écart d'âge < 1.5 ans) + (3 si incompatibilité allergies) + 1\*n (n = nombre de régimes non validés <=3)

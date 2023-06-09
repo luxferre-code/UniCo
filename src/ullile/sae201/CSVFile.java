@@ -56,6 +56,7 @@ public class CSVFile {
                 map.put(HEADER.get(idx), scanner.next().replace("\"", ""));
             }
         }
+        scanner.close();
 
         Teenager t = new Teenager(map.get("NAME"), map.get("FORENAME"), LocalDate.parse(map.get("BIRTH_DATE")), Country.valueOf(map.get("COUNTRY")));
         t.addRequirement(CriterionName.HOBBIES, map.get("HOBBIES"));

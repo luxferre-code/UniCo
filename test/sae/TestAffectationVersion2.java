@@ -11,8 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import ullile.sae201.CriterionName;
 import ullile.sae201.Teenager;
