@@ -1,5 +1,6 @@
 package ullile.sae201;
 
+import ullile.sae201.exception.InvalidCSVException;
 import ullile.sae201.exception.InvalidCriterion;
 
 import java.io.*;
@@ -140,8 +141,9 @@ public class CSVFile {
      * @param fileName   (String) - The name of the file to read
      * @param haveHeader (boolean) - If the file have a header
      * @return (Platform) - The platform object
+     * @throws InvalidCSVException
      */
-    public static Platform read(String fileName, boolean haveHeader) {
+    public static Platform read(String fileName, boolean haveHeader) throws InvalidCSVException {
         Platform p = new Platform();
         try (BufferedReader br = new BufferedReader(new FileReader(getDirWhoResourcesIs() + "resources" + FIlE_DELIMITER + fileName))) {
             String line;
@@ -153,20 +155,23 @@ public class CSVFile {
                     p.addTeenager(readLine(line));
                 } catch (IllegalArgumentException | NoSuchElementException e) {
                     System.out.println("Error while reading the line");
-                    e.printStackTrace();
+                    //e.printStackTrace();
+                    throw new InvalidCSVException();
                 } catch (InvalidCriterion e) {
                     System.out.println("Invalid criterion found ! Teenager not added");
+                    throw new InvalidCSVException();
                 }
             }
         } catch (RuntimeException | IOException e) {
             System.out.println("Error while reading the file");
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new InvalidCSVException();
         }
 
         return p;
     }
 
-    public static Platform read(String filename) {
+    public static Platform read(String filename) throws InvalidCSVException {
         return read(filename, true);
     }
 
@@ -219,7 +224,7 @@ public class CSVFile {
         return true;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvalidCSVException {
         Platform p = read("testCSVReader.csv");
         System.out.println(p);
         exportData(p, "test2.csv");

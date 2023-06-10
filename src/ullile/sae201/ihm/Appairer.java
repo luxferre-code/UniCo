@@ -1,7 +1,6 @@
 package ullile.sae201.ihm;
 
 import java.io.File;
-import java.text.ParseException;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -177,13 +176,13 @@ public class Appairer extends Application {
           alert2.setHeaderText("Fichier incompatible !");
           alert2.setContentText("Le format du csv n'est pas le bon il doit être de la forme : FORENAME;NAME;COUNTRY;BIRTH_DATE;HOBBIES;GUEST_ANIMAL_ALLERGY;HOST_HAS_ANIMAL;GUEST_FOOD;HOST_FOOD;GENDER;PAIR_GENDER;HISTORY");
           alert2.showAndWait();
-        } catch (ParseException e) {
+        } /* catch (ParseException e) {
           Alert alert3 = new Alert(AlertType.WARNING);
           alert3.setTitle("Une erreur s'est produite");
           alert3.setHeaderText("Fichier incompatible !");
           alert3.setContentText("Le date doit être au format dd/MM/yyy");
           alert3.showAndWait();
-        }
+        } */
         //Appairer.filename = "";
       }
   

@@ -8,6 +8,7 @@ import ullile.sae201.Criterion;
 import ullile.sae201.CriterionName;
 import ullile.sae201.Teenager;
 import ullile.sae201.exception.RequirementNotFound;
+
 import fr.ulille.but.sae2_02.graphes.Arete;
 import fr.ulille.but.sae2_02.graphes.CalculAffectation;
 import fr.ulille.but.sae2_02.graphes.GrapheNonOrienteValue;
