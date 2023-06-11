@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * CSVFile class
  *
- * @author Valentin Thuillier
+ * @author Valentin Thuillier, Elise Leroy
  */
 public class CSVFile {
 

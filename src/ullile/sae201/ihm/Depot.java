@@ -24,7 +24,7 @@ import ullile.sae201.Platform;
 import ullile.sae201.exception.InvalidCSVException;
 
 
-public class Appairer extends Application {
+public class Depot extends Application {
   public static String filename;
   public static Platform paltform;
 
@@ -148,7 +148,7 @@ public class Appairer extends Application {
       File selectedFile = fc.showOpenDialog(null);
   
       if(selectedFile != null) {
-        Appairer.filename = selectedFile.getAbsolutePath();
+        Depot.filename = selectedFile.getAbsolutePath();
       } else {
         System.out.println("Fichier invalide");
       }
@@ -157,9 +157,9 @@ public class Appairer extends Application {
 
   class buttonContinuerAction implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event){
-      System.out.println(Appairer.filename);
-      System.out.println(Appairer.filename.substring(Appairer.filename.length()-3, Appairer.filename.length()));
-      if(Appairer.filename == null || !Appairer.filename.substring(Appairer.filename.length()-3, Appairer.filename.length()).equals("csv")){
+      System.out.println(Depot.filename);
+      System.out.println(Depot.filename.substring(Depot.filename.length()-3, Depot.filename.length()));
+      if(Depot.filename == null || !Depot.filename.substring(Depot.filename.length()-3, Depot.filename.length()).equals("csv")){
        
         Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle("Une erreur s'est produite");
@@ -169,7 +169,7 @@ public class Appairer extends Application {
         
       } else {
         try {
-          Appairer.paltform = CSVFile.read(Appairer.filename, true);
+          Depot.paltform = CSVFile.read(Depot.filename, true);
         } catch (InvalidCSVException e){
           Alert alert2 = new Alert(AlertType.WARNING);
           alert2.setTitle("Une erreur s'est produite");
@@ -185,6 +185,8 @@ public class Appairer extends Application {
         } */
         //Appairer.filename = "";
       }
+
+      
   
       
     }

@@ -16,12 +16,55 @@ import fr.ulille.but.sae2_02.graphes.GrapheNonOrienteValue;
 
 /**
  * AffectationUtil class
- * @author Romain Degez, Valentin Thuillier
+ * @author Romain Degez, Valentin Thuillier, Elise Leroy
  */
 public class AffectationUtil {
 
-    private static final int MAXHOBBIESCOUNT = 3;
-    private static final int MAXFOODCOUNT = 3;
+    private static int maxHobbyCount = 3;
+    private static int maxFoodCount = 3;
+    public static  double genderWeight = 1.0;
+    public static  double foodWeight = 1.0;
+    public static double ageWeight = 2.0;
+    public static double lessCompatibleHistoryWeight = 4.0;
+    public static double superCompatibleHistoryWeight = 6.0;
+    public static double hobbiesWeight = 1.0;  
+    public static double allergyWeight = 3.0; 
+
+    public static void setMaxHobbyCount(int maxHobbyCount) {
+        AffectationUtil.maxHobbyCount = maxHobbyCount;
+    }
+
+    public static void setMaxFoodCount(int maxFoodCount) {
+        AffectationUtil.maxFoodCount = maxFoodCount;
+    }
+
+    public static void setGenderWeight(double genderWeight) {
+        AffectationUtil.genderWeight = genderWeight;
+    }
+
+    public static void setFoodWeight(double foodWeight) {
+        AffectationUtil.foodWeight = foodWeight;
+    }
+
+    public static void setAgeWeight(double ageWeight) {
+        AffectationUtil.ageWeight = ageWeight;
+    }
+
+    public static void setLessCompatibleHistoryWeight(double lessCompatibleHistoryWeight) {
+        AffectationUtil.lessCompatibleHistoryWeight = lessCompatibleHistoryWeight;
+    }
+
+    public static void setSuperCompatibleHistoryWeight(double superCompatibleHistoryWeight) {
+        AffectationUtil.superCompatibleHistoryWeight = superCompatibleHistoryWeight;
+    }
+
+    public static void setHobbiesWeight(double hobbiesWeight) {
+        AffectationUtil.hobbiesWeight = hobbiesWeight;
+    }
+
+    public static void setAllergyWeight(double allergyWeight) {
+        AffectationUtil.allergyWeight = allergyWeight;
+    }
 
     /** Calcule le poids de l’arête entre host et visitor dans le graphe modèle.
      * Doit faire appel à la méthode compatibleWithGuest(Teenager) de Teenager.
@@ -108,13 +151,13 @@ public class AffectationUtil {
      * @return (double) - The edge weight got from the hobbies
      */
     private static double hobbiesWeight(Teenager host, Teenager visitor) throws RequirementNotFound {
-        double hobbiesCount = 0.0;
+        double baseHobbyWeight = 0.0;
         for(String hobby : host.getHobbies()){
-            if(visitor.getHobbies().contains(hobby) && hobbiesCount < MAXHOBBIESCOUNT) {
-                hobbiesCount++;
+            if(visitor.getHobbies().contains(hobby) && hobbiesWeight < maxHobbyCount) {
+                baseHobbyWeight+=hobbiesWeight;
             }
         }
-        return hobbiesCount;
+        return baseHobbyWeight;
     }
 
     /**
@@ -158,7 +201,7 @@ public class AffectationUtil {
      * @return (double) - The edge weight got from the pair_gender and gender
      */
     private static double genderWeight(Teenager host, Teenager visitor) {
-        double genderWeight = 0.0;
+        double baseGenderWeight = 0.0;
         String genderHost = "", genderVisitor = "";
         try {
             genderHost = host.getCriterionValue(CriterionName.GENDER) ;
@@ -168,19 +211,19 @@ public class AffectationUtil {
         }
         try {
             if(host.getCriterionValue(CriterionName.PAIR_GENDER).equals(genderVisitor)){
-                genderWeight++;
+                baseGenderWeight += genderWeight;
             }
         } catch(RequirementNotFound e) {
-            genderWeight++;
+            baseGenderWeight += genderWeight;
         }
         try {
             if(visitor.getCriterionValue(CriterionName.PAIR_GENDER).equals(genderHost)){
-                genderWeight++;
+                baseGenderWeight += genderWeight;
             }
         } catch(RequirementNotFound e) {
-            genderWeight++;
+            baseGenderWeight += genderWeight;
         }
-        return genderWeight;
+        return baseGenderWeight;
     }
 
     /**
@@ -193,7 +236,7 @@ public class AffectationUtil {
         LocalDate hostBirthDate = host.getDateNaiss();
         LocalDate visitorBirthDate = visitor.getDateNaiss();
         if(hostBirthDate.until(visitorBirthDate, ChronoUnit.MONTHS) <= 18){
-            return 2;
+            return ageWeight;
         }
         return 0;
     }
@@ -206,7 +249,7 @@ public class AffectationUtil {
      */
     private static double compatibleFoodWeightAdvanced(Teenager host, Teenager visitor) {
         boolean temp;
-        double foodWeight = 0.0;
+        double baseFoodWeight = 0;
         String[] guestFoods, hostFoods;
 
         try { guestFoods = visitor.getCriterionValue(CriterionName.GUEST_FOOD).split(","); }
@@ -223,11 +266,11 @@ public class AffectationUtil {
                     break;
                 }
             }
-            if(!temp || foodWeight <MAXFOODCOUNT){
-                foodWeight++;
+            if(!temp || foodWeight <maxFoodCount){
+                 baseFoodWeight += foodWeight;
             }
         }
-        return foodWeight;
+        return baseFoodWeight;
     }
 
     /**
@@ -245,14 +288,14 @@ public class AffectationUtil {
         }
         try {
             if(Teenager.booleanConverter(host, CriterionName.HISTORY, "other")){
-                return 6.0;
+                return superCompatibleHistoryWeight;
             }
         } catch (Exception e) {
             return 0.0;
         }
         try {
             if(Teenager.booleanConverter(visitor, CriterionName.HISTORY, "other")){
-                return 6.0;
+                return superCompatibleHistoryWeight;
             }
         } catch (Exception e) {
             return 0.0;
@@ -271,20 +314,20 @@ public class AffectationUtil {
             try {
                 if(Teenager.booleanConverter(host, CriterionName.HISTORY, "same")){
                     if(Teenager.booleanConverter(visitor, CriterionName.HISTORY, "same")){
-                        return 6;
+                        return superCompatibleHistoryWeight;
                     }
                 }
             } catch(RequirementNotFound e1) {
                 try {
                     if(Teenager.booleanConverter(host, CriterionName.HISTORY, "same")){
-                        return 4;
+                        return lessCompatibleHistoryWeight;
                     }
                 } catch(RequirementNotFound e2) {
         
                 }
                 try {
                     if(Teenager.booleanConverter(visitor, CriterionName.HISTORY, "same")){
-                        return 4;
+                        return lessCompatibleHistoryWeight;
                     }
                 } catch(RequirementNotFound e3) {
         
@@ -423,8 +466,5 @@ public class AffectationUtil {
         }
         return affichage;
     }
-
-
-
 
 }
