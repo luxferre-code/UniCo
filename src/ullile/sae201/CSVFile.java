@@ -1,11 +1,23 @@
 package ullile.sae201;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.Scanner;
+
 import ullile.sae201.exception.InvalidCSVException;
 import ullile.sae201.exception.InvalidCriterion;
-
-import java.io.*;
-import java.time.LocalDate;
-import java.util.*;
 
 /**
  * CSVFile class

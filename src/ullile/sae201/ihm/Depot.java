@@ -12,8 +12,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -23,6 +21,11 @@ import ullile.sae201.CSVFile;
 import ullile.sae201.Platform;
 import ullile.sae201.exception.InvalidCSVException;
 
+/**
+ * Depot class
+ * @author Elise Leroy
+ */
+
 
 public class Depot extends Application {
   public static String filename;
@@ -30,69 +33,17 @@ public class Depot extends Application {
 
   public void start(Stage stage) {
     //faire en GridPane
-    BorderPane root = new BorderPane();
-    root.setLeft(getMenu());
-    root.setCenter(getPageCSV());
+    VBox root = new VBox();
+    VBox conteneurPrincipal = new VBox();
 
-    Scene scene = new Scene(root, 1000, 600);
-    stage.setScene(scene);
-    stage.setTitle("Appairer");
-    stage.show();
-  }
-
-  private VBox getMenu() {
-    VBox menu = new VBox();
-    VBox vBoxButton = new VBox(4);
-    vBoxButton.setPadding(new Insets(25, 0, 0, 0));
-    menu.setPadding(new Insets(15, 20, 0, 20));
-    menu.setStyle("-fx-border-style : hidden solid hidden hidden;"+
-                   "-fx-border-color: lightgrey;");
-
-    Label logo = new Label("UniCo");
-    logo.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 24));
+    Label titre = new Label("UniCo  | Dépôt du fichier");
+    titre.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 34));
+    titre.setPadding(new Insets(20, 0, 0, 20));
     
-
-    Button liste = new Button("Liste");
-    liste.setStyle("-fx-background-color: transparent");
-    liste.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 16));
-    vBoxButton.getChildren().add(liste);
-
-    Button appairer = new Button("Appairer");
-    appairer.setStyle("-fx-background-color: transparent");
-    appairer.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 16));
-    vBoxButton.getChildren().add(appairer);
-
-    menu.getChildren().addAll(logo, vBoxButton);
-
-    return menu;
-  }
-
-  private HBox getPageCSV() {
-    HBox centerCSV = new HBox();
-    VBox titreCSV = new VBox();
-    VBox menuDepotCSV = new VBox();
-    
-
-
-    centerCSV.setStyle("-fx-border-style : hidden solid hidden hidden;"+
-    "-fx-border-color: red;");
-
-    titreCSV.setPadding(new Insets(15, 20, 20, 20));
-    titreCSV.setPrefWidth(centerCSV.getPrefWidth());
-    menuDepotCSV.setStyle("-fx-border-style : hidden solid hidden solid;"+
-    "-fx-border-color: lightgrey;");
-    menuDepotCSV.setPrefWidth(centerCSV.getPrefWidth());
-    menuDepotCSV.setAlignment(Pos.CENTER_LEFT);
-
-    Label appairer = new Label("Appairer");
-    appairer.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 20));
-    titreCSV.getChildren().add(appairer);
-
     Label deposer = new Label("Déposer votre fichier CSV");
-    deposer.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 15));
+    deposer.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 32));
     deposer.setPadding(new Insets(0,0,25,0));
-    menuDepotCSV.getChildren().add(deposer);
-
+ 
     Button depot = new Button("Dépôt");
     depot.setStyle("-fx-border-style: solid;"+
                    "-fx-border-color: lightgrey;"+
@@ -100,25 +51,35 @@ public class Depot extends Application {
                    "-fx-padding: 5 40;"+
                    "-fx-background-color: lightgrey;");
     depot.addEventHandler(ActionEvent.ACTION, new buttonDepotAction());
-    menuDepotCSV.getChildren().add(depot);
 
     Label marchePas = new Label("Ça ne marche pas ...");
-    marchePas.setFont(Font.font("Bahnschrift", FontWeight.NORMAL, null, 10));
-    marchePas.setPadding(new Insets(10,0,200,0));
-    menuDepotCSV.getChildren().add(marchePas);
+    marchePas.setFont(Font.font("Bahnschrift", FontWeight.NORMAL, null, 15));
+    marchePas.setPadding(new Insets(10,0,250,0));
 
     Button continuer = new Button("Continuer");
     continuer.setStyle("-fx-border-style: solid;"+
                    "-fx-border-color: lightgreen;"+
-                   "-fx-background-radius: 50px;"+
-                   "-fx-border-radius: 50px;"+
+                   "-fx-background-radius: 10px;"+
+                   "-fx-border-radius: 10px;"+
                    "-fx-padding: 15 30;"+
                    "-fx-background-color: lightgreen;");
     continuer.addEventHandler(ActionEvent.ACTION, new buttonContinuerAction());
-    menuDepotCSV.getChildren().add(continuer);
+    VBox boxContinuer = new VBox();
 
-    centerCSV.getChildren().addAll(titreCSV, menuDepotCSV);
-    return centerCSV;
+    boxContinuer.getChildren().add(continuer);
+    boxContinuer.setAlignment(Pos.CENTER);
+
+    conteneurPrincipal.getChildren().addAll(deposer, depot, marchePas);
+    conteneurPrincipal.setAlignment(Pos.CENTER);
+    conteneurPrincipal.setPadding(new Insets(150, 0, 0, 0));
+
+    root.getChildren().addAll(titre, conteneurPrincipal, boxContinuer);
+
+
+    Scene scene = new Scene(root, 1194, 834);
+    stage.setScene(scene);
+    stage.setTitle("UniCo - Dépôt du fichier");
+    stage.show();
   }
 
   /*
@@ -157,8 +118,6 @@ public class Depot extends Application {
 
   class buttonContinuerAction implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event){
-      System.out.println(Depot.filename);
-      System.out.println(Depot.filename.substring(Depot.filename.length()-3, Depot.filename.length()));
       if(Depot.filename == null || !Depot.filename.substring(Depot.filename.length()-3, Depot.filename.length()).equals("csv")){
        
         Alert alert = new Alert(AlertType.WARNING);
@@ -197,4 +156,6 @@ public class Depot extends Application {
   }
 
 }
+
+
 

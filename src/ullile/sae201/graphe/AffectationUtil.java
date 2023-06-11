@@ -20,8 +20,8 @@ import fr.ulille.but.sae2_02.graphes.GrapheNonOrienteValue;
  */
 public class AffectationUtil {
 
-    private static int maxHobbyCount = 3;
-    private static int maxFoodCount = 3;
+    private static final int MAX_HOBBY_COUNT = 3;
+    private static final int MAX_FOOD_COUNT = 3;
     public static  double genderWeight = 1.0;
     public static  double foodWeight = 1.0;
     public static double ageWeight = 2.0;
@@ -30,13 +30,6 @@ public class AffectationUtil {
     public static double hobbiesWeight = 1.0;  
     public static double allergyWeight = 3.0; 
 
-    public static void setMaxHobbyCount(int maxHobbyCount) {
-        AffectationUtil.maxHobbyCount = maxHobbyCount;
-    }
-
-    public static void setMaxFoodCount(int maxFoodCount) {
-        AffectationUtil.maxFoodCount = maxFoodCount;
-    }
 
     public static void setGenderWeight(double genderWeight) {
         AffectationUtil.genderWeight = genderWeight;
@@ -65,6 +58,37 @@ public class AffectationUtil {
     public static void setAllergyWeight(double allergyWeight) {
         AffectationUtil.allergyWeight = allergyWeight;
     }
+
+
+    public static double getResetGenderWeight(){
+        return 1.0;
+    }
+
+    public static double getResetFoodWeight(){
+        return 1.0;
+    }
+
+    public static double getResetLessCompatibleHistoryWeight(){
+        return 4.0;
+    }
+
+    public static double getResetSuperCompatibleHistoryWeight(){
+        return 6.0;
+    }
+
+    public static double getResetHobbiesWeight(){
+        return 1.0;
+    }
+
+    public static double getResetAllergyWeight(){
+        return 3.0;
+    }
+
+    public static double getResetAgeWeight(){
+        return 2.0;
+    }
+
+
 
     /** Calcule le poids de l’arête entre host et visitor dans le graphe modèle.
      * Doit faire appel à la méthode compatibleWithGuest(Teenager) de Teenager.
@@ -153,7 +177,7 @@ public class AffectationUtil {
     private static double hobbiesWeight(Teenager host, Teenager visitor) throws RequirementNotFound {
         double baseHobbyWeight = 0.0;
         for(String hobby : host.getHobbies()){
-            if(visitor.getHobbies().contains(hobby) && hobbiesWeight < maxHobbyCount) {
+            if(visitor.getHobbies().contains(hobby) && hobbiesWeight < MAX_HOBBY_COUNT) {
                 baseHobbyWeight+=hobbiesWeight;
             }
         }
@@ -266,7 +290,7 @@ public class AffectationUtil {
                     break;
                 }
             }
-            if(!temp || foodWeight <maxFoodCount){
+            if(!temp || foodWeight <MAX_FOOD_COUNT){
                  baseFoodWeight += foodWeight;
             }
         }
