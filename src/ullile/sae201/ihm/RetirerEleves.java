@@ -19,6 +19,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+/**
+ * Depot class
+ * @author Elise Leroy
+ */
+
 
 public class RetirerEleves extends Application{
     public void start (Stage stage){

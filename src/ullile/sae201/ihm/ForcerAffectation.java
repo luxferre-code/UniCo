@@ -14,6 +14,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+/**
+ * Depot class
+ * @author Elise Leroy
+ */
+
+
 public class ForcerAffectation extends Application{
 
     ListView<String> listeInvite = new ListView<>();
