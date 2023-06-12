@@ -44,7 +44,8 @@ public class ModifPonderation extends Application {
                 "-fx-border-color: lightgreen;"+
                 "-fx-background-radius: 10px;"+
                 "-fx-border-radius: 10px;"+
-                "-fx-padding: 15 30;"+
+                "-fx-padding: 10 30;"+
+                "-fx-font-size: 16px;"+
                 "-fx-background-color: lightgreen;");
 
         
@@ -99,6 +100,7 @@ public class ModifPonderation extends Application {
             moins.setOnMouseClicked(e ->{
                 int currentValue = Integer.parseInt(valeur.getText());
                 valeur.setText(""+(currentValue - 1));
+                //changedValueTab[cpt] = currentValue -1;
             });
 
             plus.setOnMouseClicked(e ->{
@@ -171,20 +173,6 @@ public class ModifPonderation extends Application {
         stage.setTitle("UniCo - Modification des pondérations");
         stage.show();
     }
-
-    /*
-    class ClicListenerIncDec implements EventHandler<ActionEvent>{
-        public void handle(ActionEvent event){
-            int currentValue = Integer.parseInt(valeur.getText());
-            if(event.getTarget() == plus){
-                valeur.setText(""+(currentValue + 1));
-            } else {
-                valeur.setText(""+(currentValue - 1));
-            }
-        }
-    }*/
-
-
 
 
     public static void main(String[] args) {

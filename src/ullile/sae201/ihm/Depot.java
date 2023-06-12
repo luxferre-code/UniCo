@@ -44,7 +44,7 @@ public class Depot extends Application {
     deposer.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 32));
     deposer.setPadding(new Insets(0,0,25,0));
  
-    Button depot = new Button("Dépôt");
+    Button depot = new Button("Dépôt...");
     depot.setStyle("-fx-border-style: solid;"+
                    "-fx-border-color: lightgrey;"+
                    "-fx-border-radius: 40px;"+
@@ -58,11 +58,12 @@ public class Depot extends Application {
 
     Button continuer = new Button("Continuer");
     continuer.setStyle("-fx-border-style: solid;"+
-                   "-fx-border-color: lightgreen;"+
-                   "-fx-background-radius: 10px;"+
-                   "-fx-border-radius: 10px;"+
-                   "-fx-padding: 15 30;"+
-                   "-fx-background-color: lightgreen;");
+            "-fx-border-color: lightgreen;"+
+            "-fx-background-radius: 10px;"+
+            "-fx-border-radius: 10px;"+
+            "-fx-padding: 10 30;"+
+            "-fx-font-size: 16px;"+
+            "-fx-background-color: lightgreen;");
     continuer.addEventHandler(ActionEvent.ACTION, new buttonContinuerAction());
     VBox boxContinuer = new VBox();
 
@@ -81,27 +82,6 @@ public class Depot extends Application {
     stage.setTitle("UniCo - Dépôt du fichier");
     stage.show();
   }
-
-  /*
-    public static boolean exportData(Platform p, String nameFile) {
-
-        File f = new File(nameFile);
-        if (f.exists()) {
-            f.delete();
-        }
-
-        try (BufferedWriter br = new BufferedWriter(new FileWriter(nameFile))) {
-            br.write("FORENAME;NAME;COUNTRY;BIRTH_DATE;HOBBIES;GUEST_ANIMAL_ALLERGY;HOST_HAS_ANIMAL;GUEST_FOOD;HOST_FOOD;GENDER;PAIR_GENDER;HISTORY\n");
-            for (Teenager t : p.getTeenagers()) {
-                br.write(CSVFile.exportLineTeenager(t));
-                br.newLine();
-            }
-        } catch (IOException e) {
-            return false;
-        }
-        return true;
-    }*/
-  
 
   class buttonDepotAction implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event){
@@ -135,14 +115,7 @@ public class Depot extends Application {
           alert2.setHeaderText("Fichier incompatible !");
           alert2.setContentText("Le format du csv n'est pas le bon il doit être de la forme : FORENAME;NAME;COUNTRY;BIRTH_DATE;HOBBIES;GUEST_ANIMAL_ALLERGY;HOST_HAS_ANIMAL;GUEST_FOOD;HOST_FOOD;GENDER;PAIR_GENDER;HISTORY");
           alert2.showAndWait();
-        } /* catch (ParseException e) {
-          Alert alert3 = new Alert(AlertType.WARNING);
-          alert3.setTitle("Une erreur s'est produite");
-          alert3.setHeaderText("Fichier incompatible !");
-          alert3.setContentText("Le date doit être au format dd/MM/yyy");
-          alert3.showAndWait();
-        } */
-        //Appairer.filename = "";
+        } 
       }
 
       
