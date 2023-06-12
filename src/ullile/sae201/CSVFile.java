@@ -157,7 +157,7 @@ public class CSVFile {
      */
     public static Platform read(String fileName, boolean haveHeader) throws InvalidCSVException {
         Platform p = new Platform();
-        try (BufferedReader br = new BufferedReader(new FileReader(getDirWhoResourcesIs() + "resources" + FIlE_DELIMITER + fileName))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             if (haveHeader) {
                 headerModifier(br.readLine());
@@ -219,12 +219,12 @@ public class CSVFile {
      */
     public static boolean exportData(Platform p, String nameFile) {
 
-        File f = new File(getDirWhoResourcesIs() + "resources" + FIlE_DELIMITER + nameFile);
+        File f = new File(nameFile);
         if (f.exists()) {
             f.delete();
         }
 
-        try (BufferedWriter br = new BufferedWriter(new FileWriter(getDirWhoResourcesIs() + "resources" + FIlE_DELIMITER + nameFile))) {
+        try (BufferedWriter br = new BufferedWriter(new FileWriter(nameFile))) {
             br.write("FORENAME;NAME;COUNTRY;BIRTH_DATE;HOBBIES;GUEST_ANIMAL_ALLERGY;HOST_HAS_ANIMAL;GUEST_FOOD;HOST_FOOD;GENDER;PAIR_GENDER;HISTORY\n");
             for (Teenager t : p.getTeenagers()) {
                 br.write(exportLineTeenager(t));

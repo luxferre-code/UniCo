@@ -21,17 +21,22 @@ import ullile.sae201.graphe.AffectationUtil;
 
 public class ModifPonderation extends Application {
 
-    public void start(Stage stage) {
-        //récupère les pondérations de base
-        final int[] tableauReset = new int[]{(int)AffectationUtil.getResetFoodWeight(),
+    public static int[] initTab() {
+        return new int[]{(int)AffectationUtil.getResetFoodWeight(),
                                         (int)AffectationUtil.getResetHobbiesWeight(),
                                         (int)AffectationUtil.getResetAllergyWeight(),
                                         (int)AffectationUtil.getResetSuperCompatibleHistoryWeight(),
                                         (int)AffectationUtil.getResetLessCompatibleHistoryWeight(),
                                         (int)AffectationUtil.getResetGenderWeight(),
                                         (int)AffectationUtil.getResetAgeWeight()};
+    }
 
-        final int[] changedValueTab = tableauReset;
+    public void start(Stage stage) {
+        //récupère les pondérations de base
+        int[] tableauReset = initTab();
+        int[] changedValueTab = initTab();
+
+        //final int[] changedValueTab = tableauReset;;
 
         VBox root = new VBox();
         HBox conteneurPrincipal = new HBox(90);
@@ -91,7 +96,7 @@ public class ModifPonderation extends Application {
             Button moins = new Button(" - ");
             moins.setPrefSize(32, 30); 
 
-            TextField valeur = new TextField(""+tableauReset[i]);
+            TextField valeur = new TextField("" + tableauReset[i]);
             valeur.setPrefSize(70, 30);
             valeur.setAlignment(Pos.CENTER);
 
@@ -161,7 +166,8 @@ public class ModifPonderation extends Application {
                     "Gender :" + AffectationUtil.genderWeight +"\n"+
                     "Age :" + AffectationUtil.ageWeight +"\n"
             );
-            javafx.application.Application.launch(RetirerEleves.class);
+            stage.close();
+            new RetirerEleves().start(new Stage());
         });
         
         VBox alignementCentre = new VBox();

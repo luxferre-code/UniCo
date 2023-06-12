@@ -15,6 +15,9 @@ public class Platform {
     private final static int NOMINONTHESET = 0;
     private final HashSet<Teenager> teenagers = new HashSet<>();
 
+    public final Set<Teenager> HOSTS = new HashSet<>();
+    public final Set<Teenager> GUESTS = new HashSet<>(); 
+
     /**
      * Platform constructor
      */
@@ -144,5 +147,12 @@ public class Platform {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    public void associatedToSet(Country host, Country guest) {
+        for(Teenager t : this.teenagers) {
+            if(t.getCountry().equals(host)) this.HOSTS.add(t);
+            else if(t.getCountry().equals(guest)) this.GUESTS.add(t);
+        }
     }
 }

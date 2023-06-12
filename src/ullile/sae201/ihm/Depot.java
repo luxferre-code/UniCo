@@ -31,9 +31,12 @@ public class Depot extends Application {
   public static String filename;
   public static Platform paltform;
 
+  public static Stage s;
+
   public void start(Stage stage) {
-    //faire en GridPane
-    VBox root = new VBox();
+    this.s = stage;
+    VBox root;
+    root = new VBox();
     VBox conteneurPrincipal = new VBox();
 
     Label titre = new Label("UniCo  | Dépôt du fichier");
@@ -109,6 +112,11 @@ public class Depot extends Application {
       } else {
         try {
           Depot.paltform = CSVFile.read(Depot.filename, true);
+          if(Depot.paltform != null) {
+            Depot.s.close();
+            ModifPonderation tmp = new ModifPonderation();
+            tmp.start(new Stage());
+          }
         } catch (InvalidCSVException e){
           Alert alert2 = new Alert(AlertType.WARNING);
           alert2.setTitle("Une erreur s'est produite");
