@@ -15,7 +15,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 /**
- * Depot class
+ * ForcerAffectation class
  * @author Elise Leroy
  */
 

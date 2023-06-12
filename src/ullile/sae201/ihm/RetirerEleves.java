@@ -20,7 +20,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 /**
- * Depot class
+ * RetirerEleves class
  * @author Elise Leroy
  */
 

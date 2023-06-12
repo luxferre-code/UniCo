@@ -48,6 +48,7 @@ public class ModifPonderation extends Application {
                 "-fx-font-size: 16px;"+
                 "-fx-background-color: lightgreen;");
 
+
         
         String[] labelTab = new String[7];
         labelTab[0] = "Malus d’incompatibilité alimentaire";
@@ -160,6 +161,7 @@ public class ModifPonderation extends Application {
                     "Gender :" + AffectationUtil.genderWeight +"\n"+
                     "Age :" + AffectationUtil.ageWeight +"\n"
             );
+            javafx.application.Application.launch(RetirerEleves.class);
         });
         
         VBox alignementCentre = new VBox();
