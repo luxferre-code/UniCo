@@ -35,7 +35,7 @@ public class ForcerAffectation extends Application{
     ArrayList<String> inviteEnCoupleForce = new ArrayList<>();
 
     //hashMap of arrayLists of teenagers
-    public static Map<ArrayList<Teenager>, ArrayList<Teenager>> mapCouple;
+    public static Map<Teenager, Teenager> mapCouple;
     ComboBox<String> listeInvite = new ComboBox<>();
     public static Stage s;
 
@@ -157,8 +157,7 @@ public class ForcerAffectation extends Application{
         return retour;
     }
 
-    private ArrayList<Teenager> getTeenagerHote(){
-        ArrayList<Teenager> retour = new ArrayList<Teenager>();
+    private Teenager getTeenagerHote(){
         String name ="";
         String forename="";
         for(int i=0; i<hoteEnCoupleForce.get(0).length(); i++){
@@ -168,12 +167,10 @@ public class ForcerAffectation extends Application{
             forename = hoteEnCoupleForce.get(0).substring(i+1, hoteEnCoupleForce.get(0).length());
         }
         Depot.platform.SORTED_HOSTS.remove(Depot.platform.getTeenagerHostByName(name, forename));
-        retour.add(Depot.platform.getTeenagerHostByName(name, forename));
-        return retour;
+        return Depot.platform.getTeenagerHostByName(name, forename);
     }
 
-    private ArrayList<Teenager> getTeenagerInvite(){
-        ArrayList<Teenager> retour = new ArrayList<Teenager>();
+    private Teenager getTeenagerInvite(){
         String name="";
         String forename="";
         for(int i=0; i<inviteEnCoupleForce.get(0).length(); i++){
@@ -183,8 +180,7 @@ public class ForcerAffectation extends Application{
             forename = inviteEnCoupleForce.get(0).substring(i+1, inviteEnCoupleForce.get(0).length());
         }
         Depot.platform.SORTED_GUESTS.remove(Depot.platform.getTeenagerGuestByName(name, forename));
-        retour.add(Depot.platform.getTeenagerGuestByName(name, forename));
-        return retour;
+        return Depot.platform.getTeenagerGuestByName(name, forename);
     }
 
 
