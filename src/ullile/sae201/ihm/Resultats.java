@@ -39,15 +39,24 @@ public class Resultats extends Application{
         texteExplicatif.setPadding(new Insets(10, 0, 50, 23));
         titre.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 34));
         titre.setPadding(new Insets(20, 0, 0, 20));
-        Button continuer = new Button("Retourner au dépôt");
+        Button boutonDepot = new Button("Retour au dépôt");
+        Button continuer = new Button("Exporter le fichier");
         continuer.setStyle("-fx-border-style: solid;"+
+                "-fx-border-color: lightgreen;"+
+                "-fx-background-radius: 10px;"+
+                "-fx-border-radius: 10px;"+
+                "-fx-padding: 10 30;"+
+                "-fx-font-size: 16px;"+
+                "-fx-background-color: lignthgreen;");
+
+        boutonDepot.setStyle("-fx-border-style: solid;"+
                 "-fx-border-color: darksalmon;"+
                 "-fx-background-radius: 10px;"+
                 "-fx-border-radius: 10px;"+
                 "-fx-padding: 10 30;"+
                 "-fx-font-size: 16px;"+
                 "-fx-background-color: darksalmon;");
-        continuer.setOnMouseClicked(e ->{
+        boutonDepot.setOnMouseClicked(e ->{
             if(e.getButton()==MouseButton.PRIMARY){
                 Resultats.s.close();
                 Depot tmp = new Depot();
