@@ -60,8 +60,12 @@ public class Resultats extends Application{
         ListView<String> listeResultat = new ListView<>();
         listeResultat.getItems().add("Pouet");
         listeResultat.setMaxWidth(400);
-        graphe = AffectationUtil.creerGrapheTeenagerV2(Depot.platform.SORTED_HOSTS, Depot.platform.SORTED_HOSTS);
-        affectation = new CalculAffectation<Teenager>(graphe,Depot.platform.SORTED_HOSTS,Depot.platform.SORTED_HOSTS);
+        ArrayList<Teenager> listeHost = new ArrayList<Teenager>();
+        ArrayList<Teenager> listeGuest = new ArrayList<Teenager>();
+        listeHost.addAll(Depot.platform.SORTED_HOSTS);
+        listeGuest.addAll(Depot.platform.SORTED_GUESTS);
+        graphe = AffectationUtil.creerGrapheTeenagerV2(listeHost, listeGuest);
+        affectation = new CalculAffectation<Teenager>(graphe,listeHost,listeGuest);
         appariment.addAll(affectation.calculerAffectation());
         String[] ligneParLigne = AffectationUtil.tableauAfficherAppariementIHM(appariment);
 

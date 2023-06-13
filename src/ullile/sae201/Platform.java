@@ -1,9 +1,7 @@
 package ullile.sae201;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import ullile.sae201.exception.RequirementNotFound;
@@ -22,8 +20,8 @@ public class Platform {
     public final Set<Teenager> GUESTS = new HashSet<>(); 
 
     //HOSTS and GUESTS sorted alphabetically
-    public final ArrayList<Teenager> SORTED_HOSTS = new ArrayList<>();
-    public final ArrayList<Teenager> SORTED_GUESTS = new ArrayList<>();
+    public final Set<Teenager> SORTED_HOSTS = new HashSet<>();
+    public final Set<Teenager> SORTED_GUESTS = new HashSet<>();
 
     /**
      * Platform constructor
@@ -175,7 +173,7 @@ public class Platform {
         for(Teenager t : this.HOSTS) {
             this.SORTED_HOSTS.add(t);
         }
-        this.SORTED_HOSTS.sort((Teenager t1, Teenager t2) -> t1.getName().compareTo(t2.getName()));
+        //this.SORTED_HOSTS.sort((Teenager t1, Teenager t2) -> t1.getName().compareTo(t2.getName()));
     }
 
     /**
@@ -189,7 +187,7 @@ public class Platform {
         for(Teenager t : this.GUESTS) {
             this.SORTED_GUESTS.add(t);
         }
-        this.SORTED_GUESTS.sort((Teenager t1, Teenager t2) -> t1.getName().compareTo(t2.getName()));
+        //this.SORTED_GUESTS.sort((Teenager t1, Teenager t2) -> t1.getName().compareTo(t2.getName()));
     }
 
     

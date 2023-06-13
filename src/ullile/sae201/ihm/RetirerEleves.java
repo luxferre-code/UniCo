@@ -36,7 +36,7 @@ public class RetirerEleves extends Application{
     public static ArrayList<Teenager> listeInviteRetire = new ArrayList<>();
 
     public void start (Stage stage){
-        this.s = stage;
+        RetirerEleves.s = stage;
         VBox root = new VBox();
         Label titre = new Label("UniCo  | Retirer des élèves");
         titre.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 34));
@@ -53,8 +53,7 @@ public class RetirerEleves extends Application{
             if(e.getButton()==MouseButton.PRIMARY){
                 retirerEleveDeLaListe();
                 RetirerEleves.s.close();
-                ForcerAffectation tmp = new ForcerAffectation();
-                tmp.start(new Stage());
+                new ForcerAffectation().start(new Stage());
             }
         });
 
@@ -72,7 +71,7 @@ public class RetirerEleves extends Application{
         //Structure de création de la liste hôte avec checkbox
         this.listeHboxHote = new ArrayList<>();
         for(Teenager t : Depot.platform.SORTED_HOSTS){
-            this.listeHboxHote.add(listeCreator(t.getName(), t.getForename()));
+            this.listeHboxHote.add(listeCreator(t, true));
         }
         ObservableList<HBox> listeObs = FXCollections.observableList(listeHboxHote);
         ListView<HBox> listViewHote = new ListView<>();
@@ -82,7 +81,7 @@ public class RetirerEleves extends Application{
         //Structure de création de la liste invités avec checkbox
         this.listeHboxInvite = new ArrayList<>();
         for(Teenager t : Depot.platform.SORTED_GUESTS){
-            this.listeHboxInvite.add(listeCreator(t.getName(), t.getForename()));
+            this.listeHboxInvite.add(listeCreator(t, false));
         }
         ObservableList<HBox> listeObs2 = FXCollections.observableList(listeHboxInvite);
         ListView<HBox> listViewInvite = new ListView<>();
@@ -111,7 +110,9 @@ public class RetirerEleves extends Application{
         stage.show();
     }
 
-    private HBox listeCreator(String name, String forename){
+    private HBox listeCreator(Teenager t, boolean isHost){
+        String name = t.getName();
+        String forename = t.getForename();
         HBox ligneListeTeenager = new HBox(4);
         ligneListeTeenager.setAlignment(Pos.CENTER_LEFT);
         Label nomTeenager = new Label(name+" "+forename);
@@ -122,26 +123,28 @@ public class RetirerEleves extends Application{
         ligneListeTeenager.getChildren().addAll(checkbox, nomTeenager);
 
         ligneListeTeenager.setOnMouseClicked(e ->{
-            if(e.getButton()==MouseButton.PRIMARY){
+            if(e.getButton() == MouseButton.PRIMARY){
                 checkbox.setSelected(!checkbox.isSelected());
+                if(isHost) {
+                    if(listeHoteRetire.contains(t)) listeHoteRetire.remove(t);
+                    else listeHoteRetire.add(t);
+                } else {
+                    if(listeInviteRetire.contains(t)) listeInviteRetire.remove(t);
+                    else listeInviteRetire.add(t);
+                }
             }
         });
         return ligneListeTeenager;
     }
 
     private void retirerEleveDeLaListe(){
-        for(int i=0; i<this.listeHboxHote.size();i++){
-            if(((CheckBox)this.listeHboxHote.get(i).getChildren().get(0)).isSelected()){
-                listeHoteRetire.add(Depot.platform.SORTED_HOSTS.get(i));
-                Depot.platform.SORTED_HOSTS.remove(i);
-            }
+        for(Teenager t : listeHoteRetire){
+            System.out.println("hote: " + t);
+            Depot.platform.SORTED_HOSTS.remove(t);
         }
-        
-        for(int i=0; i<this.listeHboxInvite.size();i++){
-            if(((CheckBox)this.listeHboxInvite.get(i).getChildren().get(0)).isSelected()){
-                listeInviteRetire.add(Depot.platform.SORTED_GUESTS.get(i));
-                Depot.platform.SORTED_GUESTS.remove(i);
-            }
+        for(Teenager t : listeInviteRetire){
+            System.out.println(t);
+            Depot.platform.SORTED_GUESTS.remove(t);
         }
     }
 

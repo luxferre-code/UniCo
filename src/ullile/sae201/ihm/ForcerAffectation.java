@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import ullile.sae201.Teenager;
 
 /**
  * ForcerAffectation class
@@ -29,7 +30,7 @@ public class ForcerAffectation extends Application{
     public static Stage s;
 
     public void start(Stage stage){
-        this.s = stage;
+        ForcerAffectation.s = stage;
         class ListOnClickListener implements ListChangeListener<String>{
 
             public void onChanged(Change<? extends String> report){
@@ -100,16 +101,24 @@ public class ForcerAffectation extends Application{
     }
 
     private String[] getNomCompletHote(){
-        for(int i=0; i<Depot.platform.SORTED_HOSTS.size(); i++){
-            listeNomCompletHote[i] = Depot.platform.SORTED_HOSTS.get(i).getName()+" "+Depot.platform.SORTED_HOSTS.get(i).getForename();
+        int i = 0;
+
+        for(Teenager t : Depot.platform.SORTED_HOSTS){
+            listeNomCompletHote[i] = t.getName()+" "+t.getForename();
+            i++;
         }
+
         return listeNomCompletHote;
     }
 
     private String[] getNomCompletInvite(){
-        for(int i=0; i<Depot.platform.SORTED_GUESTS.size(); i++){
-            listeNomCompletHote[i] = Depot.platform.SORTED_GUESTS.get(i).getName()+" "+Depot.platform.SORTED_GUESTS.get(i).getForename();
+        int i = 0;
+
+        for(Teenager t : Depot.platform.SORTED_GUESTS){
+            listeNomCompletInvite[i] = t.getName()+" "+t.getForename();
+            i++;
         }
+
         return listeNomCompletInvite;
     }
 
