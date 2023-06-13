@@ -18,7 +18,7 @@ public class Teenager implements Serializable {
     private final LocalDate DATENAISS;
     private Teenager history = null;
 
-    private static final HashSet<CriterionName> REQUIDED = new HashSet<>() {{
+    private static final HashSet<CriterionName> REQUIDED = new HashSet<CriterionName>() {{
         add(CriterionName.GENDER);
     }};
 

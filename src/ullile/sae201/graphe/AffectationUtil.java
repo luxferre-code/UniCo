@@ -195,6 +195,7 @@ public class AffectationUtil {
      * @return (double) - The edge weight got from the history
      */
     private static double historyWeight(Teenager host, Teenager visitor){
+        if(host.getHistory() == null) return 0.0;
         if(host.getHistory().equals(visitor)){
             try {
                 if(Teenager.booleanConverter(host, CriterionName.HISTORY, "same")){
@@ -477,7 +478,12 @@ public class AffectationUtil {
 
         for (Teenager host : hosts) {
             for (Teenager guest : guests) {
-                teenagerGraphe.ajouterArete(host, guest, weightV2(host, guest));
+                try {
+                    teenagerGraphe.ajouterArete(host, guest, weightV2(host, guest));
+                } catch(IllegalArgumentException ignored) {
+                    System.out.println("Tentative d'ajout d'une arête existante");
+                }
+                
             }
         }
         return teenagerGraphe;

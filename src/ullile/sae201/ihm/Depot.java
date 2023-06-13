@@ -34,7 +34,7 @@ public class Depot extends Application {
   public static Stage s;
 
   public void start(Stage stage) {
-    this.s = stage;
+    Depot.s = stage;
     VBox root;
     root = new VBox();
     VBox conteneurPrincipal = new VBox();
@@ -111,6 +111,7 @@ public class Depot extends Application {
         
       } else {
         try {
+          System.out.println(Depot.filename);
           Depot.platform = CSVFile.read(Depot.filename, true);
           if(Depot.platform != null) {
             Depot.s.close();
@@ -123,6 +124,8 @@ public class Depot extends Application {
           alert2.setHeaderText("Fichier incompatible !");
           alert2.setContentText("Le format du csv n'est pas le bon il doit être de la forme : FORENAME;NAME;COUNTRY;BIRTH_DATE;HOBBIES;GUEST_ANIMAL_ALLERGY;HOST_HAS_ANIMAL;GUEST_FOOD;HOST_FOOD;GENDER;PAIR_GENDER;HISTORY");
           alert2.showAndWait();
+        } catch (Exception e) {
+          e.printStackTrace();
         } 
       }
 

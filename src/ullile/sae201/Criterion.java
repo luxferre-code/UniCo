@@ -12,17 +12,17 @@ public class Criterion implements Serializable {
 
     public final static String YES = "yes";
     public final static String NO = "no";
-    private final static HashSet<String> GENDERS = new HashSet<>() {{
+    private final static HashSet<String> GENDERS = new HashSet<String>() {{
         add("male");
         add("female");
         add("other");
     }};
-    private final static HashSet<String> FOOD = new HashSet<>() {{
+    private final static HashSet<String> FOOD = new HashSet<String>() {{
         add("nonuts");
         add("vegetarian");
         add("");
     }};
-    private final static HashSet<String> POSSIBILITY_HISTORY = new HashSet<>() {{
+    private final static HashSet<String> POSSIBILITY_HISTORY = new HashSet<String>() {{
         add("same");
         add("other");
         add("");
@@ -48,33 +48,30 @@ public class Criterion implements Serializable {
      */
     public boolean isValid() {
         switch (this.label.getType()) {
-            case 'B' -> {
+            case 'B':
                 return this.value.equals(Criterion.YES) || this.value.equals(Criterion.NO);
-            }
-            case 'T' -> {
+            
+            case 'T':
                 switch (this.label.name()) {
-                    case "GENDER" -> {
+                    case "GENDER":
                         return Criterion.GENDERS.contains(this.value);
-                    }
-                    case "PAIR_GENDER" -> {
+                    
+                    case "PAIR_GENDER":
                         return Criterion.GENDERS.contains(this.value) || this.value.isEmpty();
-                    }
-                    case "HISTORY" -> {
+                    
+                    case "HISTORY":
                         return Criterion.POSSIBILITY_HISTORY.contains(this.value);
-                    }
-                    default -> {
+                    
+                    default:
                         if (this.label.name().equals("HOST_FOOD") || this.label.name().equals("GUEST_FOOD")) {
                             for (String s : this.value.split(",")) {
                                 if (!Criterion.FOOD.contains(s)) return false;
                             }
                         }
-                    }
                 }
                 return true;
-            }
-            default -> {
+            default:
                 return false;
-            }
         }
     }
 

@@ -28,7 +28,7 @@ public class CSVFile {
 
     public static final String FIlE_DELIMITER = System.getProperty("file.separator");
     private static final String DELIMITER = ";";
-    private static List<String> HEADER = new ArrayList<>() {{
+    private static List<String> HEADER = new ArrayList<String>() {{
         add("FORENAME");
         add("NAME");
         add("COUNTRY");

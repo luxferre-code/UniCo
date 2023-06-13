@@ -31,7 +31,7 @@ public class DetectionPays extends Application{
     ComboBox<Country> paysInvite;
 
     public void start(Stage stage) {
-        this.s = stage;
+        DetectionPays.s = stage;
         Label titre = new Label("UniCo  | Précision des pays");
         titre.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 34));
         titre.setPadding(new Insets(20, 0, 0, 20));
@@ -94,9 +94,11 @@ public class DetectionPays extends Application{
             }
         }
         ObservableList<Country> obsPays = FXCollections.observableList(setPays);
-        for(Country c : setPays){
+
+        /*for(Country c : Country.values()){
             obsPays.add(c);
-        };
+        };*/
+
         paysHote.setItems(obsPays);
         paysInvite.setItems(obsPays);
     }
