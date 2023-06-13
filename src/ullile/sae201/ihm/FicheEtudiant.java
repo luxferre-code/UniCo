@@ -16,7 +16,7 @@ public class FicheEtudiant extends Application{
     public static Stage s;
 
     public void start(Stage stage){
-        this.s = stage;
+        s = stage;
         Label titre = new Label("UniCo  | Modification des pondérations");
         titre.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 34));
         titre.setPadding(new Insets(20, 0, 0, 20));

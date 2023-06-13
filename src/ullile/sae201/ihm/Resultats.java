@@ -2,6 +2,8 @@ package ullile.sae201.ihm;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import fr.ulille.but.sae2_02.graphes.Arete;
 import fr.ulille.but.sae2_02.graphes.CalculAffectation;
@@ -10,6 +12,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -17,7 +20,9 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import ullile.sae201.CSVFile;
 import ullile.sae201.Teenager;
 import ullile.sae201.graphe.AffectationUtil;
 
@@ -31,6 +36,7 @@ public class Resultats extends Application{
     private GrapheNonOrienteValue<Teenager> graphe;
     private CalculAffectation<Teenager> affectation;
     ArrayList<Arete<Teenager>> appariment = new ArrayList<Arete<Teenager>>(); 
+    private static Map<String, ArrayList<Teenager>> forCliquedCouple = new HashMap<>();
 
     public void start(Stage stage){
         Label titre = new Label("UniCo  | Résultat des affectations");
@@ -47,7 +53,7 @@ public class Resultats extends Application{
                 "-fx-border-radius: 10px;"+
                 "-fx-padding: 10 30;"+
                 "-fx-font-size: 16px;"+
-                "-fx-background-color: lignthgreen;");
+                "-fx-background-color: lightgreen;");
 
         boutonDepot.setStyle("-fx-border-style: solid;"+
                 "-fx-border-color: darksalmon;"+
@@ -64,6 +70,19 @@ public class Resultats extends Application{
             }
         });
 
+
+    continuer.setOnMouseClicked(e -> {
+        System.out.println("Action" + e.getButton() + " " + e.isPrimaryButtonDown());
+            if(e.getButton()==MouseButton.PRIMARY) {
+                System.out.println("Chooser");
+                DirectoryChooser directoryChooser = new DirectoryChooser();
+                directoryChooser.setTitle("Choisir un dossier");
+                System.out.println("Chooser2");
+                CSVFile.exportAppariement(appariment, directoryChooser.showDialog(null).getAbsolutePath());
+                new Alert(Alert.AlertType.INFORMATION, "Fichier exporté").showAndWait();
+            }
+        });
+
         Label titreListe = new Label("Hôte - Invité - Poids");
         titreListe.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 20));
 
@@ -74,17 +93,9 @@ public class Resultats extends Application{
         listeHost.addAll(Depot.platform.SORTED_HOSTS);
         listeGuest.addAll(Depot.platform.SORTED_GUESTS);
 
-        //for each mapCouple in mapCouple creerGrapheTeenagerV2 et calculerAffectation et ajouter dans ligneParLigne
-        ArrayList<String[]> ligneParLigneForce = new ArrayList<String[]>();
-        for(var entry : ForcerAffectation.mapCouple.entrySet()){
-            ArrayList<Teenager> host = entry.getKey();
-            ArrayList<Teenager> guest = entry.getValue();
-            graphe = AffectationUtil.creerGrapheTeenagerV2(host, guest);
-            affectation = new CalculAffectation<Teenager>(graphe,listeHost,listeGuest);
-            appariment.addAll(affectation.calculerAffectation());
-            ligneParLigneForce.add(AffectationUtil.tableauAfficherAppariementIHM(appariment));
-            appariment.clear();
-        }
+        ArrayList<Teenager> host = new ArrayList<Teenager>(Depot.platform.SORTED_HOSTS);
+        ArrayList<Teenager> guest = new ArrayList<Teenager>(Depot.platform.SORTED_GUESTS);
+        graphe = AffectationUtil.creerGrapheTeenagerV2(host, guest);
          
         graphe = AffectationUtil.creerGrapheTeenagerV2(listeHost, listeGuest);
         affectation = new CalculAffectation<Teenager>(graphe,listeHost,listeGuest);
@@ -93,6 +104,10 @@ public class Resultats extends Application{
 
         for(int i = 0; i < ligneParLigneReste.length; i++){
             listeResultat.getItems().add(ligneParLigneReste[i]);
+            ArrayList<Teenager> tmp = new ArrayList<Teenager>();
+            tmp.add(appariment.get(i).getExtremite1()); // On ajoute l'hôte
+            tmp.add(appariment.get(i).getExtremite2()); // On ajoute l'invité
+            forCliquedCouple.put(ligneParLigneReste[i], tmp);
         }
 
         listeResultat.setOnMouseClicked(e ->{
@@ -111,6 +126,8 @@ public class Resultats extends Application{
         conteneurListeEtContinuer.getChildren().addAll(vboxTitreListe, continuer);
         conteneurListeEtContinuer.setAlignment(Pos.TOP_CENTER);
         root.getChildren().addAll(titre, texteExplicatif, conteneurListeEtContinuer);
+
+        
 
         Scene scene = new Scene(root, 1000, 700);
         stage.setResizable(false);

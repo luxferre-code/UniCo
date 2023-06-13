@@ -513,8 +513,9 @@ public class AffectationUtil {
            while(affichage.length()<15){
             affichage+="-";
            }
-           affichage += " "+arete.getExtremite2() + "(" + arete.getPoids() + ")\n"; 
+           affichage += " "+arete.getExtremite2() + " ( match à " + arete.getPoids() + " )\n"; 
            retour[appariment.indexOf(arete)] = affichage;
+           affichage = "";
         }
         return retour;
     }

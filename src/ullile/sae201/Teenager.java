@@ -373,5 +373,9 @@ public class Teenager implements Serializable {
         }
     }
 
+    public String minimalToString() {
+        return NAME + " " + FORENAME + "(" + COUNTRY + ")";
+    }
+
 
 }

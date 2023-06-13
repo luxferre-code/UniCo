@@ -16,6 +16,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 
+import fr.ulille.but.sae2_02.graphes.Arete;
 import ullile.sae201.exception.InvalidCSVException;
 import ullile.sae201.exception.InvalidCriterion;
 
@@ -240,6 +241,25 @@ public class CSVFile {
         Platform p = read("testCSVReader.csv");
         System.out.println(p);
         exportData(p, "test2.csv");
+    }
+
+    public static void exportAppariement(ArrayList<Arete<Teenager>> appariment, String fileDir) {
+        fileDir += FIlE_DELIMITER + "appariement.csv";
+        File f = new File(fileDir);
+        if (f.exists()) {
+            f.delete();
+        }
+
+        try (BufferedWriter br = new BufferedWriter(new FileWriter(fileDir))) {
+            br.write("FORENAME;NAME;COUNTRY;BIRTH_DATE;HOBBIES;GUEST_ANIMAL_ALLERGY;HOST_HAS_ANIMAL;GUEST_FOOD;HOST_FOOD;GENDER;PAIR_GENDER;HISTORY;");
+            br.write("FORENAME;NAME;COUNTRY;BIRTH_DATE;HOBBIES;GUEST_ANIMAL_ALLERGY;HOST_HAS_ANIMAL;GUEST_FOOD;HOST_FOOD;GENDER;PAIR_GENDER;HISTORY_guest\n".replace(";", "_guest;"));
+            for(Arete<Teenager> a : appariment) {
+                br.write(exportLineTeenager(a.getExtremite1()));
+                br.write(DELIMITER);
+                br.write(exportLineTeenager(a.getExtremite1()));
+                br.newLine();
+            }
+        } catch (IOException ignored) {}
     }
 
 

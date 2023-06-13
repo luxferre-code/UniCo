@@ -3,6 +3,7 @@ package ullile.sae201.ihm;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -35,24 +36,14 @@ public class ForcerAffectation extends Application{
     ArrayList<String> inviteEnCoupleForce = new ArrayList<>();
 
     //hashMap of arrayLists of teenagers
-    public static Map<Teenager, Teenager> mapCouple;
-    ComboBox<String> listeInvite = new ComboBox<>();
+    public static Map<Teenager, Teenager> mapCouple = new HashMap<>();
+    ComboBox<Teenager> listeInvite = new ComboBox<>();
     public static Stage s;
 
 
     
     public void start(Stage stage){
         ForcerAffectation.s = stage;
-       /*  class ComboBox implements ListChangeListener<String>{
-
-            public void onChanged(Change<? extends String> report){
-                
-                listeNomCompletHote = getNomCompletInvite();
-                listeInvite.getItems().clear();
-                listeInvite.getItems().addAll(listeNomCompletInvite);
-
-            }
-        } */
 
         VBox root = new VBox(30);
         VBox conteneurListeEtBouton = new VBox(30);
@@ -84,27 +75,34 @@ public class ForcerAffectation extends Application{
         listeViewCoupleForce.setMaxWidth(200);
         listeViewCoupleForce.setMaxHeight(100);
 
-        ComboBox<String> listeHote = new ComboBox<>();
+        ComboBox<Teenager> listeHote = new ComboBox<>();
         listeHote.setPrefWidth(200);
-        listeNomCompletHote.addAll(getNomCompletHote());
+        listeNomCompletHote.addAll(getNomComplet(Depot.platform.HOSTS));
         System.out.println(listeNomCompletHote);
-        ObservableList<String> listeObsHote = FXCollections.observableArrayList(listeNomCompletHote);
+        ObservableList<Teenager> listeObsHote = FXCollections.observableArrayList(Depot.platform.HOSTS);
         //first row of combobox must be empty
-        listeObsHote.add(0, "");
+        //listeObsHote.add(0, "");
         listeHote.setItems(listeObsHote);
 
         listeInvite.setMaxWidth(200);
-        listeNomCompletInvite.addAll(getNomCompletInvite());
-        ObservableList<String> listeObsinvite = FXCollections.observableArrayList(listeNomCompletInvite);
-        listeObsinvite.add(0, "");
+        listeNomCompletInvite.addAll(getNomComplet(Depot.platform.GUESTS));
+        ObservableList<Teenager> listeObsinvite = FXCollections.observableArrayList(Depot.platform.GUESTS);
+        //listeObsinvite.add(0, "");
         listeInvite.setItems(listeObsinvite);
 
         ajouter.setOnMouseClicked(e ->{
-            if(e.getButton() == MouseButton.PRIMARY){
+            /*if(e.getButton() == MouseButton.PRIMARY){
                 if(listeHote.getValue() != "" && listeInvite.getValue() != ""){
-                    listeViewCoupleForce.getItems().add(listeHote.getValue()+" - "+listeInvite.getValue());
-                    hoteEnCoupleForce.add(listeHote.getValue());
-                    inviteEnCoupleForce.add(listeInvite.getValue());
+                    listeViewCoupleForce.getItems().add(listeHote.getValue() + " - " + listeInvite.getValue());
+                    mapCouple.put(getTeenagerHote(), getTeenagerInvite());
+                    listeHote.getItems().remove(listeHote.getValue());
+                    listeInvite.getItems().remove(listeInvite.getValue());
+                }
+            }*/
+            if(e.getButton() == MouseButton.PRIMARY){
+                if(listeHote.getValue() != null && listeInvite.getValue() != null){
+                    listeViewCoupleForce.getItems().add(listeHote.getValue().minimalToString() + " - " + listeInvite.getValue().minimalToString());
+                    mapCouple.put(listeHote.getValue(), listeInvite.getValue());
                     listeHote.getItems().remove(listeHote.getValue());
                     listeInvite.getItems().remove(listeInvite.getValue());
                 }
@@ -121,11 +119,7 @@ public class ForcerAffectation extends Application{
         root.getChildren().addAll(titre, conteneurListeEtBouton);
 
         continuer.setOnMouseClicked(e ->{
-            if(e.getButton()==MouseButton.PRIMARY){
-                mapCouple = new HashMap<>();
-                for(String s : listeViewCoupleForce.getItems()){
-                    mapCouple.put(getTeenagerHote(), getTeenagerInvite());
-                }
+            if(e.getButton() == MouseButton.PRIMARY){
                 ForcerAffectation.s.close();
                 Resultats tmp = new Resultats();
                 tmp.start(new Stage());
@@ -141,50 +135,13 @@ public class ForcerAffectation extends Application{
 
     }
 
-    private ArrayList<String> getNomCompletHote(){
+    private ArrayList<String> getNomComplet(Set<Teenager> liste){
         ArrayList<String> retour = new ArrayList<String>();
-        for(Teenager t : Depot.platform.SORTED_HOSTS){
-            listeNomCompletHote.add(t.getName()+" "+t.getForename());
+        for(Teenager t : liste){
+            listeNomCompletInvite.add(t.minimalToString());
         }
         return retour;
     }
-
-    private ArrayList<String> getNomCompletInvite(){
-        ArrayList<String> retour = new ArrayList<String>();
-        for(Teenager t : Depot.platform.SORTED_GUESTS){
-            listeNomCompletInvite.add(t.getName()+" "+t.getForename());
-        }
-        return retour;
-    }
-
-    private Teenager getTeenagerHote(){
-        String name ="";
-        String forename="";
-        for(int i=0; i<hoteEnCoupleForce.get(0).length(); i++){
-            while(hoteEnCoupleForce.get(0).charAt(i) != ' '){
-                name += hoteEnCoupleForce.get(0).substring(0, i);
-            }
-            forename = hoteEnCoupleForce.get(0).substring(i+1, hoteEnCoupleForce.get(0).length());
-        }
-        Depot.platform.SORTED_HOSTS.remove(Depot.platform.getTeenagerHostByName(name, forename));
-        return Depot.platform.getTeenagerHostByName(name, forename);
-    }
-
-    private Teenager getTeenagerInvite(){
-        String name="";
-        String forename="";
-        for(int i=0; i<inviteEnCoupleForce.get(0).length(); i++){
-            while(inviteEnCoupleForce.get(0).charAt(i) != ' '){
-                name += inviteEnCoupleForce.get(0).substring(0, i);
-            }
-            forename = inviteEnCoupleForce.get(0).substring(i+1, inviteEnCoupleForce.get(0).length());
-        }
-        Depot.platform.SORTED_GUESTS.remove(Depot.platform.getTeenagerGuestByName(name, forename));
-        return Depot.platform.getTeenagerGuestByName(name, forename);
-    }
-
-
-
 
     public static void main(String[] args) {
         Application.launch(args);
