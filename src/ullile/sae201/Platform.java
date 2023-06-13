@@ -1,14 +1,17 @@
 package ullile.sae201;
 
-import ullile.sae201.exception.RequirementNotFound;
-
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import ullile.sae201.exception.RequirementNotFound;
 
 /**
  * Platform class
  *
- * @author Valentin Thuillier
+ * @author Valentin Thuillier, Elise Leroy
  */
 public class Platform {
 
@@ -17,6 +20,10 @@ public class Platform {
 
     public final Set<Teenager> HOSTS = new HashSet<>();
     public final Set<Teenager> GUESTS = new HashSet<>(); 
+
+    //HOSTS and GUESTS sorted alphabetically
+    public final ArrayList<Teenager> SORTED_HOSTS = new ArrayList<>();
+    public final ArrayList<Teenager> SORTED_GUESTS = new ArrayList<>();
 
     /**
      * Platform constructor
@@ -149,10 +156,41 @@ public class Platform {
         return sb.toString();
     }
 
-    public void associatedToSet(Country host, Country guest) {
+    /* public void associatedToSet(Country host, Country guest) {
         for(Teenager t : this.teenagers) {
             if(t.getCountry().equals(host)) this.HOSTS.add(t);
             else if(t.getCountry().equals(guest)) this.GUESTS.add(t);
         }
+    } */
+
+
+    /**
+     * Set the host country (For HMI)
+     * @param value (Host Country)
+     */
+    public void setHostCountry(Country value) {
+        for(Teenager t : this.teenagers) {
+            if(t.getCountry().equals(value)) this.HOSTS.add(t);
+        }
+        for(Teenager t : this.HOSTS) {
+            this.SORTED_HOSTS.add(t);
+        }
+        this.SORTED_HOSTS.sort((Teenager t1, Teenager t2) -> t1.getName().compareTo(t2.getName()));
     }
+
+    /**
+     * Set the guest country (For HMI)
+     * @param value (Guest Country)
+     */
+    public void setInviteCountry(Country value) {
+        for(Teenager t : this.teenagers) {
+            if(t.getCountry().equals(value)) this.GUESTS.add(t);
+        }
+        for(Teenager t : this.GUESTS) {
+            this.SORTED_GUESTS.add(t);
+        }
+        this.SORTED_GUESTS.sort((Teenager t1, Teenager t2) -> t1.getName().compareTo(t2.getName()));
+    }
+
+    
 }

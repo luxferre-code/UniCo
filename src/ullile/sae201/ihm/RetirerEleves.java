@@ -13,11 +13,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import ullile.sae201.Teenager;
 
 /**
  * RetirerEleves class
@@ -26,10 +28,13 @@ import javafx.stage.Stage;
 
 
 public class RetirerEleves extends Application{
-    public void start (Stage stage){
-        //Platform temp = new Platform();
-        //HashSet<Teenager> teenagers = (HashSet<Teenager>) temp.getTeenagers();
 
+    public static Stage s;
+    List<HBox> listeHote;
+    List<HBox> listeInvite;
+
+    public void start (Stage stage){
+        this.s = stage;
         VBox root = new VBox();
         Label titre = new Label("UniCo  | Retirer des élèves");
         titre.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 34));
@@ -42,6 +47,14 @@ public class RetirerEleves extends Application{
                 "-fx-padding: 10 30;"+
                 "-fx-font-size: 16px;"+
                 "-fx-background-color: lightgreen;");
+        continuer.setOnMouseClicked(e ->{
+            if(e.getButton()==MouseButton.PRIMARY){
+                retirerEleveDeLaListe();
+                RetirerEleves.s.close();
+                ForcerAffectation tmp = new ForcerAffectation();
+                tmp.start(new Stage());
+            }
+        });
 
         HBox conteneurHoteInvi = new HBox(100);
 
@@ -55,9 +68,9 @@ public class RetirerEleves extends Application{
 
 
         //Structure de création de la liste hôte avec checkbox
-        List<HBox> listeHote = new ArrayList<>();
-        for(int i=0; i<24; i++){
-            listeHote.add(listeCreator("test")); //getTeenganer name if Teenager == hote
+        this.listeHote = new ArrayList<>();
+        for(Teenager t : Depot.platform.SORTED_HOSTS){
+            this.listeHote.add(listeCreator(t.getName()));
         }
         ObservableList<HBox> listeObs = FXCollections.observableList(listeHote);
         ListView<HBox> listViewHote = new ListView<>();
@@ -65,15 +78,16 @@ public class RetirerEleves extends Application{
         listViewHote.setPrefWidth(350);
 
         //Structure de création de la liste invités avec checkbox
-        List<HBox> listeInvite = new ArrayList<>();
-        for(int i=0; i<24; i++){
-            listeInvite.add(listeCreator("Louis Jean Joseph De La Vega"));
+        this.listeInvite = new ArrayList<>();
+        for(Teenager t : Depot.platform.SORTED_GUESTS){
+            this.listeInvite.add(listeCreator(t.getName()));
         }
         ObservableList<HBox> listeObs2 = FXCollections.observableList(listeInvite);
         ListView<HBox> listViewInvite = new ListView<>();
         listViewInvite.setItems(listeObs2);
         listViewInvite.setPrefWidth(350);
         
+
 
         vboxInvite.getChildren().addAll(titreInvite, listViewInvite);
         vboxHote.getChildren().addAll(titreHote, listViewHote);
@@ -83,13 +97,13 @@ public class RetirerEleves extends Application{
         VBox conteneurListeEtContinuer = new VBox();
         conteneurListeEtContinuer.getChildren().addAll(conteneurHoteInvi, continuer);
         conteneurListeEtContinuer.setAlignment(Pos.CENTER);
-        conteneurHoteInvi.setPadding(new Insets(40, 0, 120, 0));
+        conteneurHoteInvi.setPadding(new Insets(40, 0, 70, 0));
 
 
         root.getChildren().addAll(titre, conteneurListeEtContinuer);
 
-        Scene scene = new Scene(root, 1194, 834);
-        
+        Scene scene = new Scene(root, 1000, 700);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.setTitle("UniCo - Retirer des élèves");
         stage.show();
@@ -104,9 +118,28 @@ public class RetirerEleves extends Application{
         CheckBox checkbox = new CheckBox();
         checkbox.setPadding(new Insets(8));
         ligneListeTeenager.getChildren().addAll(checkbox, nomTeenager);
+
+        ligneListeTeenager.setOnMouseClicked(e ->{
+            if(e.getButton()==MouseButton.PRIMARY){
+                checkbox.setSelected(!checkbox.isSelected());
+            }
+        });
         return ligneListeTeenager;
     }
 
+    private void retirerEleveDeLaListe(){
+        for(int i=0; i<this.listeHote.size();i++){
+            if(((CheckBox)this.listeHote.get(i).getChildren().get(0)).isSelected()){
+                Depot.platform.SORTED_HOSTS.remove(i);
+            }
+        }
+        
+        for(int i=0; i<this.listeInvite.size();i++){
+            if(((CheckBox)this.listeInvite.get(i).getChildren().get(0)).isSelected()){
+                Depot.platform.SORTED_GUESTS.remove(i);
+            }
+        }
+    }
 
 
     public static void main(String[] args) {

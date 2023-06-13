@@ -29,7 +29,7 @@ import ullile.sae201.exception.InvalidCSVException;
 
 public class Depot extends Application {
   public static String filename;
-  public static Platform paltform;
+  public static Platform platform;
 
   public static Stage s;
 
@@ -79,8 +79,8 @@ public class Depot extends Application {
 
     root.getChildren().addAll(titre, conteneurPrincipal, boxContinuer);
 
-
-    Scene scene = new Scene(root, 1194, 834);
+    Scene scene = new Scene(root, 1000, 700);
+    stage.setResizable(false);
     stage.setScene(scene);
     stage.setTitle("UniCo - Dépôt du fichier");
     stage.show();
@@ -111,8 +111,8 @@ public class Depot extends Application {
         
       } else {
         try {
-          Depot.paltform = CSVFile.read(Depot.filename, true);
-          if(Depot.paltform != null) {
+          Depot.platform = CSVFile.read(Depot.filename, true);
+          if(Depot.platform != null) {
             Depot.s.close();
             ModifPonderation tmp = new ModifPonderation();
             tmp.start(new Stage());

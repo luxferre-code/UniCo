@@ -59,7 +59,11 @@ public class AffectationUtil {
         AffectationUtil.allergyWeight = allergyWeight;
     }
 
-
+    /**
+     * Serie de méthode qui permettent de récupérer les poids initiaux de chaque critère
+     * Utilisé en IHM
+     * @return (double Poids du critère)
+     */
     public static double getResetGenderWeight(){
         return 1.0;
     }
@@ -489,6 +493,24 @@ public class AffectationUtil {
            affichage += arete.getExtremite1() + "--" + arete.getExtremite2() + "(" + arete.getPoids() + ")\n"; 
         }
         return affichage;
+    }
+
+    /**
+     * Crée un tableau d'affichage de l'appariement optimal adapté à l'ihm
+     * @return un tableau avec chaque ligne : NomHote --- NomInvite (poids)
+     */
+    public static String[] tableauAfficherAppariementIHM(ArrayList<Arete<Teenager>> appariment){
+        String affichage = "";
+        String[] retour = new String[appariment.size()];
+        for (Arete<Teenager> arete : appariment) {
+           affichage += arete.getExtremite1()+" ";
+           while(affichage.length()<15){
+            affichage+="-";
+           }
+           affichage += " "+arete.getExtremite2() + "(" + arete.getPoids() + ")\n"; 
+           retour[appariment.indexOf(arete)] = affichage;
+        }
+        return retour;
     }
 
 }

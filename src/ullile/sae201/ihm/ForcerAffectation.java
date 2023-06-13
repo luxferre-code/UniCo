@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -23,12 +24,13 @@ import javafx.stage.Stage;
 public class ForcerAffectation extends Application{
 
     ListView<String> listeInvite = new ListView<>();
+    public static Stage s;
 
     public void start(Stage stage){
-        
+        this.s = stage;
         class ListOnClickListener implements ListChangeListener<String>{
             public void onChanged(Change<? extends String> report){
-                String[] listeNomInvite = new String[]{"Petunia","Robert","Jean","Pierre"};//modifier par getNomInvite()
+                String[] listeNomInvite = new String[]{"Petunia","Robert","Jean","Pierre"}; //modifier par getNomInvite()
                 listeInvite.getItems().clear();
                 listeInvite.getItems().addAll(listeNomInvite);
 
@@ -48,6 +50,13 @@ public class ForcerAffectation extends Application{
                 "-fx-padding: 10 30;"+
                 "-fx-font-size: 16px;"+
                 "-fx-background-color: lightgreen;");
+        continuer.setOnMouseClicked(e ->{
+            if(e.getButton()==MouseButton.PRIMARY){
+                ForcerAffectation.s.close();
+                Resultats tmp = new Resultats();
+                tmp.start(new Stage());
+            }
+        });
 
         HBox conteneurHoteInvi = new HBox(40);
         
@@ -74,7 +83,8 @@ public class ForcerAffectation extends Application{
 
         root.getChildren().addAll(titre, conteneurListeEtBouton);
 
-        Scene scene = new Scene(root, 1194, 834);
+        Scene scene = new Scene(root, 1000, 700);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.setTitle("UniCo - Modification des pondérations");
         stage.show();

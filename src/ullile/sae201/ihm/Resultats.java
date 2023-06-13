@@ -1,17 +1,35 @@
 package ullile.sae201.ihm;
 
+import java.util.ArrayList;
+
+import fr.ulille.but.sae2_02.graphes.Arete;
+import fr.ulille.but.sae2_02.graphes.CalculAffectation;
+import fr.ulille.but.sae2_02.graphes.GrapheNonOrienteValue;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import ullile.sae201.Teenager;
+import ullile.sae201.graphe.AffectationUtil;
+
+/**
+ * Resultats class
+ * @author Elise Leroy
+ */
 
 public class Resultats extends Application{
+    static Stage s;
+    private GrapheNonOrienteValue<Teenager> graphe;
+    private CalculAffectation<Teenager> affectation;
+    ArrayList<Arete<Teenager>> appariment = new ArrayList<Arete<Teenager>>(); 
 
     public void start(Stage stage){
         Label titre = new Label("UniCo  | Résultat des affectations");
@@ -28,21 +46,48 @@ public class Resultats extends Application{
                 "-fx-padding: 10 30;"+
                 "-fx-font-size: 16px;"+
                 "-fx-background-color: darksalmon;");
+        continuer.setOnMouseClicked(e ->{
+            if(e.getButton()==MouseButton.PRIMARY){
+                Resultats.s.close();
+                Depot tmp = new Depot();
+                tmp.start(new Stage());
+            }
+        });
 
         Label titreListe = new Label("Hôte - Invité - Poids");
         titreListe.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 20));
+
         ListView<String> listeResultat = new ListView<>();
-        listeResultat.setPrefWidth(400);
+        listeResultat.getItems().add("Pouet");
+        listeResultat.setMaxWidth(400);
+        graphe = AffectationUtil.creerGrapheTeenagerV2(Depot.platform.SORTED_HOSTS, Depot.platform.SORTED_HOSTS);
+        affectation = new CalculAffectation<Teenager>(graphe,Depot.platform.SORTED_HOSTS,Depot.platform.SORTED_HOSTS);
+        appariment.addAll(affectation.calculerAffectation());
+        String[] ligneParLigne = AffectationUtil.tableauAfficherAppariementIHM(appariment);
+
+        for(int i = 0; i < ligneParLigne.length; i++){
+            listeResultat.getItems().add(ligneParLigne[i]);
+        }
+
+        listeResultat.setOnMouseClicked(e ->{
+            if(e.getButton()==MouseButton.PRIMARY){
+                
+            }
+        });
 
         VBox root = new VBox();
         VBox conteneurListeEtContinuer = new VBox();
         VBox vboxTitreListe = new VBox();
 
         vboxTitreListe.getChildren().addAll(titreListe, listeResultat);
+        vboxTitreListe.setAlignment(Pos.CENTER);
+        vboxTitreListe.setPadding(new Insets(0, 0, 90, 0));
         conteneurListeEtContinuer.getChildren().addAll(vboxTitreListe, continuer);
+        conteneurListeEtContinuer.setAlignment(Pos.TOP_CENTER);
         root.getChildren().addAll(titre, texteExplicatif, conteneurListeEtContinuer);
 
-        Scene scene = new Scene(root, 1194, 834);
+        Scene scene = new Scene(root, 1000, 700);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.setTitle("UniCo - Résultat des affectations");
         stage.show();

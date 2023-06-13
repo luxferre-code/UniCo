@@ -39,7 +39,7 @@ public class ModifPonderation extends Application {
         //final int[] changedValueTab = tableauReset;;
 
         VBox root = new VBox();
-        HBox conteneurPrincipal = new HBox(90);
+        HBox conteneurPrincipal = new HBox(70);
 
         Label titre = new Label("UniCo  | Modification des pondérations");
         titre.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 34));
@@ -72,7 +72,7 @@ public class ModifPonderation extends Application {
         VBox conteneurTexte = new VBox(30);
         for(int i=0; i<7; i++){
             Label label = new Label(labelTab[i]);
-            label.setFont(Font.font("Banhnschrift", FontWeight.NORMAL, null, 20));
+            label.setFont(Font.font("Banhnschrift", FontWeight.NORMAL, null, 18));
             VBox conteneurHoriTexte = new VBox();
             if(i==2 || i==3 || i==4){
                 Label notice = new Label(noticeTab[i-2]);
@@ -87,6 +87,7 @@ public class ModifPonderation extends Application {
             conteneurHoriTexte.setAlignment(Pos.CENTER_RIGHT);
             conteneurTexte.getChildren().add(conteneurHoriTexte);
             conteneurTexte.setAlignment(Pos.CENTER_RIGHT);
+            conteneurTexte.setPadding(new Insets(0,0,0,60));
         }
 
         VBox conteneurBoutons = new VBox();
@@ -94,34 +95,36 @@ public class ModifPonderation extends Application {
             int cpt = i;
 
             Button moins = new Button(" - ");
-            moins.setPrefSize(32, 30); 
+            moins.setPrefSize(32, 32); 
 
             TextField valeur = new TextField("" + tableauReset[i]);
-            valeur.setPrefSize(70, 30);
+            valeur.setPrefSize(70, 32);
             valeur.setAlignment(Pos.CENTER);
 
             Button plus = new Button(" + ");
-            plus.setPrefSize(32, 30);
+            plus.setPrefSize(32, 32);
 
             moins.setOnMouseClicked(e ->{
                 int currentValue = Integer.parseInt(valeur.getText());
                 valeur.setText(""+(currentValue - 1));
-                //changedValueTab[cpt] = currentValue -1;
+                changedValueTab[cpt] = currentValue - 1;
             });
 
             plus.setOnMouseClicked(e ->{
                 int currentValue = Integer.parseInt(valeur.getText());
                 valeur.setText(""+(currentValue + 1));
+                changedValueTab[cpt] = currentValue + 1;
             });
 
             VBox retablirBox = new VBox();
             Button retablir = new Button("Rétablir");
-            retablir.setPrefSize(70, 30);
+            retablir.setPrefSize(70, 32);
 
             
             retablir.setOnMouseClicked(e ->{
                 int baseValue = tableauReset[cpt];
                 valeur.setText(""+(baseValue));
+                changedValueTab[cpt] = tableauReset[cpt];
             });
 
             retablirBox.getChildren().add(retablir);
@@ -132,14 +135,16 @@ public class ModifPonderation extends Application {
             HBox conteneurHoriBouton = new HBox(10);
             conteneurHoriBouton.getChildren().addAll(moins, valeur, plus, retablirBox);
             if(i==2 || i==3){
-                conteneurHoriBouton.setPadding(new Insets(3, 0, 46, 0));
+                conteneurHoriBouton.setPadding(new Insets(0, 0, 46, 0));
             } else if(i==4){
-                conteneurHoriBouton.setPadding(new Insets(3, 0, 60, 0));
+                conteneurHoriBouton.setPadding(new Insets(0, 0, 60, 0));
+            } else if(i==6) {
+                conteneurHoriBouton.setPadding(new Insets(0, 0, 0, 0));
             } else {
-                conteneurHoriBouton.setPadding(new Insets(6, 0, 28, 0));
+                conteneurHoriBouton.setPadding(new Insets(0, 0, 26, 0));
             }
             
-            conteneurBoutons.setPadding(new Insets(20, 0, 0, 0));
+            conteneurBoutons.setPadding(new Insets(0, 0, 0, 0));
             conteneurBoutons.getChildren().add(conteneurHoriBouton);
             conteneurBoutons.setAlignment(Pos.TOP_LEFT);
 
@@ -147,7 +152,7 @@ public class ModifPonderation extends Application {
         }
 
         conteneurPrincipal.getChildren().addAll(conteneurTexte, conteneurBoutons);
-        conteneurPrincipal.setPadding(new Insets(50, 0, 90, 100));
+        conteneurPrincipal.setPadding(new Insets(20, 0, 50, 80));
 
         continuer.setOnMouseClicked(e ->{
             AffectationUtil.setFoodWeight((double)changedValueTab[0]);
@@ -167,7 +172,7 @@ public class ModifPonderation extends Application {
                     "Age :" + AffectationUtil.ageWeight +"\n"
             );
             stage.close();
-            new RetirerEleves().start(new Stage());
+            new DetectionPays().start(new Stage());
         });
         
         VBox alignementCentre = new VBox();
@@ -176,12 +181,12 @@ public class ModifPonderation extends Application {
 
         root.getChildren().addAll(titre, alignementCentre);
 
-        Scene scene = new Scene(root, 1194, 834);
+        Scene scene = new Scene(root, 1000, 700);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.setTitle("UniCo - Modification des pondérations");
         stage.show();
     }
-
 
     public static void main(String[] args) {
         Application.launch(args);
