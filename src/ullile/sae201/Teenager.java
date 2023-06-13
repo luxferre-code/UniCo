@@ -249,7 +249,7 @@ public class Teenager implements Serializable {
      * @return (String) - it's gender
      */
     public String getGender(){
-        return CriterionName.GENDER.name();
+        return this.requirements.get(CriterionName.GENDER).getValue();
     }
 
     /**
