@@ -22,6 +22,8 @@ import javafx.stage.Stage;
 
 
 public class ForcerAffectation extends Application{
+    String[] listeNomCompletHote;
+    String[] listeNomCompletInvite;
 
     ListView<String> listeInvite = new ListView<>();
     public static Stage s;
@@ -29,17 +31,19 @@ public class ForcerAffectation extends Application{
     public void start(Stage stage){
         this.s = stage;
         class ListOnClickListener implements ListChangeListener<String>{
+
             public void onChanged(Change<? extends String> report){
-                String[] listeNomInvite = new String[]{"Petunia","Robert","Jean","Pierre"}; //modifier par getNomInvite()
+                
+                listeNomCompletHote = getNomCompletInvite();
                 listeInvite.getItems().clear();
-                listeInvite.getItems().addAll(listeNomInvite);
+                listeInvite.getItems().addAll(listeNomCompletInvite);
 
             }
         }
 
         VBox root = new VBox(30);
-        VBox conteneurListeEtBouton = new VBox(120);
-        Label titre = new Label("UniCo  | Modification des pondérations");
+        VBox conteneurListeEtBouton = new VBox(75);
+        Label titre = new Label("UniCo  | Fixer des affectations");
         titre.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 34));
         titre.setPadding(new Insets(20, 0, 0, 20));
         Button continuer = new Button("Valider et continuer");
@@ -64,11 +68,14 @@ public class ForcerAffectation extends Application{
         Label titreHote = new Label("Hôtes");
         titreHote.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 25));
         ListView<String> listeHote = new ListView<>();
-        for(int i=0; i<24; i++){
-            listeHote.getItems().add("nom Hote"); //getTeenganer name if Teenager == hote
+        listeNomCompletHote = new String[Depot.platform.SORTED_HOSTS.size()];
+        listeNomCompletHote = getNomCompletHote();
+        for(int i=0; i<listeNomCompletHote.length; i++){
+            listeHote.getItems().add(listeNomCompletHote[i]);
         }
         conteneurHote.getChildren().addAll(titreHote, listeHote);
 
+        listeNomCompletInvite = new String[Depot.platform.SORTED_GUESTS.size()];
         listeHote.getSelectionModel().getSelectedItems().addListener(new ListOnClickListener());
 
         VBox conteneurInvite = new VBox(10);
@@ -86,10 +93,24 @@ public class ForcerAffectation extends Application{
         Scene scene = new Scene(root, 1000, 700);
         stage.setResizable(false);
         stage.setScene(scene);
-        stage.setTitle("UniCo - Modification des pondérations");
+        stage.setTitle("UniCo - Fixer des affectations");
         stage.show();
 
 
+    }
+
+    private String[] getNomCompletHote(){
+        for(int i=0; i<Depot.platform.SORTED_HOSTS.size(); i++){
+            listeNomCompletHote[i] = Depot.platform.SORTED_HOSTS.get(i).getName()+" "+Depot.platform.SORTED_HOSTS.get(i).getForename();
+        }
+        return listeNomCompletHote;
+    }
+
+    private String[] getNomCompletInvite(){
+        for(int i=0; i<Depot.platform.SORTED_GUESTS.size(); i++){
+            listeNomCompletHote[i] = Depot.platform.SORTED_GUESTS.get(i).getName()+" "+Depot.platform.SORTED_GUESTS.get(i).getForename();
+        }
+        return listeNomCompletInvite;
     }
 
 

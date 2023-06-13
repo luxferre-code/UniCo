@@ -9,9 +9,11 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -45,18 +47,35 @@ public class DetectionPays extends Application{
                 "-fx-background-color: lightgreen;");
         continuer.setOnMouseClicked(e ->{
             if(e.getButton()==MouseButton.PRIMARY){
-                DetectionPays.s.close();
-                RetirerEleves tmp = new RetirerEleves();
-                tmp.start(new Stage());
+                if(paysHote.getValue() == null || paysInvite.getValue() == null){
+                    Alert nullAlert = new Alert(AlertType.ERROR);
+                    nullAlert.setTitle("Pays Invalides");
+                    nullAlert.setContentText("Erreur");
+                    nullAlert.showAndWait();
+                    return;
+                } else if(paysHote.getValue().equals(paysInvite.getValue())){
+                    Alert sameAlert = new Alert(AlertType.ERROR);
+                    sameAlert.setTitle("Pays Invalides");
+                    sameAlert.setContentText("Erreur, les pays doivent être différents");
+                    sameAlert.showAndWait();
+                    return;
+                } else {
+                    DetectionPays.s.close();
+                    RetirerEleves tmp = new RetirerEleves();
+                    tmp.start(new Stage());
+                } 
             }
         });
 
         VBox root = new VBox();
-        VBox conteneurPrincipal = new VBox();
-        VBox conteneurHote = new VBox();
-        VBox conteneurInvite = new VBox();
+        VBox conteneurPrincipal = new VBox(280);
+        VBox conteneurHote = new VBox(20);
+        VBox conteneurInvite = new VBox(20);
+        VBox conteneurHoteInvi = new VBox(20);
         Label instructionHote = new Label("Veuillez sélectionner le pays des hôtes");
+        instructionHote.setFont(Font.font("Bahnschrift", FontWeight.NORMAL, null, 16));
         Label instructionInvite = new Label("Veuillez sélectionner le pays des invité(e)s");
+        instructionInvite.setFont(Font.font("Bahnschrift", FontWeight.NORMAL, null, 16));
         paysHote = new ComboBox<>();
         paysInvite = new ComboBox<>();
         conteneurHote.getChildren().addAll(instructionHote, paysHote);
@@ -65,8 +84,10 @@ public class DetectionPays extends Application{
         conteneurHote.setAlignment(Pos.CENTER);
         conteneurInvite.setPadding(new Insets(20, 0, 0, 20));
         conteneurInvite.setAlignment(Pos.CENTER);
-        conteneurPrincipal.getChildren().addAll(conteneurHote, conteneurInvite, continuer);
+        conteneurHoteInvi.getChildren().addAll(conteneurHote, conteneurInvite);
+        conteneurPrincipal.getChildren().addAll(conteneurHoteInvi, continuer);
         conteneurPrincipal.setAlignment(Pos.CENTER);
+        conteneurPrincipal.setPadding(new Insets(40, 0, 0, 20));
         root.getChildren().addAll(titre, conteneurPrincipal);
         setComboBox();
 

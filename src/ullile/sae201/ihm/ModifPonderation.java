@@ -21,7 +21,7 @@ import ullile.sae201.graphe.AffectationUtil;
 
 public class ModifPonderation extends Application {
 
-    public static int[] initTab() {
+    public static int[] resetTab() {
         return new int[]{(int)AffectationUtil.getResetFoodWeight(),
                                         (int)AffectationUtil.getResetHobbiesWeight(),
                                         (int)AffectationUtil.getResetAllergyWeight(),
@@ -31,9 +31,22 @@ public class ModifPonderation extends Application {
                                         (int)AffectationUtil.getResetAgeWeight()};
     }
 
+    public static int[] initTab(){
+        return new int[]{(int)AffectationUtil.foodWeight,
+                        (int)AffectationUtil.hobbiesWeight,
+                        (int)AffectationUtil.allergyWeight,
+                        (int)AffectationUtil.superCompatibleHistoryWeight,
+                        (int)AffectationUtil.lessCompatibleHistoryWeight,
+                        (int)AffectationUtil.genderWeight,
+                        (int)AffectationUtil.ageWeight};
+    }
+
+    
+
     public void start(Stage stage) {
         //récupère les pondérations de base
-        int[] tableauReset = initTab();
+        int[] tableauInit = initTab();
+        int[] tableauReset = resetTab();
         int[] changedValueTab = initTab();
 
         //final int[] changedValueTab = tableauReset;;
@@ -97,7 +110,7 @@ public class ModifPonderation extends Application {
             Button moins = new Button(" - ");
             moins.setPrefSize(32, 32); 
 
-            TextField valeur = new TextField("" + tableauReset[i]);
+            TextField valeur = new TextField("" + tableauInit[i]);
             valeur.setPrefSize(70, 32);
             valeur.setAlignment(Pos.CENTER);
 

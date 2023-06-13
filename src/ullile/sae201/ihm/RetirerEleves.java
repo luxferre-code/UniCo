@@ -30,8 +30,10 @@ import ullile.sae201.Teenager;
 public class RetirerEleves extends Application{
 
     public static Stage s;
-    List<HBox> listeHote;
-    List<HBox> listeInvite;
+    List<HBox> listeHboxHote;
+    List<HBox> listeHboxInvite;
+    public static ArrayList<Teenager> listeHoteRetire = new ArrayList<>();
+    public static ArrayList<Teenager> listeInviteRetire = new ArrayList<>();
 
     public void start (Stage stage){
         this.s = stage;
@@ -68,21 +70,21 @@ public class RetirerEleves extends Application{
 
 
         //Structure de création de la liste hôte avec checkbox
-        this.listeHote = new ArrayList<>();
+        this.listeHboxHote = new ArrayList<>();
         for(Teenager t : Depot.platform.SORTED_HOSTS){
-            this.listeHote.add(listeCreator(t.getName()));
+            this.listeHboxHote.add(listeCreator(t.getName(), t.getForename()));
         }
-        ObservableList<HBox> listeObs = FXCollections.observableList(listeHote);
+        ObservableList<HBox> listeObs = FXCollections.observableList(listeHboxHote);
         ListView<HBox> listViewHote = new ListView<>();
         listViewHote.setItems(listeObs);
         listViewHote.setPrefWidth(350);
 
         //Structure de création de la liste invités avec checkbox
-        this.listeInvite = new ArrayList<>();
+        this.listeHboxInvite = new ArrayList<>();
         for(Teenager t : Depot.platform.SORTED_GUESTS){
-            this.listeInvite.add(listeCreator(t.getName()));
+            this.listeHboxInvite.add(listeCreator(t.getName(), t.getForename()));
         }
-        ObservableList<HBox> listeObs2 = FXCollections.observableList(listeInvite);
+        ObservableList<HBox> listeObs2 = FXCollections.observableList(listeHboxInvite);
         ListView<HBox> listViewInvite = new ListView<>();
         listViewInvite.setItems(listeObs2);
         listViewInvite.setPrefWidth(350);
@@ -109,10 +111,10 @@ public class RetirerEleves extends Application{
         stage.show();
     }
 
-    private HBox listeCreator(String name){
+    private HBox listeCreator(String name, String forename){
         HBox ligneListeTeenager = new HBox(4);
         ligneListeTeenager.setAlignment(Pos.CENTER_LEFT);
-        Label nomTeenager = new Label(name);
+        Label nomTeenager = new Label(name+" "+forename);
         nomTeenager.setFont(Font.font("Banhnschrift", FontWeight.NORMAL, null, 20));
         nomTeenager.setPadding(new Insets(0, 0, 0, 5));
         CheckBox checkbox = new CheckBox();
@@ -128,14 +130,16 @@ public class RetirerEleves extends Application{
     }
 
     private void retirerEleveDeLaListe(){
-        for(int i=0; i<this.listeHote.size();i++){
-            if(((CheckBox)this.listeHote.get(i).getChildren().get(0)).isSelected()){
+        for(int i=0; i<this.listeHboxHote.size();i++){
+            if(((CheckBox)this.listeHboxHote.get(i).getChildren().get(0)).isSelected()){
+                listeHoteRetire.add(Depot.platform.SORTED_HOSTS.get(i));
                 Depot.platform.SORTED_HOSTS.remove(i);
             }
         }
         
-        for(int i=0; i<this.listeInvite.size();i++){
-            if(((CheckBox)this.listeInvite.get(i).getChildren().get(0)).isSelected()){
+        for(int i=0; i<this.listeHboxInvite.size();i++){
+            if(((CheckBox)this.listeHboxInvite.get(i).getChildren().get(0)).isSelected()){
+                listeInviteRetire.add(Depot.platform.SORTED_GUESTS.get(i));
                 Depot.platform.SORTED_GUESTS.remove(i);
             }
         }
