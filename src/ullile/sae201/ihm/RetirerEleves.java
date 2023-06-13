@@ -35,6 +35,8 @@ public class RetirerEleves extends Application{
     public static ArrayList<Teenager> listeHoteRetire = new ArrayList<>();
     public static ArrayList<Teenager> listeInviteRetire = new ArrayList<>();
 
+    public static Label titreHote, titreInvite;
+
     public void start (Stage stage){
         RetirerEleves.s = stage;
         VBox root = new VBox();
@@ -50,7 +52,7 @@ public class RetirerEleves extends Application{
                 "-fx-font-size: 16px;"+
                 "-fx-background-color: lightgreen;");
         continuer.setOnMouseClicked(e ->{
-            if(e.getButton()==MouseButton.PRIMARY){
+            if(e.getButton()==MouseButton.PRIMARY && (Depot.platform.SORTED_HOSTS.size() - listeHoteRetire.size()) == (Depot.platform.SORTED_GUESTS.size() - listeInviteRetire.size())){
                 retirerEleveDeLaListe();
                 RetirerEleves.s.close();
                 new ForcerAffectation().start(new Stage());
@@ -59,11 +61,11 @@ public class RetirerEleves extends Application{
 
         HBox conteneurHoteInvi = new HBox(100);
 
-        Label titreHote = new Label("Hôtes");
+        titreHote = new Label("Hôtes (" + Depot.platform.SORTED_HOSTS.size() + ")");
         titreHote.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 25));
         VBox vboxHote = new VBox(10);
 
-        Label titreInvite = new Label("Invité(e)s");
+        titreInvite = new Label("Invité(e)s (" + Depot.platform.SORTED_GUESTS.size() + ")");
         titreInvite.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 25));
         VBox vboxInvite = new VBox(10);
 
@@ -119,6 +121,7 @@ public class RetirerEleves extends Application{
         nomTeenager.setFont(Font.font("Banhnschrift", FontWeight.NORMAL, null, 20));
         nomTeenager.setPadding(new Insets(0, 0, 0, 5));
         CheckBox checkbox = new CheckBox();
+        checkbox.disableProperty().setValue(true);
         checkbox.setPadding(new Insets(8));
         ligneListeTeenager.getChildren().addAll(checkbox, nomTeenager);
 
@@ -128,9 +131,11 @@ public class RetirerEleves extends Application{
                 if(isHost) {
                     if(listeHoteRetire.contains(t)) listeHoteRetire.remove(t);
                     else listeHoteRetire.add(t);
+                    titreHote.setText("Hôtes (" + (Depot.platform.SORTED_HOSTS.size() - listeHoteRetire.size()) + ")");
                 } else {
                     if(listeInviteRetire.contains(t)) listeInviteRetire.remove(t);
                     else listeInviteRetire.add(t);
+                    titreInvite.setText("Invité(e)s (" + (Depot.platform.SORTED_GUESTS.size() - listeInviteRetire.size()) + ")");
                 }
             }
         });
