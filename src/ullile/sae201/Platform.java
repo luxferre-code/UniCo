@@ -138,6 +138,30 @@ public class Platform {
     }
 
     /**
+     * Getter of a single Teenager
+     *
+     * @return A host Teenager by name and forename
+     */
+    public Teenager getTeenagerHostByName(String name, String forename){
+        for(Teenager t : this.SORTED_HOSTS){
+            if(t.getName().equals(name) && t.getForename().equals(forename)) return t;
+        }
+        return null;
+    }
+
+    /**
+     * Getter of a single Teenager
+     * 
+     * @return A guest Teenager by name and forename
+     */
+    public Teenager getTeenagerGuestByName(String name, String forename){
+        for(Teenager t : this.SORTED_GUESTS){
+            if(t.getName().equals(name) && t.getForename().equals(forename)) return t;
+        }
+        return null;
+    }
+
+    /**
      * String representation of the platform
      *
      * @return (String) - The string representation
@@ -166,6 +190,8 @@ public class Platform {
      * @param value (Host Country)
      */
     public void setHostCountry(Country value) {
+        this.HOSTS.clear();
+        this.SORTED_HOSTS.clear();
         for(Teenager t : this.teenagers) {
             if(t.getCountry().equals(value)) this.HOSTS.add(t);
         }
@@ -180,6 +206,8 @@ public class Platform {
      * @param value (Guest Country)
      */
     public void setInviteCountry(Country value) {
+        this.GUESTS.clear();
+        this.SORTED_GUESTS.clear();
         for(Teenager t : this.teenagers) {
             if(t.getCountry().equals(value)) this.GUESTS.add(t);
         }

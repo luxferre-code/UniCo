@@ -1,5 +1,6 @@
 package ullile.sae201.ihm;
 
+
 import java.util.ArrayList;
 
 import fr.ulille.but.sae2_02.graphes.Arete;
@@ -58,19 +59,31 @@ public class Resultats extends Application{
         titreListe.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 20));
 
         ListView<String> listeResultat = new ListView<>();
-        listeResultat.getItems().add("Pouet");
         listeResultat.setMaxWidth(400);
         ArrayList<Teenager> listeHost = new ArrayList<Teenager>();
         ArrayList<Teenager> listeGuest = new ArrayList<Teenager>();
         listeHost.addAll(Depot.platform.SORTED_HOSTS);
         listeGuest.addAll(Depot.platform.SORTED_GUESTS);
+
+        //for each mapCouple in mapCouple creerGrapheTeenagerV2 et calculerAffectation et ajouter dans ligneParLigne
+        ArrayList<String[]> ligneParLigneForce = new ArrayList<String[]>();
+        for(var entry : ForcerAffectation.mapCouple.entrySet()){
+            ArrayList<Teenager> host = entry.getKey();
+            ArrayList<Teenager> guest = entry.getValue();
+            graphe = AffectationUtil.creerGrapheTeenagerV2(host, guest);
+            affectation = new CalculAffectation<Teenager>(graphe,listeHost,listeGuest);
+            appariment.addAll(affectation.calculerAffectation());
+            ligneParLigneForce.add(AffectationUtil.tableauAfficherAppariementIHM(appariment));
+            appariment.clear();
+        }
+         
         graphe = AffectationUtil.creerGrapheTeenagerV2(listeHost, listeGuest);
         affectation = new CalculAffectation<Teenager>(graphe,listeHost,listeGuest);
         appariment.addAll(affectation.calculerAffectation());
-        String[] ligneParLigne = AffectationUtil.tableauAfficherAppariementIHM(appariment);
+        String[] ligneParLigneReste = AffectationUtil.tableauAfficherAppariementIHM(appariment);
 
-        for(int i = 0; i < ligneParLigne.length; i++){
-            listeResultat.getItems().add(ligneParLigne[i]);
+        for(int i = 0; i < ligneParLigneReste.length; i++){
+            listeResultat.getItems().add(ligneParLigneReste[i]);
         }
 
         listeResultat.setOnMouseClicked(e ->{

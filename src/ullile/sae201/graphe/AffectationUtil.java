@@ -148,7 +148,7 @@ public class AffectationUtil {
         return weight;
     }
 
-        /** Calcule le poids de l’arête entre host et visitor dans le graphe modèle.
+    /** Calcule le poids de l’arête entre host et visitor dans le graphe modèle.
      * Doit faire appel à la méthode compatibleWithGuest(Teenager) de Teenager.
      * Peut avoir d’autres paramètres si nécessaire.
      * @param host (Teenager) - The teenager
