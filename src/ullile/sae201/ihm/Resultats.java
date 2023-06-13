@@ -112,7 +112,9 @@ public class Resultats extends Application{
 
         listeResultat.setOnMouseClicked(e ->{
             if(e.getButton()==MouseButton.PRIMARY){
-                
+                ArrayList<Teenager> tmp = forCliquedCouple.get(listeResultat.getSelectionModel().getSelectedItem());
+                FicheEtudiant fiche = new FicheEtudiant(tmp.get(0), tmp.get(1));
+                fiche.start(new Stage());
             }
         });
 
@@ -122,7 +124,7 @@ public class Resultats extends Application{
 
         vboxTitreListe.getChildren().addAll(titreListe, listeResultat);
         vboxTitreListe.setAlignment(Pos.CENTER);
-        vboxTitreListe.setPadding(new Insets(0, 0, 90, 0));
+        vboxTitreListe.setPadding(new Insets(0, 0, 60, 0));
         conteneurListeEtContinuer.getChildren().addAll(vboxTitreListe, continuer);
         conteneurListeEtContinuer.setAlignment(Pos.TOP_CENTER);
         root.getChildren().addAll(titre, texteExplicatif, conteneurListeEtContinuer);
