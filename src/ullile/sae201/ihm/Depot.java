@@ -55,7 +55,7 @@ public class Depot extends Application {
                    "-fx-background-color: lightgrey;");
     depot.addEventHandler(ActionEvent.ACTION, new buttonDepotAction());
 
-    Label marchePas = new Label("Ça ne marche pas ...");
+    Label marchePas = new Label();
     marchePas.setFont(Font.font("Bahnschrift", FontWeight.NORMAL, null, 15));
     marchePas.setPadding(new Insets(10,0,250,0));
 
@@ -79,7 +79,7 @@ public class Depot extends Application {
 
     root.getChildren().addAll(titre, conteneurPrincipal, boxContinuer);
 
-    Scene scene = new Scene(root, 1000, 700);
+    Scene scene = new Scene(root, 1000, 740);
     stage.setResizable(false);
     stage.setScene(scene);
     stage.setTitle("UniCo - Dépôt du fichier");

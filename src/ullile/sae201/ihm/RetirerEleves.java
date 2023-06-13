@@ -58,6 +58,26 @@ public class RetirerEleves extends Application{
                 new ForcerAffectation().start(new Stage());
             }
         });
+        Button retourDepot = new Button("Retour au dépôt");
+        VBox vboxRetourDepot = new VBox();
+        vboxRetourDepot.setAlignment(Pos.CENTER_RIGHT);
+        vboxRetourDepot.getChildren().add(retourDepot);
+        vboxRetourDepot.setPadding(new Insets(0, 30, 0, 0));
+        vboxRetourDepot.setAlignment(Pos.TOP_RIGHT);
+        retourDepot.setStyle("-fx-border-style: solid;"+
+                "-fx-border-color: darksalmon;"+
+                "-fx-background-radius: 10px;"+
+                "-fx-border-radius: 10px;"+
+                "-fx-padding: 5 15;"+
+                "-fx-font-size: 12px;"+
+                "-fx-background-color: darksalmon;");
+        retourDepot.setOnMouseClicked(e ->{
+            if(e.getButton()==MouseButton.PRIMARY){
+                stage.close();
+                new Depot().start(new Stage());
+            }
+        });
+
 
         HBox conteneurHoteInvi = new HBox(100);
 
@@ -103,9 +123,9 @@ public class RetirerEleves extends Application{
         conteneurHoteInvi.setPadding(new Insets(40, 0, 70, 0));
 
 
-        root.getChildren().addAll(titre, conteneurListeEtContinuer);
+        root.getChildren().addAll(titre, vboxRetourDepot, conteneurListeEtContinuer);
 
-        Scene scene = new Scene(root, 1000, 700);
+        Scene scene = new Scene(root, 1000, 740);
         stage.setResizable(false);
         stage.setScene(scene);
         stage.setTitle("UniCo - Retirer des élèves");

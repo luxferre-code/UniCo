@@ -4,6 +4,7 @@ package ullile.sae201.ihm;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import fr.ulille.but.sae2_02.graphes.Arete;
 import fr.ulille.but.sae2_02.graphes.CalculAffectation;
@@ -45,7 +46,6 @@ public class Resultats extends Application{
         texteExplicatif.setPadding(new Insets(10, 0, 50, 23));
         titre.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 34));
         titre.setPadding(new Insets(20, 0, 0, 20));
-        Button boutonDepot = new Button("Retour au dépôt");
         Button continuer = new Button("Exporter le fichier");
         continuer.setStyle("-fx-border-style: solid;"+
                 "-fx-border-color: lightgreen;"+
@@ -55,20 +55,26 @@ public class Resultats extends Application{
                 "-fx-font-size: 16px;"+
                 "-fx-background-color: lightgreen;");
 
-        boutonDepot.setStyle("-fx-border-style: solid;"+
+        Button retourDepot = new Button("Retour au dépôt");
+        VBox vboxRetourDepot = new VBox();
+        vboxRetourDepot.setAlignment(Pos.CENTER_RIGHT);
+        vboxRetourDepot.getChildren().add(retourDepot);
+        vboxRetourDepot.setPadding(new Insets(0, 30, 0, 0));
+        vboxRetourDepot.setAlignment(Pos.TOP_RIGHT);
+        retourDepot.setStyle("-fx-border-style: solid;"+
                 "-fx-border-color: darksalmon;"+
                 "-fx-background-radius: 10px;"+
                 "-fx-border-radius: 10px;"+
-                "-fx-padding: 10 30;"+
-                "-fx-font-size: 16px;"+
+                "-fx-padding: 5 15;"+
+                "-fx-font-size: 12px;"+
                 "-fx-background-color: darksalmon;");
-        boutonDepot.setOnMouseClicked(e ->{
+        retourDepot.setOnMouseClicked(e ->{
             if(e.getButton()==MouseButton.PRIMARY){
-                Resultats.s.close();
-                Depot tmp = new Depot();
-                tmp.start(new Stage());
+                stage.close();
+                new Depot().start(new Stage());
             }
         });
+
 
 
     continuer.setOnMouseClicked(e -> {
@@ -92,14 +98,21 @@ public class Resultats extends Application{
         ArrayList<Teenager> listeGuest = new ArrayList<Teenager>();
         listeHost.addAll(Depot.platform.SORTED_HOSTS);
         listeGuest.addAll(Depot.platform.SORTED_GUESTS);
-
-        ArrayList<Teenager> host = new ArrayList<Teenager>(Depot.platform.SORTED_HOSTS);
-        ArrayList<Teenager> guest = new ArrayList<Teenager>(Depot.platform.SORTED_GUESTS);
-        graphe = AffectationUtil.creerGrapheTeenagerV2(host, guest);
          
         graphe = AffectationUtil.creerGrapheTeenagerV2(listeHost, listeGuest);
         affectation = new CalculAffectation<Teenager>(graphe,listeHost,listeGuest);
         appariment.addAll(affectation.calculerAffectation());
+
+        ArrayList<Teenager> guests = ForcerAffectation.mapCouple.values().stream().collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Teenager> hosts = ForcerAffectation.mapCouple.keySet().stream().collect(Collectors.toCollection(ArrayList::new));
+
+        GrapheNonOrienteValue<Teenager> grapheForce = AffectationUtil.creerGrapheTeenagerV2(hosts, guests);
+        CalculAffectation<Teenager> affectationForce = new CalculAffectation<Teenager>(grapheForce, hosts, guests);
+        ArrayList<Arete<Teenager>> apparimentForce = new ArrayList<Arete<Teenager>>();
+        apparimentForce.addAll(affectationForce.calculerAffectation());
+
+        appariment.addAll(affectationForce.calculerAffectation());
+
         String[] ligneParLigneReste = AffectationUtil.tableauAfficherAppariementIHM(appariment);
 
         for(int i = 0; i < ligneParLigneReste.length; i++){
@@ -124,14 +137,14 @@ public class Resultats extends Application{
 
         vboxTitreListe.getChildren().addAll(titreListe, listeResultat);
         vboxTitreListe.setAlignment(Pos.CENTER);
-        vboxTitreListe.setPadding(new Insets(0, 0, 60, 0));
+        vboxTitreListe.setPadding(new Insets(0, 0, 30, 0));
         conteneurListeEtContinuer.getChildren().addAll(vboxTitreListe, continuer);
         conteneurListeEtContinuer.setAlignment(Pos.TOP_CENTER);
-        root.getChildren().addAll(titre, texteExplicatif, conteneurListeEtContinuer);
+        root.getChildren().addAll(titre, vboxRetourDepot, texteExplicatif, conteneurListeEtContinuer);
 
         
 
-        Scene scene = new Scene(root, 1000, 700);
+        Scene scene = new Scene(root, 1000, 740);
         stage.setResizable(false);
         stage.setScene(scene);
         stage.setTitle("UniCo - Résultat des affectations");

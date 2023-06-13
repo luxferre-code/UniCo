@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -20,6 +21,7 @@ import ullile.sae201.graphe.AffectationUtil;
  */
 
 public class ModifPonderation extends Application {
+
 
     public static int[] resetTab() {
         return new int[]{(int)AffectationUtil.getResetFoodWeight(),
@@ -65,7 +67,25 @@ public class ModifPonderation extends Application {
                 "-fx-padding: 10 30;"+
                 "-fx-font-size: 16px;"+
                 "-fx-background-color: lightgreen;");
-
+        Button retourDepot = new Button("Retour au dépôt");
+        VBox vboxRetourDepot = new VBox();
+        vboxRetourDepot.setAlignment(Pos.CENTER_RIGHT);
+        vboxRetourDepot.getChildren().add(retourDepot);
+        vboxRetourDepot.setPadding(new Insets(0, 30, 0, 0));
+        vboxRetourDepot.setAlignment(Pos.TOP_RIGHT);
+        retourDepot.setStyle("-fx-border-style: solid;"+
+                "-fx-border-color: darksalmon;"+
+                "-fx-background-radius: 10px;"+
+                "-fx-border-radius: 10px;"+
+                "-fx-padding: 5 15;"+
+                "-fx-font-size: 12px;"+
+                "-fx-background-color: darksalmon;");
+        retourDepot.setOnMouseClicked(e ->{
+            if(e.getButton()==MouseButton.PRIMARY){
+                stage.close();
+                new Depot().start(new Stage());
+            }
+        });
 
         
         String[] labelTab = new String[7];
@@ -165,7 +185,7 @@ public class ModifPonderation extends Application {
         }
 
         conteneurPrincipal.getChildren().addAll(conteneurTexte, conteneurBoutons);
-        conteneurPrincipal.setPadding(new Insets(20, 0, 50, 80));
+        conteneurPrincipal.setPadding(new Insets(20, 30, 50, 50));
 
         continuer.setOnMouseClicked(e ->{
             AffectationUtil.setFoodWeight((double)changedValueTab[0]);
@@ -192,9 +212,9 @@ public class ModifPonderation extends Application {
         alignementCentre.getChildren().addAll(conteneurPrincipal, continuer);
         alignementCentre.setAlignment(Pos.CENTER);
 
-        root.getChildren().addAll(titre, alignementCentre);
+        root.getChildren().addAll(titre, vboxRetourDepot, alignementCentre);
 
-        Scene scene = new Scene(root, 1000, 700);
+        Scene scene = new Scene(root, 1000, 740);
         stage.setResizable(false);
         stage.setScene(scene);
         stage.setTitle("UniCo - Modification des pondérations");

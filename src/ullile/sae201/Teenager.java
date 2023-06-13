@@ -10,7 +10,7 @@ import java.util.*;
 
 /**
  * Teenager class
- * @author Valentin Thuillier, Romain Degez
+ * @author Valentin Thuillier, Romain Degez, Elise Leroy
  */
 public class Teenager implements Serializable {
 

@@ -155,7 +155,7 @@ public class FicheEtudiant extends Application{
 
         root.getChildren().addAll(titre, conteneurPrincipal);
 
-        Scene scene = new Scene(root, 1000, 700);
+        Scene scene = new Scene(root, 800, 550);
         stage.setResizable(false);
         stage.setScene(scene);
         stage.setTitle("UniCo - Détails du couple");

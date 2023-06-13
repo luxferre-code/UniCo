@@ -37,6 +37,25 @@ public class DetectionPays extends Application{
         Label titre = new Label("UniCo  | Précision des pays");
         titre.setFont(Font.font("Bahnschrift", FontWeight.BOLD, null, 34));
         titre.setPadding(new Insets(20, 0, 0, 20));
+        Button retourDepot = new Button("Retour au dépôt");
+        VBox vboxRetourDepot = new VBox();
+        vboxRetourDepot.setAlignment(Pos.CENTER_RIGHT);
+        vboxRetourDepot.getChildren().add(retourDepot);
+        vboxRetourDepot.setPadding(new Insets(0, 30, 0, 0));
+        vboxRetourDepot.setAlignment(Pos.TOP_RIGHT);
+        retourDepot.setStyle("-fx-border-style: solid;"+
+                "-fx-border-color: darksalmon;"+
+                "-fx-background-radius: 10px;"+
+                "-fx-border-radius: 10px;"+
+                "-fx-padding: 5 15;"+
+                "-fx-font-size: 12px;"+
+                "-fx-background-color: darksalmon;");
+        retourDepot.setOnMouseClicked(e ->{
+            if(e.getButton()==MouseButton.PRIMARY){
+                stage.close();
+                new Depot().start(new Stage());
+            }
+        });
         Button continuer = new Button("Valider et continuer");
         continuer.setStyle("-fx-border-style: solid;"+
                 "-fx-border-color: lightgreen;"+
@@ -85,10 +104,10 @@ public class DetectionPays extends Application{
         conteneurInvite.setPadding(new Insets(20, 0, 0, 20));
         conteneurInvite.setAlignment(Pos.CENTER);
         conteneurHoteInvi.getChildren().addAll(conteneurHote, conteneurInvite);
-        conteneurPrincipal.getChildren().addAll(conteneurHoteInvi, continuer);
+        conteneurPrincipal.getChildren().addAll(titre, conteneurHoteInvi, continuer);
         conteneurPrincipal.setAlignment(Pos.CENTER);
         conteneurPrincipal.setPadding(new Insets(40, 0, 0, 20));
-        root.getChildren().addAll(titre, conteneurPrincipal);
+        root.getChildren().addAll(titre, vboxRetourDepot, conteneurPrincipal);
         setComboBox();
 
         paysHote.setOnAction(e ->{
@@ -99,7 +118,7 @@ public class DetectionPays extends Application{
             Depot.platform.setInviteCountry(paysInvite.getValue());
         });
 
-        Scene scene = new Scene(root, 1000, 700);
+        Scene scene = new Scene(root, 1000, 740);
         stage.setResizable(false);
         stage.setScene(scene);
         stage.setTitle("UniCo - Précisez les pays");

@@ -40,7 +40,6 @@ public class ForcerAffectation extends Application{
     ComboBox<Teenager> listeInvite = new ComboBox<>();
     public static Stage s;
 
-
     
     public void start(Stage stage){
         ForcerAffectation.s = stage;
@@ -58,6 +57,26 @@ public class ForcerAffectation extends Application{
                 "-fx-padding: 10 30;"+
                 "-fx-font-size: 16px;"+
                 "-fx-background-color: lightgreen;");
+                Button retourDepot = new Button("Retour au dépôt");
+        VBox vboxRetourDepot = new VBox();
+        vboxRetourDepot.setAlignment(Pos.CENTER_RIGHT);
+        vboxRetourDepot.getChildren().add(retourDepot);
+        vboxRetourDepot.setPadding(new Insets(0, 30, 0, 0));
+        vboxRetourDepot.setAlignment(Pos.TOP_RIGHT);
+        retourDepot.setStyle("-fx-border-style: solid;"+
+                "-fx-border-color: darksalmon;"+
+                "-fx-background-radius: 10px;"+
+                "-fx-border-radius: 10px;"+
+                "-fx-padding: 5 15;"+
+                "-fx-font-size: 12px;"+
+                "-fx-background-color: darksalmon;");
+        retourDepot.setOnMouseClicked(e ->{
+            if(e.getButton()==MouseButton.PRIMARY){
+                stage.close();
+                new Depot().start(new Stage());
+            }
+        });
+
         
 
         HBox conteneurHoteInvi = new HBox(40);
@@ -72,33 +91,22 @@ public class ForcerAffectation extends Application{
         Button ajouter = new Button("Ajouter");
         ajouter.setPadding(new Insets(10, 30, 10, 30));
         ListView<String> listeViewCoupleForce = new ListView<>();
-        listeViewCoupleForce.setMaxWidth(200);
+        listeViewCoupleForce.setMaxWidth(400);
         listeViewCoupleForce.setMaxHeight(100);
 
         ComboBox<Teenager> listeHote = new ComboBox<>();
-        listeHote.setPrefWidth(200);
+        listeHote.setMaxWidth(200);
         listeNomCompletHote.addAll(getNomComplet(Depot.platform.HOSTS));
         System.out.println(listeNomCompletHote);
         ObservableList<Teenager> listeObsHote = FXCollections.observableArrayList(Depot.platform.HOSTS);
-        //first row of combobox must be empty
-        //listeObsHote.add(0, "");
         listeHote.setItems(listeObsHote);
 
         listeInvite.setMaxWidth(200);
         listeNomCompletInvite.addAll(getNomComplet(Depot.platform.GUESTS));
         ObservableList<Teenager> listeObsinvite = FXCollections.observableArrayList(Depot.platform.GUESTS);
-        //listeObsinvite.add(0, "");
         listeInvite.setItems(listeObsinvite);
 
         ajouter.setOnMouseClicked(e ->{
-            /*if(e.getButton() == MouseButton.PRIMARY){
-                if(listeHote.getValue() != "" && listeInvite.getValue() != ""){
-                    listeViewCoupleForce.getItems().add(listeHote.getValue() + " - " + listeInvite.getValue());
-                    mapCouple.put(getTeenagerHote(), getTeenagerInvite());
-                    listeHote.getItems().remove(listeHote.getValue());
-                    listeInvite.getItems().remove(listeInvite.getValue());
-                }
-            }*/
             if(e.getButton() == MouseButton.PRIMARY){
                 if(listeHote.getValue() != null && listeInvite.getValue() != null){
                     listeViewCoupleForce.getItems().add(listeHote.getValue().minimalToString() + " - " + listeInvite.getValue().minimalToString());
@@ -116,7 +124,7 @@ public class ForcerAffectation extends Application{
         conteneurListeEtBouton.getChildren().addAll(conteneurHoteInvi, ajouter, listeViewCoupleForce, continuer);
         conteneurListeEtBouton.setAlignment(Pos.CENTER);
 
-        root.getChildren().addAll(titre, conteneurListeEtBouton);
+        root.getChildren().addAll(titre, vboxRetourDepot, conteneurListeEtBouton);
 
         continuer.setOnMouseClicked(e ->{
             if(e.getButton() == MouseButton.PRIMARY){
@@ -126,7 +134,7 @@ public class ForcerAffectation extends Application{
             }
         });
 
-        Scene scene = new Scene(root, 1000, 700);
+        Scene scene = new Scene(root, 1000, 740);
         stage.setResizable(false);
         stage.setScene(scene);
         stage.setTitle("UniCo - Fixer des affectations");
