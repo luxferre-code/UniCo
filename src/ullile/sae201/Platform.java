@@ -1,19 +1,26 @@
 package ullile.sae201;
 
-import ullile.sae201.exception.RequirementNotFound;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import ullile.sae201.exception.RequirementNotFound;
 
 /**
  * Platform class
  *
- * @author Valentin Thuillier
+ * @author Valentin Thuillier, Elise Leroy
  */
 public class Platform {
 
     private final static int NOMINONTHESET = 0;
     private final HashSet<Teenager> teenagers = new HashSet<>();
+
+    public final Set<Teenager> HOSTS = new HashSet<>();
+    public final Set<Teenager> GUESTS = new HashSet<>(); 
+
+    //HOSTS and GUESTS sorted alphabetically
+    public final Set<Teenager> SORTED_HOSTS = new HashSet<>();
+    public final Set<Teenager> SORTED_GUESTS = new HashSet<>();
 
     /**
      * Platform constructor
@@ -131,6 +138,30 @@ public class Platform {
     }
 
     /**
+     * Getter of a single Teenager
+     *
+     * @return A host Teenager by name and forename
+     */
+    public Teenager getTeenagerHostByName(String name, String forename){
+        for(Teenager t : this.SORTED_HOSTS){
+            if(t.getName().equals(name) && t.getForename().equals(forename)) return t;
+        }
+        return null;
+    }
+
+    /**
+     * Getter of a single Teenager
+     * 
+     * @return A guest Teenager by name and forename
+     */
+    public Teenager getTeenagerGuestByName(String name, String forename){
+        for(Teenager t : this.SORTED_GUESTS){
+            if(t.getName().equals(name) && t.getForename().equals(forename)) return t;
+        }
+        return null;
+    }
+
+    /**
      * String representation of the platform
      *
      * @return (String) - The string representation
@@ -145,4 +176,46 @@ public class Platform {
         }
         return sb.toString();
     }
+
+    /* public void associatedToSet(Country host, Country guest) {
+        for(Teenager t : this.teenagers) {
+            if(t.getCountry().equals(host)) this.HOSTS.add(t);
+            else if(t.getCountry().equals(guest)) this.GUESTS.add(t);
+        }
+    } */
+
+
+    /**
+     * Set the host country (For HMI)
+     * @param value (Host Country)
+     */
+    public void setHostCountry(Country value) {
+        this.HOSTS.clear();
+        this.SORTED_HOSTS.clear();
+        for(Teenager t : this.teenagers) {
+            if(t.getCountry().equals(value)) this.HOSTS.add(t);
+        }
+        for(Teenager t : this.HOSTS) {
+            this.SORTED_HOSTS.add(t);
+        }
+        //this.SORTED_HOSTS.sort((Teenager t1, Teenager t2) -> t1.getName().compareTo(t2.getName()));
+    }
+
+    /**
+     * Set the guest country (For HMI)
+     * @param value (Guest Country)
+     */
+    public void setInviteCountry(Country value) {
+        this.GUESTS.clear();
+        this.SORTED_GUESTS.clear();
+        for(Teenager t : this.teenagers) {
+            if(t.getCountry().equals(value)) this.GUESTS.add(t);
+        }
+        for(Teenager t : this.GUESTS) {
+            this.SORTED_GUESTS.add(t);
+        }
+        //this.SORTED_GUESTS.sort((Teenager t1, Teenager t2) -> t1.getName().compareTo(t2.getName()));
+    }
+
+    
 }

@@ -1,21 +1,35 @@
 package ullile.sae201;
 
-import ullile.sae201.exception.InvalidCriterion;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.Scanner;
+
+import fr.ulille.but.sae2_02.graphes.Arete;
+import ullile.sae201.exception.InvalidCSVException;
+import ullile.sae201.exception.InvalidCriterion;
 
 /**
  * CSVFile class
  *
- * @author Valentin Thuillier
+ * @author Valentin Thuillier, Elise Leroy
  */
 public class CSVFile {
 
     public static final String FIlE_DELIMITER = System.getProperty("file.separator");
     private static final String DELIMITER = ";";
-    private static List<String> HEADER = new ArrayList<>() {{
+    private static List<String> HEADER = new ArrayList<String>() {{
         add("FORENAME");
         add("NAME");
         add("COUNTRY");
@@ -68,34 +82,6 @@ public class CSVFile {
         t.addRequirement(CriterionName.PAIR_GENDER, map.get("PAIR_GENDER"));
         t.addRequirement(CriterionName.HISTORY, map.get("HISTORY"));
         return t;
-
-        /*String forename = scanner.next().replace("\"", "");
-        String name = scanner.next().replace("\"", "");
-        Country country = Country.valueOf(scanner.next().replace("\"", ""));
-        LocalDate birthday = LocalDate.parse(scanner.next().replace("\"", ""));
-        String hobbies = scanner.next().replace("\"", "");
-        Criterion guestAnimal = new Criterion(scanner.next().replace("\"", ""), CriterionName.GUEST_ANIMAL_ALLERGY);
-        Criterion hostHasAnimal = new Criterion(scanner.next().replace("\"", ""), CriterionName.HOST_HAS_ANIMAL);
-        Criterion guestFood = new Criterion(scanner.next().replace("\"", ""), CriterionName.GUEST_FOOD);
-        Criterion hostFood = new Criterion(scanner.next().replace("\"", ""), CriterionName.HOST_FOOD);
-        Criterion gender = new Criterion(scanner.next().replace("\"", ""), CriterionName.GENDER);
-        Criterion pairGender = new Criterion(scanner.next().replace("\"", ""), CriterionName.PAIR_GENDER);
-        Criterion history;
-        if (scanner.hasNext()) {
-            history = new Criterion(scanner.next().replace("\"", ""), CriterionName.HISTORY);
-        } else {
-            history = new Criterion("", CriterionName.HISTORY);
-        }
-        Teenager t = new Teenager(name, forename, birthday, country);
-        t.addRequirement(CriterionName.HOBBIES, hobbies);
-        t.addRequirement(guestAnimal);
-        t.addRequirement(hostHasAnimal);
-        t.addRequirement(guestFood);
-        t.addRequirement(hostFood);
-        t.addRequirement(gender);
-        t.addRequirement(pairGender);
-        t.addRequirement(history);
-        return t;*/
     }
 
     /**
@@ -140,10 +126,11 @@ public class CSVFile {
      * @param fileName   (String) - The name of the file to read
      * @param haveHeader (boolean) - If the file have a header
      * @return (Platform) - The platform object
+     * @throws InvalidCSVException
      */
-    public static Platform read(String fileName, boolean haveHeader) {
+    public static Platform read(String fileName, boolean haveHeader) throws InvalidCSVException {
         Platform p = new Platform();
-        try (BufferedReader br = new BufferedReader(new FileReader(getDirWhoResourcesIs() + "resources" + FIlE_DELIMITER + fileName))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             if (haveHeader) {
                 headerModifier(br.readLine());
@@ -153,20 +140,23 @@ public class CSVFile {
                     p.addTeenager(readLine(line));
                 } catch (IllegalArgumentException | NoSuchElementException e) {
                     System.out.println("Error while reading the line");
-                    e.printStackTrace();
+                    //e.printStackTrace();
+                    throw new InvalidCSVException();
                 } catch (InvalidCriterion e) {
                     System.out.println("Invalid criterion found ! Teenager not added");
+                    throw new InvalidCSVException();
                 }
             }
         } catch (RuntimeException | IOException e) {
             System.out.println("Error while reading the file");
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new InvalidCSVException();
         }
 
         return p;
     }
 
-    public static Platform read(String filename) {
+    public static Platform read(String filename) throws InvalidCSVException {
         return read(filename, true);
     }
 
@@ -202,12 +192,12 @@ public class CSVFile {
      */
     public static boolean exportData(Platform p, String nameFile) {
 
-        File f = new File(getDirWhoResourcesIs() + "resources" + FIlE_DELIMITER + nameFile);
+        File f = new File(nameFile);
         if (f.exists()) {
             f.delete();
         }
 
-        try (BufferedWriter br = new BufferedWriter(new FileWriter(getDirWhoResourcesIs() + "resources" + FIlE_DELIMITER + nameFile))) {
+        try (BufferedWriter br = new BufferedWriter(new FileWriter(nameFile))) {
             br.write("FORENAME;NAME;COUNTRY;BIRTH_DATE;HOBBIES;GUEST_ANIMAL_ALLERGY;HOST_HAS_ANIMAL;GUEST_FOOD;HOST_FOOD;GENDER;PAIR_GENDER;HISTORY\n");
             for (Teenager t : p.getTeenagers()) {
                 br.write(exportLineTeenager(t));
@@ -219,10 +209,29 @@ public class CSVFile {
         return true;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvalidCSVException {
         Platform p = read("testCSVReader.csv");
         System.out.println(p);
         exportData(p, "test2.csv");
+    }
+
+    public static void exportAppariement(ArrayList<Arete<Teenager>> appariment, String fileDir) {
+        fileDir += FIlE_DELIMITER + "appariement.csv";
+        File f = new File(fileDir);
+        if (f.exists()) {
+            f.delete();
+        }
+
+        try (BufferedWriter br = new BufferedWriter(new FileWriter(fileDir))) {
+            br.write("FORENAME;NAME;COUNTRY;BIRTH_DATE;HOBBIES;GUEST_ANIMAL_ALLERGY;HOST_HAS_ANIMAL;GUEST_FOOD;HOST_FOOD;GENDER;PAIR_GENDER;HISTORY;");
+            br.write("FORENAME;NAME;COUNTRY;BIRTH_DATE;HOBBIES;GUEST_ANIMAL_ALLERGY;HOST_HAS_ANIMAL;GUEST_FOOD;HOST_FOOD;GENDER;PAIR_GENDER;HISTORY_guest\n".replace(";", "_guest;"));
+            for(Arete<Teenager> a : appariment) {
+                br.write(exportLineTeenager(a.getExtremite1()));
+                br.write(DELIMITER);
+                br.write(exportLineTeenager(a.getExtremite1()));
+                br.newLine();
+            }
+        } catch (IOException ignored) {}
     }
 
 

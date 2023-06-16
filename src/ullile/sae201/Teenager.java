@@ -5,11 +5,12 @@ import ullile.sae201.exception.RequirementNotFound;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 
 /**
  * Teenager class
- * @author Valentin Thuillier, Romain Degez
+ * @author Valentin Thuillier, Romain Degez, Elise Leroy
  */
 public class Teenager implements Serializable {
 
@@ -18,7 +19,7 @@ public class Teenager implements Serializable {
     private final LocalDate DATENAISS;
     private Teenager history = null;
 
-    private static final HashSet<CriterionName> REQUIDED = new HashSet<>() {{
+    private static final HashSet<CriterionName> REQUIDED = new HashSet<CriterionName>() {{
         add(CriterionName.GENDER);
     }};
 
@@ -234,6 +235,78 @@ public class Teenager implements Serializable {
     public Teenager getHistory() {
         return history;
     }
+
+    /**
+     * Get the age of the teenager
+     * @return (int) - The age of the teenager
+     */
+    public int getAge(){
+        return Period.between(this.getDateNaiss(), LocalDate.now()).getYears();
+    }
+
+    /**
+     * Get the gender of the teenager
+     * @return (String) - it's gender
+     */
+    public String getGender(){
+        return this.requirements.get(CriterionName.GENDER).getValue();
+    }
+
+    /**
+     * return the teenager's food one by one in a string (needed in HMI)
+     * @return (String) - The teenager's food
+     */
+    public String foodToString(boolean isHost){
+        String affichage = "";
+        try {
+            if(isHost){
+                if(this.getCriterionValue(CriterionName.HOST_FOOD).equals("")) return "Aucun critère";
+                for (String food : this.getCriterionValue(CriterionName.HOST_FOOD).split(",")) {
+                    affichage += food + "\n";
+                }
+            }else{
+                if(this.getCriterionValue(CriterionName.GUEST_FOOD).equals("")) return "Aucun critère";
+                for (String food : this.getCriterionValue(CriterionName.GUEST_FOOD).split(",")) {
+                    affichage += food + "\n";
+                }
+            }
+            return affichage;
+        } catch (RequirementNotFound requirementNotFound) {
+            return "";
+        }
+    }
+
+    /**
+     * return a boolean if the host has an animal or guest allegic to it based on parameter
+     * @param isHost (boolean) - true if the inspected teenager is the host
+     * @return (boolean) - True if the teenager has an animal, false otherwise. same for guest
+     */
+    public boolean getAnimalSpecification(boolean isHost){
+        try {
+            if(isHost) return booleanConverter(this,CriterionName.HOST_HAS_ANIMAL,Criterion.YES);
+            return booleanConverter(this,CriterionName.GUEST_ANIMAL_ALLERGY,Criterion.YES);
+        } catch (RequirementNotFound requirementNotFound) {
+            return false;
+        }
+    }
+
+
+    /**
+     * return the teenager's hobbies one by one in a string (needed in HMI)
+     * @return (String) - The teenager's hobbies
+     */
+    public String hobbiesToString(){
+        String affichage = "";
+        try {
+            for (String hobby : this.getCriterionValue(CriterionName.HOBBIES).split(",")) {
+                affichage += hobby + "\n";
+            }
+            return affichage;
+        } catch (RequirementNotFound requirementNotFound) {
+            return "";
+        }
+    }
+
     
     /**
      * Set the history of the teenager
@@ -371,6 +444,10 @@ public class Teenager implements Serializable {
             i.printStackTrace();
             return null;
         }
+    }
+
+    public String minimalToString() {
+        return NAME + " " + FORENAME + "(" + COUNTRY + ")";
     }
 
 

@@ -1,17 +1,16 @@
 package sae;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import fr.ulille.but.sae2_02.graphes.Arete;
 import fr.ulille.but.sae2_02.graphes.CalculAffectation;
 import fr.ulille.but.sae2_02.graphes.GrapheNonOrienteValue;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-
 import ullile.sae201.CriterionName;
 import ullile.sae201.Teenager;
 import ullile.sae201.exception.InvalidCriterion;

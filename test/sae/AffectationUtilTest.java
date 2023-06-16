@@ -1,11 +1,11 @@
 package sae;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import ullile.sae201.CriterionName;
 import ullile.sae201.Teenager;

@@ -3,6 +3,7 @@ package sae;
 import org.junit.Before;
 import org.junit.Test;
 import ullile.sae201.*;
+import ullile.sae201.exception.InvalidCSVException;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -68,7 +69,7 @@ public class CSvFileTest {
     }
 
     @Test
-    public void testRead() {
+    public void testRead() throws InvalidCSVException {
         Platform p = CSVFile.read(FILENAME, true);
         assertEquals(p.getTeenagers().size(), platform.getTeenagers().size());
         for (Teenager t : platform.getTeenagers()) {
@@ -84,7 +85,7 @@ public class CSvFileTest {
     }
 
     @Test
-    public void testWrite() {
+    public void testWrite() throws InvalidCSVException {
         CSVFile.exportData(platform, FILENAME + ".test");
         Platform p = CSVFile.read(FILENAME + ".test", true);
         assertEquals(p.getTeenagers().size(), platform.getTeenagers().size());
