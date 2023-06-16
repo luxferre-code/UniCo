@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"ullile.sae201","l":"Country"},{"p":"ullile.sae201","l":"Criterion"},{"p":"ullile.sae201","l":"CriterionName"},{"p":"ullile.sae201","l":"CSVFile"},{"p":"ullile.sae201","l":"Platform"},{"p":"ullile.sae201","l":"Teenager"}]
