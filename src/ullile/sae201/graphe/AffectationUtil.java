@@ -181,7 +181,7 @@ public class AffectationUtil {
     private static double hobbiesWeight(Teenager host, Teenager visitor) throws RequirementNotFound {
         double baseHobbyWeight = 0.0;
         for(String hobby : host.getHobbies()){
-            if(visitor.getHobbies().contains(hobby) && hobbiesWeight < MAX_HOBBY_COUNT) {
+            if(visitor.getHobbies().contains(hobby) && baseHobbyWeight < MAX_HOBBY_COUNT) {
                 baseHobbyWeight+=hobbiesWeight;
             }
         }
